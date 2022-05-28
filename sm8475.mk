@@ -303,10 +303,6 @@ PRODUCT_PACKAGES += \
     MotoActions \
     MotoCommonOverlay
 
-# Net
-PRODUCT_PACKAGES += \
-    netutils-wrapper-1.0
-
 # OMX
 PRODUCT_PACKAGES += \
     libcodec2_hidl@1.2.vendor \
