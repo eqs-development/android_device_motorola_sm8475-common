@@ -614,10 +614,10 @@ int set_active_boot_slot(unsigned slot)
 	for (i = 0; i < ARRAY_SIZE(ptn_list); i++) {
 		//XBL, XBL_CFG, MULTIIMGOEM, MULTIIMGQTI are handled differrently
                //for ufs devices so ignore them.
-		if (is_ufs && (!strncmp(ptn_list[i],PTN_XBL,strlen(PTN_XBL))
-		    || !strncmp(ptn_list[i],PTN_XBL_CFG,strlen(PTN_XBL_CFG))
-                    || !strncmp(ptn_list[i],PTN_MULTIIMGOEM,strlen(PTN_MULTIIMGOEM))
-                    || !strncmp(ptn_list[i],PTN_MULTIIMGQTI,strlen(PTN_MULTIIMGQTI))))
+		if (is_ufs && (!strncmp(ptn_list[i],PTN_XBL,strlen(ptn_list[i]))
+		    || !strncmp(ptn_list[i],PTN_XBL_CFG,strlen(ptn_list[i]))
+                    || !strncmp(ptn_list[i],PTN_MULTIIMGOEM,strlen(ptn_list[i]))
+                    || !strncmp(ptn_list[i],PTN_MULTIIMGQTI,strlen(ptn_list[i]))))
 				continue;
 		//The partition list will be the list of _a partitions
 		string cur_ptn = ptn_list[i];
