@@ -2374,7 +2374,7 @@ IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.-->
         <int name="default_rtt_mode_int" value="1" />
     </carrier_config>
 
-    <carrier_config device="lahaina" mcc="311" mnc="480">
+    <carrier_config device="taro" mcc="311" mnc="480">
         <boolean name="show_rtt_visibility_setting_bool" value="true" />
         <boolean name="ignore_rtt_mode_setting_bool" value="true"/>
         <int name="default_rtt_mode_int" value="1" />

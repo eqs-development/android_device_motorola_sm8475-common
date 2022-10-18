@@ -46,16 +46,16 @@ build_codename=`getprop vendor.media.system.build_codename`
 product=`getprop ro.build.product`
 
 case "$target" in
-    "lahaina")
+    "taro")
         case "$soc_hwid" in
             475|515)
-                setprop vendor.media.target_variant "_yupik_v0"
+                setprop vendor.media.target_variant "_cape_v0"
                 if [ $build_codename -le "12" ]; then
                     setprop vendor.netflix.bsp_rev "Q7325-SPY-33758-1"
                 fi
                 sku_ver=`cat /sys/devices/platform/soc/aa00000.qcom,vidc/sku_version` 2> /dev/null
                 if [ $sku_ver -eq 1 ]; then
-                    setprop vendor.media.target_variant "_yupik_v1"
+                    setprop vendor.media.target_variant "_cape_v1"
                 fi
                 ;;
             450)
@@ -71,13 +71,13 @@ case "$target" in
                 fi
                 ;;
             497|498)
-                    setprop vendor.media.target_variant "_yupik_iot"
+                    setprop vendor.media.target_variant "_cape_iot"
                 ;;
             *)
                 if [ $target_qssi == "true" ]; then
-                    setprop vendor.media.target_variant "_lahaina_vendor"
+                    setprop vendor.media.target_variant "_taro_vendor"
                 else
-                    setprop vendor.media.target_variant "_lahaina"
+                    setprop vendor.media.target_variant "_taro"
                 fi
                 if [ $build_codename -le "12" ]; then
                     setprop vendor.netflix.bsp_rev "Q875-32408-1"
