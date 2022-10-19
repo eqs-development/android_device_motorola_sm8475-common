@@ -55,8 +55,7 @@
 #define BOOT_IMG_PTN_NAME "boot"
 #define LUN_NAME_END_LOC 14
 #define BOOT_SLOT_PROP "ro.boot.slot_suffix"
-#define BOARD_PLATFORM_PROP  "ro.build.product"
-#define GVMQ_PLATFORM        "msmnile_gvmq"
+#define VENDOR_BOOTCTRL_ENABLE  "ro.vendor.bootctrl.enable"
 
 #define SLOT_ACTIVE 1
 #define SLOT_INACTIVE 2
@@ -87,6 +86,8 @@ using ::android::bootable::GetMiscVirtualAbMergeStatus;
 using ::android::bootable::InitMiscVirtualAbMessageIfNeeded;
 using ::android::bootable::SetMiscVirtualAbMergeStatus;
 using ::android::hardware::boot::V1_1::MergeStatus;
+
+unsigned int kMaxNumSlots = 2;
 
 //Get the value of one of the attribute fields for a partition.
 static int get_partition_attribute(char *partname,
@@ -449,8 +450,8 @@ error:
 bool bootcontrol_init()
 {
 	char platform[256];
-	property_get(BOARD_PLATFORM_PROP , platform, "");
-	if (!strncmp(platform, GVMQ_PLATFORM, strlen(GVMQ_PLATFORM)))
+	property_get(VENDOR_BOOTCTRL_ENABLE , platform, "");
+	if (!strncmp(platform, "true", strlen("true")))
 		mGvmqPlatform = true;
 	return InitMiscVirtualAbMessageIfNeeded();
 }
@@ -611,17 +612,14 @@ int set_active_boot_slot(unsigned slot)
 	//actual names. To do this we append the slot suffix to every member
 	//in the list.
 	for (i = 0; i < ARRAY_SIZE(ptn_list); i++) {
-		//XBL & XBL_CFG are handled differrently for ufs devices so
-		//ignore them
-		if (is_ufs && (!strncmp(ptn_list[i],
-						PTN_XBL,
-						strlen(PTN_XBL))
-					|| !strncmp(ptn_list[i],
-						PTN_XBL_CFG,
-						strlen(PTN_XBL_CFG))))
+		//XBL, XBL_CFG, MULTIIMGOEM, MULTIIMGQTI are handled differrently
+               //for ufs devices so ignore them.
+		if (is_ufs && (!strncmp(ptn_list[i],PTN_XBL,strlen(PTN_XBL))
+		    || !strncmp(ptn_list[i],PTN_XBL_CFG,strlen(PTN_XBL_CFG))
+                    || !strncmp(ptn_list[i],PTN_MULTIIMGOEM,strlen(PTN_MULTIIMGOEM))
+                    || !strncmp(ptn_list[i],PTN_MULTIIMGQTI,strlen(PTN_MULTIIMGQTI))))
 				continue;
-		//The partition list will be the list of partitions
-		//corresponding to the slot being set active
+		//The partition list will be the list of _a partitions
 		string cur_ptn = ptn_list[i];
 		cur_ptn.append(slot_suffix_arr[slot]);
 		ptn_vec.push_back(cur_ptn);
@@ -690,6 +688,9 @@ error:
 }
 int is_slot_bootable(unsigned slot)
 {
+	if (mGvmqPlatform) {
+		return slot < kMaxNumSlots && slot < get_number_slots();
+	}
 	int attr = 0;
 	char bootPartition[MAX_GPT_NAME_SIZE + 1] = {0};
 
@@ -709,6 +710,23 @@ error:
 
 int is_slot_marked_successful(unsigned slot)
 {
+	if (mGvmqPlatform) {
+		std::string err;
+		std::string misc_blk_device = get_bootloader_message_blk_device(&err);
+		if (misc_blk_device.empty()) {
+			ALOGE("Could not find bootloader message block device: %s", err.c_str());
+			return -1;
+		}
+		bootloader_message boot_verify;
+		if (!read_bootloader_message_from(&boot_verify, misc_blk_device, &err)) {
+			ALOGE("Failed to read from %s due to %s ", misc_blk_device.c_str(), err.c_str());
+			return -1;
+		}
+		if ((boot_verify.reserved[2] == 'y') && (slot == get_current_slot())) {
+			return 1;
+		}
+		return -1;
+	}
 	int attr = 0;
 	char bootPartition[MAX_GPT_NAME_SIZE + 1] = {0};
 
@@ -751,4 +769,28 @@ MergeStatus get_snapshot_merge_status()
 	}
 	ALOGI("%s: Returning MergeStatus = %d\n", __func__, status);
 	return status;
+}
+
+int get_active_boot_slot()
+{
+	int slot = 0;
+	char bootPartition[MAX_GPT_NAME_SIZE + 1] = {0};
+
+	for (int i = 0; slot_suffix_arr[i] != NULL; i++) {
+		snprintf(bootPartition, sizeof(bootPartition) - 1,
+			"boot%s", slot_suffix_arr[i]);
+
+			if (get_partition_attribute(bootPartition,
+				ATTR_SLOT_ACTIVE) == 1) {
+				slot = i;
+				break;
+			}
+	}
+
+	if (boot_control_check_slot_sanity(slot) != 0) {
+		ALOGE("%s: Failed to validate active slot configuration", __func__);
+		return -1;
+	} else {
+		return slot;
+	}
 }
