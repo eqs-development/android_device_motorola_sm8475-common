@@ -4085,7 +4085,7 @@ bool GnssAdapter::needReportForClient(LocationAPI* client, enum loc_sess_status 
         // report intermediate fix when TBT session allows, like flp;
         // report any fix (even failed fix) when TBT session allows, like LE.
         if ((it->first.client == client || client == nullptr) &&
-                it->second.qualityLevelAccepted >= status) {
+                static_cast<int>(it->second.qualityLevelAccepted) >= static_cast<int>(status)) {
             return true;
         }
     }
