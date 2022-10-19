@@ -72,6 +72,8 @@ typedef struct {
     double     Z;
 } LocEcef;
 
+void loc_nmea_config_output_types(GnssNmeaTypesMask enabledNmeaTypes);
+
 void loc_nmea_generate_sv(const GnssSvNotification &svNotify,
                               std::vector<std::string> &nmeaArraystr);
 

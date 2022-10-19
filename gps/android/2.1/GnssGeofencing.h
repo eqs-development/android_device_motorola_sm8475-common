@@ -40,7 +40,7 @@ using ::android::sp;
 
 class GeofenceAPIClient;
 struct GnssGeofencing : public IGnssGeofencing {
-    GnssGeofencing();
+    inline GnssGeofencing(const sp<GnssGeofencing>& self) : mSelf(self), mApi(nullptr) {}
     ~GnssGeofencing();
 
     /*
@@ -65,18 +65,22 @@ struct GnssGeofencing : public IGnssGeofencing {
     // This method is not part of the IGnss base class.
     // It is called by GnssGeofencingDeathRecipient to remove all geofences added so far.
     Return<void> removeAllGeofences();
+    void handleClientDeath();
 
  private:
     struct GnssGeofencingDeathRecipient : hidl_death_recipient {
-        GnssGeofencingDeathRecipient(sp<GnssGeofencing> gnssGeofencing) :
+        GnssGeofencingDeathRecipient(const sp<GnssGeofencing>& gnssGeofencing) :
             mGnssGeofencing(gnssGeofencing) {
         }
         ~GnssGeofencingDeathRecipient() = default;
         virtual void serviceDied(uint64_t cookie, const wp<IBase>& who) override;
-        sp<GnssGeofencing> mGnssGeofencing;
+        const wp<GnssGeofencing> mGnssGeofencing;
     };
 
  private:
+    // this has to be a reference, not a copy
+    // because the pointer is not set when mSelf is assigned
+    const sp<GnssGeofencing>& mSelf;
     sp<GnssGeofencingDeathRecipient> mGnssGeofencingDeathRecipient = nullptr;
     sp<IGnssGeofenceCallback> mGnssGeofencingCbIface = nullptr;
     GeofenceAPIClient* mApi = nullptr;

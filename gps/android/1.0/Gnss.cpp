@@ -42,10 +42,9 @@ static sp<Gnss> sGnss;
 void Gnss::GnssDeathRecipient::serviceDied(uint64_t cookie, const wp<IBase>& who) {
     LOC_LOGE("%s] service died. cookie: %llu, who: %p",
             __FUNCTION__, static_cast<unsigned long long>(cookie), &who);
-    if (mGnss != nullptr) {
-        mGnss->getGnssInterface()->resetNetworkInfo();
-        mGnss->stop();
-        mGnss->cleanup();
+    auto gnss = mGnss.promote();
+    if (gnss != nullptr) {
+        gnss->handleClientDeath();
     }
 }
 
@@ -65,7 +64,7 @@ Gnss::Gnss() {
     // clear pending GnssConfig
     memset(&mPendingConfig, 0, sizeof(GnssConfig));
 
-    mGnssDeathRecipient = new GnssDeathRecipient(this);
+    mGnssDeathRecipient = new GnssDeathRecipient(sGnss);
 }
 
 Gnss::~Gnss() {
@@ -75,6 +74,16 @@ Gnss::~Gnss() {
         mApi = nullptr;
     }
     sGnss = nullptr;
+}
+
+void Gnss::handleClientDeath() {
+    getGnssInterface()->resetNetworkInfo();
+    cleanup();
+    if (mApi != nullptr) {
+        mApi->gnssUpdateCallbacks(nullptr, nullptr);
+    }
+    mGnssCbIface = nullptr;
+    mGnssNiCbIface = nullptr;
 }
 
 GnssAPIClient* Gnss::getApi() {
@@ -297,7 +306,7 @@ Return<sp<V1_0::IGnssNi>> Gnss::getExtensionGnssNi()  {
 Return<sp<V1_0::IGnssMeasurement>> Gnss::getExtensionGnssMeasurement() {
     ENTRY_LOG_CALLFLOW();
     if (mGnssMeasurement == nullptr)
-        mGnssMeasurement = new GnssMeasurement();
+        mGnssMeasurement = new GnssMeasurement(mGnssMeasurement);
     return mGnssMeasurement;
 }
 
@@ -309,12 +318,12 @@ Return<sp<V1_0::IGnssConfiguration>> Gnss::getExtensionGnssConfiguration()  {
 
 Return<sp<V1_0::IGnssGeofencing>> Gnss::getExtensionGnssGeofencing()  {
     ENTRY_LOG_CALLFLOW();
-    mGnssGeofencingIface = new GnssGeofencing();
+    mGnssGeofencingIface = new GnssGeofencing(mGnssGeofencingIface);
     return mGnssGeofencingIface;
 }
 
 Return<sp<V1_0::IGnssBatching>> Gnss::getExtensionGnssBatching()  {
-    mGnssBatching = new GnssBatching();
+    mGnssBatching = new GnssBatching(mGnssBatching);
     return mGnssBatching;
 }
 

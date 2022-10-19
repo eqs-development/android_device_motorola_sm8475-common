@@ -6,9 +6,9 @@ prebuilt_etc {
 
 prebuilt_etc {
 
-    name: "flp.conf",
+    name: "batching.conf",
     vendor: true,
-    src: "flp.conf",
+    src: "batching.conf",
 }
 
 prebuilt_etc {

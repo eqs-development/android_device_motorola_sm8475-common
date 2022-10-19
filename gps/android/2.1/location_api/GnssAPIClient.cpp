@@ -130,10 +130,43 @@ void GnssAPIClient::setCallbacks()
     memset(&locationCallbacks, 0, sizeof(LocationCallbacks));
     locationCallbacks.size = sizeof(LocationCallbacks);
 
-    locationCallbacks.trackingCb = nullptr;
-    locationCallbacks.trackingCb = [this](Location location) {
-        onTrackingCb(location);
+    static bool readConfig = false;
+    // if ANDROID_REPORT_SPE_ONLY is not set in the izat.conf,
+    // the default behavior is "report SPE PVT to Android GNSS API"
+    static uint32_t reportSpeOnly = 1;
+    static loc_param_s_type izatConfParamTable[] = {
+        {"ANDROID_REPORT_SPE_ONLY",      &reportSpeOnly,       nullptr, 'n'},
     };
+
+    if (false == readConfig) {
+        UTIL_READ_CONF(LOC_PATH_IZAT_CONF, izatConfParamTable);
+        readConfig = true;
+    }
+
+    /*-------------------|-------------    PVT received --------------------|
+     | Technology used   | By trackingCb     | By engineLocationInfoCallback|
+     |-------------------|-------------------|------------------------------|
+     |Modem PE only      | SPE               | SPE                          |
+     |-------------------|-------------------|----------------------------  |
+     |Modem + HLOS Boeing| Aggregated        | SPE and Aggregated           |
+     |----------------------------------------------------------------------|
+     * By default always register with engineLocationsInfoCb, drop
+     * aggreated PVTs(if received), so this call back only report SPE no
+     * matter what the techonolgy is used;
+     * When config is set to 0, register with trackingCb, this is the call back
+     * which will report aggregated PVT to Android GNSS API*/
+    if (0 == reportSpeOnly) {
+        locationCallbacks.trackingCb = nullptr;
+        locationCallbacks.trackingCb = [this](Location location) {
+            onTrackingCb(location);
+        };
+    } else {
+        locationCallbacks.engineLocationsInfoCb = nullptr;
+        locationCallbacks.engineLocationsInfoCb = [this](uint32_t count,
+                GnssLocationInfoNotification* engineLocationInfoNotification) {
+            onEngineLocationsInfoCb(count, engineLocationInfoNotification);
+        };
+    }
 
     locationCallbacks.batchingCb = nullptr;
     locationCallbacks.geofenceBreachCb = nullptr;
@@ -682,6 +715,29 @@ void GnssAPIClient::onGnssNmeaCb(GnssNmeaNotification gnssNmeaNotification)
                 }
             }
         }
+    }
+}
+
+void GnssAPIClient::onEngineLocationsInfoCb(uint32_t count,
+            GnssLocationInfoNotification* engineLocationInfoNotification) {
+    if (nullptr == engineLocationInfoNotification) {
+        LOC_LOGe("engineLocationInfoNotification is nullptr");
+        return;
+    }
+    GnssLocationInfoNotification* locPtr = nullptr;
+    bool foundSPE = false;
+
+    for (int i = 0; i < count; i++) {
+        locPtr = engineLocationInfoNotification + i;
+        if (nullptr == locPtr) return;
+        LOC_LOGv("count %d, type %d", i, locPtr->locOutputEngType);
+        if (LOC_OUTPUT_ENGINE_SPE == locPtr->locOutputEngType) {
+            foundSPE = true;
+            break;
+        }
+    }
+    if (foundSPE) {
+        onTrackingCb(locPtr->location);
     }
 }
 

@@ -1,4 +1,4 @@
-/* Copyright (c) 2015, 2017 The Linux Foundation. All rights reserved.
+/* Copyright (c) 2015, 2017, 2020 The Linux Foundation. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are
@@ -6,7 +6,7 @@
  *     * Redistributions of source code must retain the above copyright
  *       notice, this list of conditions and the following disclaimer.
  *     * Redistributions in binary form must reproduce the above
- *       copyright notice, this list of conditions and the following
+ *       copyright notice, this unordered_set of conditions and the following
  *       disclaimer in the documentation and/or other materials provided
  *       with the distribution.
  *     * Neither the name of The Linux Foundation, nor the names of its
@@ -30,7 +30,7 @@
 #ifndef __IDATAITEMSUBSCRIPTION_H__
 #define __IDATAITEMSUBSCRIPTION_H__
 
-#include  <list>
+#include  <unordered_set>
 #include  <DataItemId.h>
 
 namespace loc_core
@@ -51,62 +51,62 @@ public:
      * @brief Subscribe for data items by their IDs
      * @details Subscribe for data items by their IDs;
      *          An IDataItemObserver implementer invokes this method to subscribe
-     *          for a list of DataItems by passing in their Ids.
+     *          for a unordered_set of DataItems by passing in their Ids.
      *          A symbolic invocation of this method in the following order
      *          subscribe ( {1,2,3}, &obj), subscribe ( {2,3,4,5}, &obj)
-     *          where the numbers enclosed in braces indicate a list of data item Ids
-     *          will cause this class implementer to update its subscription list for
+     *          where the numbers enclosed in braces indicate a unordered_set of data item Ids
+     *          will cause this class implementer to update its subscription unordered_set for
      *          &obj to only contain the following Data Item Ids 1,2,3,4,5.
      *
-     * @param l List of DataItemId
+     * @param l Set of DataItemId
      * @param o Pointer to an instance of IDataItemObserver
      */
-    virtual void subscribe (const std :: list <DataItemId> & l, IDataItemObserver * o = NULL) = 0;
+    virtual void subscribe (const std::unordered_set<DataItemId> & l, IDataItemObserver * o = NULL) = 0;
 
     /**
      * @brief Update subscription for Data items
      * @details Update subscription for Data items;
      *          An IDataItemObserver implementer invokes this method to update their
-     *          subscription for a list of DataItems by passing in their Ids
+     *          subscription for a unordered_set of DataItems by passing in their Ids
      *          A symbolic invocation of this method in the following order
      *          updateSubscription ( {1,2,3}, &obj),updateSubscription ( {2,3,4,5}, &obj)
-     *          where the numbers enclosed in braces indicate a list of data item Ids
-     *          will cause this class implementer to update its subscription list for
+     *          where the numbers enclosed in braces indicate a unordered_set of data item Ids
+     *          will cause this class implementer to update its subscription unordered_set for
      *          &obj to only contain the following Data Item Ids 2,3,4,5.
      *          Note that this method may or may not be called.
      *
-     * @param l List of DataItemId
+     * @param l Set of DataItemId
      * @param o Pointer to an instance of IDataItemObserver
      */
-    virtual void updateSubscription (const std :: list <DataItemId> & l, IDataItemObserver * o = NULL) = 0;
+    virtual void updateSubscription (const std :: unordered_set <DataItemId> & l, IDataItemObserver * o = NULL) = 0;
 
     /**
      * @brief Request Data
      * @details Request Data
      *
-     * @param l List of DataItemId
+     * @param l Set of DataItemId
      * @param o Pointer to an instance of IDataItemObserver
      */
-    virtual void requestData (const std :: list <DataItemId> & l, IDataItemObserver * o = NULL) = 0;
+    virtual void requestData (const std :: unordered_set <DataItemId> & l, IDataItemObserver * o = NULL) = 0;
 
     /**
      * @brief Unsubscribe Data items
      * @details Unsubscrbe Data items;
      *          An IDataItemObserver implementer invokes this method to unsubscribe their
-     *          subscription for a list of DataItems by passing in their Ids
-     *          Suppose this class implementor has a currently active subscription list
+     *          subscription for a unordered_set of DataItems by passing in their Ids
+     *          Suppose this class implementor has a currently active subscription unordered_set
      *          containing 1,2,3,4,5,6,7 for &obj then a symbolic invocation of this
      *          method in the following order
      *          unsubscribe ( {1,2,3}, &obj), unsubscribe (  {1,2,3,4}, &obj),
      *          unsubscribe ( {7}, &obj)
-     *          where the numbers enclosed in braces indicate a list of data item Ids
-     *          will cause this class implementer to update its subscription list for
+     *          where the numbers enclosed in braces indicate a unordered_set of data item Ids
+     *          will cause this class implementer to update its subscription unordered_set for
      *          &obj to only contain the following data item id 5,6.
      *
-     * @param l List of DataItemId
+     * @param l Set of DataItemId
      * @param o Pointer to an instance of IDataItemObserver
      */
-    virtual void unsubscribe (const std :: list <DataItemId> & l, IDataItemObserver * o = NULL) = 0;
+    virtual void unsubscribe (const std :: unordered_set <DataItemId> & l, IDataItemObserver * o = NULL) = 0;
 
     /**
      * @brief Unsubscribe all data items

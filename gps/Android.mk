@@ -15,10 +15,10 @@ GNSS_CFLAGS := \
     -Wno-error=parentheses-equality \
     -Wno-error=undefined-bool-conversion \
     -Wno-error=tautological-compare \
-    -Wno-error=switch \
-    -Wno-error=date-time
+    -Wno-error=switch
 
-GNSS_HIDL_VERSION = 2.1
+GNSS_HIDL_VERSION := 2.1
+GNSS_AIDL_VERSION := 1
 
 GNSS_HIDL_LEGACY_MEASURMENTS_TARGET_LIST += msm8937
 GNSS_HIDL_LEGACY_MEASURMENTS_TARGET_LIST += msm8953
@@ -30,7 +30,7 @@ GNSS_HIDL_LEGACY_MEASURMENTS_TARGET_LIST += sdm845
 GNSS_HIDL_LEGACY_MEASURMENTS_TARGET_LIST += sdm660
 
 ifneq (,$(filter $(GNSS_HIDL_LEGACY_MEASURMENTS_TARGET_LIST),$(TARGET_BOARD_PLATFORM)))
-GNSS_HIDL_LEGACY_MEASURMENTS = true
+GNSS_HIDL_LEGACY_MEASURMENTS := true
 endif
 
 LOCAL_PATH := $(call my-dir)

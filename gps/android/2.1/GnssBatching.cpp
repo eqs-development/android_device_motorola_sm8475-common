@@ -34,14 +34,10 @@ void GnssBatching::GnssBatchingDeathRecipient::serviceDied(
         uint64_t cookie, const wp<IBase>& who) {
     LOC_LOGE("%s] service died. cookie: %llu, who: %p",
             __FUNCTION__, static_cast<unsigned long long>(cookie), &who);
-    if (mGnssBatching != nullptr) {
-        mGnssBatching->stop();
-        mGnssBatching->cleanup();
+    auto gnssBatching = mGnssBatching.promote();
+    if (gnssBatching != nullptr) {
+        gnssBatching->handleClientDeath();
     }
-}
-
-GnssBatching::GnssBatching() : mApi(nullptr) {
-    mGnssBatchingDeathRecipient = new GnssBatchingDeathRecipient(this);
 }
 
 GnssBatching::~GnssBatching() {
@@ -51,19 +47,28 @@ GnssBatching::~GnssBatching() {
     }
 }
 
+void GnssBatching::handleClientDeath() {
+
+    stop();
+    cleanup();
+    if (mApi != nullptr) {
+        mApi->gnssUpdateCallbacks_2_0(nullptr);
+        mApi->gnssUpdateCallbacks(nullptr);
+    }
+    mGnssBatchingCbIface_2_0 = nullptr;
+    mGnssBatchingCbIface = nullptr;
+}
 
 // Methods from ::android::hardware::gnss::V1_0::IGnssBatching follow.
 Return<bool> GnssBatching::init(const sp<V1_0::IGnssBatchingCallback>& callback) {
-    if (mApi != nullptr) {
-        LOC_LOGD("%s]: mApi is NOT nullptr, delete it first", __FUNCTION__);
-        mApi->destroy();
-        mApi = nullptr;
+    if (mGnssBatchingDeathRecipient == nullptr) {
+        mGnssBatchingDeathRecipient = new GnssBatchingDeathRecipient(mSelf);
     }
 
-    mApi = new BatchingAPIClient(callback);
-    if (mApi == nullptr) {
-        LOC_LOGE("%s]: failed to create mApi", __FUNCTION__);
-        return false;
+    if (mApi != nullptr) {
+        mApi->gnssUpdateCallbacks(callback);
+    } else {
+        mApi = new BatchingAPIClient(callback);
     }
 
     if (mGnssBatchingCbIface != nullptr) {
@@ -133,16 +138,14 @@ Return<void> GnssBatching::cleanup() {
 
 // Methods from ::android::hardware::gnss::V2_0::IGnssBatching follow.
 Return<bool> GnssBatching::init_2_0(const sp<V2_0::IGnssBatchingCallback>& callback) {
-    if (mApi != nullptr) {
-        LOC_LOGD("%s]: mApi is NOT nullptr, delete it first", __FUNCTION__);
-        mApi->destroy();
-        mApi = nullptr;
+    if (mGnssBatchingDeathRecipient == nullptr) {
+        mGnssBatchingDeathRecipient = new GnssBatchingDeathRecipient(mSelf);
     }
 
-    mApi = new BatchingAPIClient(callback);
-    if (mApi == nullptr) {
-        LOC_LOGE("%s]: failed to create mApi", __FUNCTION__);
-        return false;
+    if (mApi != nullptr) {
+        mApi->gnssUpdateCallbacks_2_0(callback);
+    } else {
+        mApi = new BatchingAPIClient(callback);
     }
 
     if (mGnssBatchingCbIface_2_0 != nullptr) {

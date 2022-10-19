@@ -40,7 +40,7 @@ using ::android::sp;
 
 class GeofenceAPIClient;
 struct GnssGeofencing : public IGnssGeofencing {
-    GnssGeofencing();
+    inline GnssGeofencing(const sp<GnssGeofencing>& self) : mSelf(self), mApi(nullptr) {}
     ~GnssGeofencing();
 
     /*
@@ -68,15 +68,20 @@ struct GnssGeofencing : public IGnssGeofencing {
 
  private:
     struct GnssGeofencingDeathRecipient : hidl_death_recipient {
-        GnssGeofencingDeathRecipient(sp<GnssGeofencing> gnssGeofencing) :
+        GnssGeofencingDeathRecipient(const sp<GnssGeofencing>& gnssGeofencing) :
             mGnssGeofencing(gnssGeofencing) {
         }
         ~GnssGeofencingDeathRecipient() = default;
         virtual void serviceDied(uint64_t cookie, const wp<IBase>& who) override;
-        sp<GnssGeofencing> mGnssGeofencing;
+        const wp<GnssGeofencing> mGnssGeofencing;
     };
 
+    void handleClientDeath();
+
  private:
+    // this has to be a reference, not a copy
+    // because the pointer is not set when mSelf is assigned
+    const sp<GnssGeofencing>& mSelf;
     sp<GnssGeofencingDeathRecipient> mGnssGeofencingDeathRecipient = nullptr;
     sp<IGnssGeofenceCallback> mGnssGeofencingCbIface = nullptr;
     GeofenceAPIClient* mApi = nullptr;

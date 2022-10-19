@@ -30,15 +30,7 @@ namespace gnss {
 namespace V2_1 {
 namespace implementation {
 
-void GnssNi::GnssNiDeathRecipient::serviceDied(uint64_t cookie, const wp<IBase>& who) {
-    LOC_LOGE("%s] service died. cookie: %llu, who: %p",
-            __FUNCTION__, static_cast<unsigned long long>(cookie), &who);
-    // we do nothing here
-    // Gnss::GnssDeathRecipient will stop the session
-}
-
 GnssNi::GnssNi(Gnss* gnss) : mGnss(gnss) {
-    mGnssNiDeathRecipient = new GnssNiDeathRecipient(this);
 }
 
 // Methods from ::android::hardware::gnss::V1_0::IGnssNi follow.
@@ -49,14 +41,7 @@ Return<void> GnssNi::setCallback(const sp<IGnssNiCallback>& callback)  {
     }
 
     mGnss->setGnssNiCb(callback);
-
-    if (mGnssNiCbIface != nullptr) {
-        mGnssNiCbIface->unlinkToDeath(mGnssNiDeathRecipient);
-    }
     mGnssNiCbIface = callback;
-    if (mGnssNiCbIface != nullptr) {
-        mGnssNiCbIface->linkToDeath(mGnssNiDeathRecipient, 0 /*cookie*/);
-    }
 
     return Void();
 }

@@ -48,8 +48,6 @@ LocationAPIControlClient::LocationAPIControlClient() :
         mRequestQueues[i].reset((uint32_t)0);
     }
 
-    memset(&mConfig, 0, sizeof(GnssConfig));
-
     LocationControlCallbacks locationControlCallbacks;
     locationControlCallbacks.size = sizeof(LocationControlCallbacks);
 
@@ -145,21 +143,15 @@ uint32_t LocationAPIControlClient::locAPIGnssUpdateConfig(GnssConfig config)
 
     pthread_mutex_lock(&mMutex);
     if (mLocationControlAPI) {
-        if (mConfig.equals(config)) {
-            LOC_LOGv("GnssConfig is identical to previous call");
-            retVal = LOCATION_ERROR_SUCCESS;
-        } else {
-            mConfig = config;
-            uint32_t* idArray = mLocationControlAPI->gnssUpdateConfig(config);
-            LOC_LOGv("gnssUpdateConfig return array: %p", idArray);
-            if (nullptr != idArray) {
-                if (nullptr != mRequestQueues[CTRL_REQUEST_CONFIG_UPDATE].getSessionArrayPtr()) {
-                    mRequestQueues[CTRL_REQUEST_CONFIG_UPDATE].reset(idArray);
-                }
-                mRequestQueues[CTRL_REQUEST_CONFIG_UPDATE].push(new GnssUpdateConfigRequest(*this));
-                retVal = LOCATION_ERROR_SUCCESS;
-                delete [] idArray;
+        uint32_t* idArray = mLocationControlAPI->gnssUpdateConfig(config);
+        LOC_LOGv("gnssUpdateConfig return array: %p", idArray);
+        if (nullptr != idArray) {
+            if (nullptr != mRequestQueues[CTRL_REQUEST_CONFIG_UPDATE].getSessionArrayPtr()) {
+                mRequestQueues[CTRL_REQUEST_CONFIG_UPDATE].reset(idArray);
             }
+            mRequestQueues[CTRL_REQUEST_CONFIG_UPDATE].push(new GnssUpdateConfigRequest(*this));
+            retVal = LOCATION_ERROR_SUCCESS;
+            delete [] idArray;
         }
     }
     pthread_mutex_unlock(&mMutex);
@@ -412,11 +404,11 @@ void LocationAPIClientBase::locAPIUpdateTrackingOptions(TrackingOptions& options
 int32_t LocationAPIClientBase::locAPIGetBatchSize()
 {
     if (mBatchSize == -1) {
-        const loc_param_s_type flp_conf_param_table[] =
+        const loc_param_s_type batching_conf_param_table[] =
         {
             {"BATCH_SIZE", &mBatchSize, nullptr, 'n'},
         };
-        UTIL_READ_CONF(LOC_PATH_FLP_CONF, flp_conf_param_table);
+        UTIL_READ_CONF(LOC_PATH_BATCHING_CONF, batching_conf_param_table);
         if (mBatchSize < 0) {
             // set mBatchSize to 0 if we got an illegal value from config file
             mBatchSize = 0;
@@ -819,9 +811,9 @@ void LocationAPIClientBase::locAPIResumeGeofences(
 
 void LocationAPIClientBase::locAPIRemoveAllGeofences()
 {
-    std::vector<uint32_t> sessionsVec = mGeofenceBiDict.getAllSessions();
-    if (sessionsVec.size() > 0) {
-        locAPIRemoveGeofences(sessionsVec.size(), &sessionsVec[0]);
+    std::vector<uint32_t> idsVec = mGeofenceBiDict.getAllIds();
+    if (idsVec.size() > 0) {
+        locAPIRemoveGeofences(idsVec.size(), &idsVec[0]);
     }
 }
 

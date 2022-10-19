@@ -1,4 +1,4 @@
-/* Copyright (c) 2011-2015, 2018-2020 The Linux Foundation. All rights reserved.
+/* Copyright (c) 2011-2015, 2018-2021 The Linux Foundation. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are
@@ -55,7 +55,7 @@
  *============================================================================*/
 
 /* Parameter data */
-static uint32_t DEBUG_LEVEL = 0xff;
+static uint32_t DEBUG_LEVEL = UINT32_MAX;
 static uint32_t TIMESTAMP = 0;
 static uint32_t DATUM_TYPE = 0;
 static bool sVendorEnhanced = true;
@@ -83,7 +83,7 @@ typedef struct loc_param_v_type
 // same conf path string over and again in location code.
 const char LOC_PATH_GPS_CONF[] = LOC_PATH_GPS_CONF_STR;
 const char LOC_PATH_IZAT_CONF[] = LOC_PATH_IZAT_CONF_STR;
-const char LOC_PATH_FLP_CONF[] = LOC_PATH_FLP_CONF_STR;
+const char LOC_PATH_BATCHING_CONF[] = LOC_PATH_BATCHING_CONF_STR;
 const char LOC_PATH_LOWI_CONF[] = LOC_PATH_LOWI_CONF_STR;
 const char LOC_PATH_SAP_CONF[] = LOC_PATH_SAP_CONF_STR;
 const char LOC_PATH_APDR_CONF[] = LOC_PATH_APDR_CONF_STR;
@@ -92,6 +92,7 @@ const char LOC_PATH_QUIPC_CONF[] = LOC_PATH_QUIPC_CONF_STR;
 const char LOC_PATH_ANT_CORR[] = LOC_PATH_ANT_CORR_STR;
 const char LOC_PATH_SLIM_CONF[] = LOC_PATH_SLIM_CONF_STR;
 const char LOC_PATH_VPE_CONF[] = LOC_PATH_VPE_CONF_STR;
+const char LOC_PATH_QPPE_CONF[] = LOC_PATH_QPPE_CONF_STR;
 
 bool isVendorEnhanced() {
     return sVendorEnhanced;
@@ -440,20 +441,23 @@ void loc_read_conf_long(const char* conf_file_name, const loc_param_s_type* conf
     FILE *conf_fp = NULL;
 
     log_buffer_init(false);
-    if((conf_fp = fopen(conf_file_name, "r")) != NULL)
+    if ((conf_fp = fopen(conf_file_name, "r")) != NULL)
     {
-        LOC_LOGD("%s: using %s", __FUNCTION__, conf_file_name);
+        LOC_LOGd("using %s", conf_file_name);
         if(table_length && config_table) {
             loc_read_conf_r_long(conf_fp, config_table, table_length, string_len);
             rewind(conf_fp);
         }
-        loc_read_conf_r_long(conf_fp, loc_param_table, loc_param_num, string_len);
+        if (DEBUG_LEVEL == UINT32_MAX) {
+            /* Read default config entries*/
+            loc_read_conf_r(conf_fp, loc_param_table, loc_param_num);
+            /* Initialize logging mechanism with parsed data */
+            loc_logger_init(DEBUG_LEVEL, TIMESTAMP);
+            log_buffer_init(sLogBufferEnabled);
+            log_tag_level_map_init();
+        }
         fclose(conf_fp);
     }
-    /* Initialize logging mechanism with parsed data */
-    loc_logger_init(DEBUG_LEVEL, TIMESTAMP);
-    log_buffer_init(sLogBufferEnabled);
-    log_tag_level_map_init();
 }
 
 /*=============================================================================
@@ -511,6 +515,7 @@ typedef struct {
     char feature_wifi_supplicant_info[LOC_MAX_PARAM_STRING];
     char auto_platform[LOC_MAX_PARAM_STRING];
     unsigned int vendor_enhanced_process;
+    unsigned int launch_on_optin;
 } loc_launcher_conf;
 
 /* process configuration parameters */
@@ -541,11 +546,12 @@ static const loc_param_s_type loc_process_conf_parameter_table[] = {
     {"PREMIUM_FEATURE",            &conf.premium_feature,          NULL, 'n'},
     {"IZAT_FEATURE_MASK",          &conf.loc_feature_mask,         NULL, 'n'},
     {"PLATFORMS",                  &conf.platform_list,            NULL, 's'},
-    {"SOC_IDS",                    &conf.soc_id_list,            NULL, 's'},
+    {"SOC_IDS",                    &conf.soc_id_list,              NULL, 's'},
     {"BASEBAND",                   &conf.baseband,                 NULL, 's'},
     {"LOW_RAM_TARGETS",            &conf.low_ram_targets,          NULL, 's'},
     {"HARDWARE_TYPE",              &conf.auto_platform,            NULL, 's'},
     {"VENDOR_ENHANCED_PROCESS",    &conf.vendor_enhanced_process,  NULL, 'n'},
+    {"LAUNCH_ON_OPTIN",            &conf.launch_on_optin,          NULL, 'n'},
 };
 
 /*===========================================================================
@@ -830,6 +836,12 @@ int loc_read_process_conf(const char* conf_file_name, uint32_t * process_count_p
         else if (strcmp(conf.proc_status, "ENABLED") == 0) {
             LOC_LOGD("%s:%d]: Process %s is enabled in conf file",
                      __func__, __LINE__, conf.proc_name);
+        }
+
+        if (conf.launch_on_optin) {
+            LOC_LOGD("%s:%d]: Process %s launch will be delayed for EULA opt in.",
+                     __func__, __LINE__, conf.proc_name);
+            child_proc[j].launch_on_optin = true;
         }
 
         //Since strlcpy copies length-1 characters, we add 1 to name_length

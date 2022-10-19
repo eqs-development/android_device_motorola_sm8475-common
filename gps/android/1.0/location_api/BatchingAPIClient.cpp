@@ -67,12 +67,10 @@ BatchingAPIClient::BatchingAPIClient(const sp<IGnssBatchingCallback>& callback) 
 
     locationCallbacks.trackingCb = nullptr;
     locationCallbacks.batchingCb = nullptr;
-    if (mGnssBatchingCbIface != nullptr) {
-        locationCallbacks.batchingCb = [this](size_t count, Location* location,
+    locationCallbacks.batchingCb = [this](size_t count, Location* location,
             BatchingOptions batchOptions) {
-            onBatchingCb(count, location, batchOptions);
-        };
-    }
+        onBatchingCb(count, location, batchOptions);
+    };
     locationCallbacks.geofenceBreachCb = nullptr;
     locationCallbacks.geofenceStatusCb = nullptr;
     locationCallbacks.gnssLocationInfoCb = nullptr;
@@ -87,6 +85,13 @@ BatchingAPIClient::BatchingAPIClient(const sp<IGnssBatchingCallback>& callback) 
 BatchingAPIClient::~BatchingAPIClient()
 {
     LOC_LOGD("%s]: ()", __FUNCTION__);
+}
+
+void BatchingAPIClient::gnssUpdateCallbacks(const sp<IGnssBatchingCallback>& callback)
+{
+    mMutex.lock();
+    mGnssBatchingCbIface = callback;
+    mMutex.unlock();
 }
 
 int BatchingAPIClient::getBatchSize()
@@ -162,13 +167,16 @@ void BatchingAPIClient::onBatchingCb(size_t count, Location* location,
         BatchingOptions /*batchOptions*/)
 {
     LOC_LOGD("%s]: (count: %zu)", __FUNCTION__, count);
-    if (mGnssBatchingCbIface != nullptr && count > 0) {
+    mMutex.lock();
+    auto cbiface = mGnssBatchingCbIface;
+    mMutex.unlock();
+    if (cbiface != nullptr && count > 0) {
         hidl_vec<GnssLocation> locationVec;
         locationVec.resize(count);
         for (size_t i = 0; i < count; i++) {
             convertGnssLocation(location[i], locationVec[i]);
         }
-        auto r = mGnssBatchingCbIface->gnssLocationBatchCb(locationVec);
+        auto r = cbiface->gnssLocationBatchCb(locationVec);
         if (!r.isOk()) {
             LOC_LOGE("%s] Error from gnssLocationBatchCb description=%s",
                 __func__, r.description().c_str());

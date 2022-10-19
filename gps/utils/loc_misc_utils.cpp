@@ -1,4 +1,4 @@
-/* Copyright (c) 2014, 2020 The Linux Foundation. All rights reserved.
+/* Copyright (c) 2014, 2020-2021 The Linux Foundation. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are
@@ -38,6 +38,7 @@
 #include <ctype.h>
 #include <fcntl.h>
 #include <inttypes.h>
+#include <sys/stat.h>
 
 #ifndef MSEC_IN_ONE_SEC
 #define MSEC_IN_ONE_SEC 1000ULL
@@ -126,7 +127,7 @@ err:
 
 inline void logDlError(const char* failedCall) {
     const char * err = dlerror();
-    LOC_LOGe("%s error: %s", failedCall, (nullptr == err) ? "unknown" : err);
+    LOC_LOGw("%s error: %s", failedCall, (nullptr == err) ? "unknown" : err);
 }
 
 void* dlGetSymFromLib(void*& libHandle, const char* libName, const char* symName)
@@ -229,7 +230,7 @@ uint64_t getQTimerFreq()
 
 uint64_t getBootTimeMilliSec()
 {
-    struct timespec curTs;
+    struct timespec curTs = {};
     clock_gettime(CLOCK_BOOTTIME, &curTs);
     return (uint64_t)GET_MSEC_FROM_TS(curTs);
 }
@@ -348,4 +349,19 @@ void loc_convert_velocity_gnss_to_vrp(float enuVelocity[3], float rollPitchYaw[3
     enuVelocity[0] = enuVelocity[0] - deltaEnuVelocity[0];
     enuVelocity[1] = enuVelocity[1] - deltaEnuVelocity[1];
     enuVelocity[2] = enuVelocity[2] - deltaEnuVelocity[2];
+}
+
+// Wait for the system script(rootdir/etc/init.qcom.rc) to create the folder
+void locUtilWaitForDir(const char* dirName) {
+    struct stat buf_stat;
+    while (1) {
+        LOC_LOGv("waiting for %s...", dirName);
+        int rc = stat(dirName, &buf_stat);
+        if (!rc) {
+            break;
+        }
+        //check every 100ms
+        usleep(100000);
+    }
+    LOC_LOGv("done");
 }

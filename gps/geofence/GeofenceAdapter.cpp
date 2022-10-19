@@ -26,6 +26,41 @@
  * IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
  */
+/*
+Changes from Qualcomm Innovation Center are provided under the following license:
+
+Copyright (c) 2022 Qualcomm Innovation Center, Inc. All rights reserved.
+
+Redistribution and use in source and binary forms, with or without
+modification, are permitted (subject to the limitations in the
+disclaimer below) provided that the following conditions are met:
+
+    * Redistributions of source code must retain the above copyright
+      notice, this list of conditions and the following disclaimer.
+
+    * Redistributions in binary form must reproduce the above
+      copyright notice, this list of conditions and the following
+      disclaimer in the documentation and/or other materials provided
+      with the distribution.
+
+    * Neither the name of Qualcomm Innovation Center, Inc. nor the names of its
+      contributors may be used to endorse or promote products derived
+      from this software without specific prior written permission.
+
+NO EXPRESS OR IMPLIED LICENSES TO ANY PARTY'S PATENT RIGHTS ARE
+GRANTED BY THIS LICENSE. THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT
+HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED
+WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
+MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
+IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR
+ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE
+GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER
+IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR
+OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN
+IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+*/
 #define LOG_TAG "LocSvc_GeofenceAdapter"
 
 #include <GeofenceAdapter.h>
@@ -38,7 +73,8 @@ using namespace loc_core;
 GeofenceAdapter::GeofenceAdapter() :
     LocAdapterBase(0,
                    LocContext::getLocContext(LocContext::mLocationHalName),
-                   true /*isMaster*/, nullptr, true)
+                   true /*isMaster*/, nullptr, true),
+    mSystemPowerState(POWER_STATE_UNKNOWN)
 {
     LOC_LOGD("%s]: Constructor", __func__);
 
@@ -48,7 +84,7 @@ GeofenceAdapter::GeofenceAdapter() :
 }
 
 void
-GeofenceAdapter::stopClientSessions(LocationAPI* client)
+GeofenceAdapter::stopClientSessions(LocationAPI* client, bool eraseSession)
 {
     LOC_LOGD("%s]: client %p", __func__, client);
 
@@ -57,14 +93,16 @@ GeofenceAdapter::stopClientSessions(LocationAPI* client)
         uint32_t hwId = it->second;
         GeofenceKey key(it->first);
         if (client == key.client) {
-            it = mGeofenceIds.erase(it);
+            if (eraseSession)
+                it = mGeofenceIds.erase(it);
             mLocApi->removeGeofence(hwId, key.id,
                     new LocApiResponse(*getContext(),
-                    [this, hwId] (LocationError err) {
+                    [this, hwId, eraseSession] (LocationError err) {
                 if (LOCATION_ERROR_SUCCESS == err) {
                     auto it2 = mGeofences.find(hwId);
                     if (it2 != mGeofences.end()) {
-                        mGeofences.erase(it2);
+                        if (eraseSession)
+                            mGeofences.erase(it2);
                     } else {
                         LOC_LOGE("%s]:geofence item to erase not found. hwId %u", __func__, hwId);
                     }
@@ -127,7 +165,10 @@ GeofenceAdapter::handleEngineUpEvent()
         virtual void proc() const {
             mAdapter.setEngineCapabilitiesKnown(true);
             mAdapter.broadcastCapabilities(mAdapter.getCapabilities());
-            mAdapter.restartGeofences();
+            if ((POWER_STATE_SUSPEND != mAdapter.mSystemPowerState) &&
+                 POWER_STATE_SHUTDOWN != mAdapter.mSystemPowerState) {
+                mAdapter.restartGeofences();
+            }
             for (auto msg: mAdapter.mPendingMsgs) {
                 mAdapter.sendMsg(msg);
             }
@@ -154,7 +195,8 @@ GeofenceAdapter::restartGeofences()
         GeofenceOption options = {sizeof(GeofenceOption),
                                    object.breachMask,
                                    object.responsiveness,
-                                   object.dwellTime};
+                                   object.dwellTime,
+                                   object.confidence};
         GeofenceInfo info = {sizeof(GeofenceInfo),
                              object.latitude,
                              object.longitude,
@@ -651,6 +693,7 @@ GeofenceAdapter::saveGeofenceItem(LocationAPI* client, uint32_t clientId, uint32
                              options.breachTypeMask,
                              options.responsiveness,
                              options.dwellTime,
+                             options.confidence,
                              info.latitude,
                              info.longitude,
                              info.radius,
@@ -717,6 +760,7 @@ GeofenceAdapter::modifyGeofenceItem(uint32_t hwId, const GeofenceOption& options
         it->second.breachMask = options.breachTypeMask;
         it->second.responsiveness = options.responsiveness;
         it->second.dwellTime = options.dwellTime;
+        it->second.confidence = options.confidence;
         dump();
     } else {
         LOC_LOGE("%s]: geofence item to modify not found. hwId %u", __func__, hwId);
@@ -849,6 +893,79 @@ GeofenceAdapter::geofenceStatus(GeofenceStatusAvailable available)
             it->second.geofenceStatusCb(notify);
         }
     }
+}
+
+void
+GeofenceAdapter::updateSystemPowerStateCommand(PowerStateType powerState)
+{
+    LOC_LOGD("%s]: powerState: %d", __func__, powerState);
+
+    struct MsgUpdateSystemPowerState : public LocMsg {
+        GeofenceAdapter& mAdapter;
+        PowerStateType mPowerState;
+        inline MsgUpdateSystemPowerState(GeofenceAdapter& adapter,
+                PowerStateType powerState) :
+            mAdapter(adapter),
+            mPowerState(powerState) {}
+        inline virtual void proc() const {
+            mAdapter.updateSystemPowerState(mPowerState);
+        }
+    };
+
+    sendMsg(new MsgUpdateSystemPowerState(*this, powerState));
+}
+
+
+void
+GeofenceAdapter::pauseOrResumeGeofences(bool pauseOrResume /*false - pause, true - resume*/)
+{
+    LocationError error;
+
+    for (auto it = mGeofenceIds.begin(); it != mGeofenceIds.end(); ++it) {
+
+        uint32_t hwId = it->second;
+        if (false == pauseOrResume) {
+            mLocApi->pauseGeofence(it->second, it->first.id, new LocApiResponse(*getContext(),
+                    [&mAdapter = *this, hwId = hwId] (LocationError err) {
+                if (LOCATION_ERROR_SUCCESS == err) {
+                    mAdapter.pauseGeofenceItem(hwId);
+                }
+            }));
+        } else {
+            mLocApi->resumeGeofence(it->second, it->first.id, new LocApiResponse(*getContext(),
+                    [&mAdapter = *this, hwId = hwId] (LocationError err) {
+                if (LOCATION_ERROR_SUCCESS == err) {
+                    mAdapter.resumeGeofenceItem(hwId);
+                }
+            }));
+        }
+    }
+}
+
+void
+GeofenceAdapter::updateSystemPowerState(PowerStateType systemPowerState)
+{
+
+    if (POWER_STATE_UNKNOWN != systemPowerState) {
+        mSystemPowerState = systemPowerState;
+
+        /*Manage active GNSS sessions based on power event*/
+        switch (systemPowerState){
+
+            case POWER_STATE_SUSPEND:
+            case POWER_STATE_SHUTDOWN:
+                pauseOrResumeGeofences(false /*pause*/);
+                LOC_LOGd("Pause all geoFences -- powerState: %d", systemPowerState);
+                break;
+            case POWER_STATE_RESUME:
+                pauseOrResumeGeofences(true /*resume*/);
+                LOC_LOGd("Resume all geoFences -- powerState: %d", systemPowerState);
+                break;
+            default:
+                break;
+        } // switch
+    }
+
 }
 
 void

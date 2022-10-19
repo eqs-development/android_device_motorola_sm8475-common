@@ -131,7 +131,7 @@ static void convertGnssAntennaInfo(std::vector<GnssAntennaInformation>& in,
 }
 
 GnssAntennaInfo::GnssAntennaInfo(Gnss* gnss) : mGnss(gnss) {
-    mGnssAntennaInfoDeathRecipient = new GnssAntennaInfoDeathRecipient(this);
+    mGnssAntennaInfoDeathRecipient = new GnssAntennaInfoDeathRecipient();
     spGnssAntennaInfo = this;
 }
 

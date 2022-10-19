@@ -44,7 +44,7 @@ using ::android::sp;
 
 class BatchingAPIClient;
 struct GnssBatching : public IGnssBatching {
-    GnssBatching();
+    inline GnssBatching(const sp<GnssBatching>& self) : mSelf(self), mApi(nullptr) {}
     ~GnssBatching();
 
     // Methods from ::android::hardware::gnss::V1_0::IGnssBatching follow.
@@ -60,15 +60,20 @@ struct GnssBatching : public IGnssBatching {
 
  private:
     struct GnssBatchingDeathRecipient : hidl_death_recipient {
-        GnssBatchingDeathRecipient(sp<GnssBatching> gnssBatching) :
+        GnssBatchingDeathRecipient(const sp<GnssBatching>& gnssBatching) :
             mGnssBatching(gnssBatching) {
         }
         ~GnssBatchingDeathRecipient() = default;
         virtual void serviceDied(uint64_t cookie, const wp<IBase>& who) override;
-        sp<GnssBatching> mGnssBatching;
+        const wp<GnssBatching> mGnssBatching;
     };
 
+    void handleClientDeath();
+
  private:
+    // this has to be a reference, not a copy
+    // because the pointer is not set when mSelf is assigned
+    const sp<GnssBatching>& mSelf;
     sp<GnssBatchingDeathRecipient> mGnssBatchingDeathRecipient = nullptr;
     sp<V1_0::IGnssBatchingCallback> mGnssBatchingCbIface = nullptr;
     BatchingAPIClient* mApi = nullptr;

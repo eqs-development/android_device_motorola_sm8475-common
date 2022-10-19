@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020, The Linux Foundation. All rights reserved.
+ * Copyright (c) 2020-2021, The Linux Foundation. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are
@@ -73,7 +73,7 @@ void MeasurementCorrections::GnssMeasurementCorrectionsDeathRecipient::serviceDi
 }
 
 MeasurementCorrections::MeasurementCorrections(Gnss* gnss) : mGnss(gnss) {
-    mGnssMeasurementCorrectionsDeathRecipient = new GnssMeasurementCorrectionsDeathRecipient(this);
+    mGnssMeasurementCorrectionsDeathRecipient = new GnssMeasurementCorrectionsDeathRecipient();
     spMeasurementCorrections = this;
 }
 
@@ -91,7 +91,10 @@ void MeasurementCorrections::measCorrSetCapabilitiesCb(
 void MeasurementCorrections::setCapabilitiesCb(
     GnssMeasurementCorrectionsCapabilitiesMask capabilities) {
 
-    if (mMeasurementCorrectionsCbIface != nullptr) {
+    std::unique_lock<std::mutex> lock(mMutex);
+    auto measCorrCbIface(mMeasurementCorrectionsCbIface);
+    lock.unlock();
+    if (measCorrCbIface != nullptr) {
         uint32_t measCorrCapabilities = 0;
 
         // Convert from one enum to another
@@ -108,7 +111,7 @@ void MeasurementCorrections::setCapabilitiesCb(
                     IMeasurementCorrectionsCallback::Capabilities::REFLECTING_PLANE;
         }
 
-        auto r = mMeasurementCorrectionsCbIface->setCapabilitiesCb(measCorrCapabilities);
+        auto r = measCorrCbIface->setCapabilitiesCb(measCorrCapabilities);
         if (!r.isOk()) {
             LOC_LOGw("Error invoking setCapabilitiesCb %s", r.description().c_str());
         }
@@ -186,7 +189,9 @@ Return<bool> MeasurementCorrections::setCallback(
         LOC_LOGe("Null GNSS interface");
         return false;
     }
+    std::unique_lock<std::mutex> lock(mMutex);
     mMeasurementCorrectionsCbIface = callback;
+    lock.unlock();
 
     return mGnss->getGnssInterface()->measCorrInit(measCorrSetCapabilitiesCb);
 }

@@ -1,4 +1,4 @@
-/* Copyright (c) 2014, 2020 The Linux Foundation. All rights reserved.
+/* Copyright (c) 2014, 2020 - 2021 The Linux Foundation. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are
@@ -317,5 +317,24 @@ SIDE EFFECTS
 ===========================================================================*/
 void loc_convert_velocity_gnss_to_vrp(float enuVelocity[3], float rollPitchYaw[3],
                                       float rollPitchYawRate[3], float leverArm[3]);
+
+
+/*===========================================================================
+FUNCTION locUtilWaitForDir
+
+DESCRIPTION
+   This function will block until the directory specified in
+   dirName has been created
+
+DEPENDENCIES
+   N/A
+
+RETURN VALUE
+    N/A
+
+SIDE EFFECTS
+   N/A
+===========================================================================*/
+void locUtilWaitForDir(const char* dirName);
 
 #endif //_LOC_MISC_UTILS_H_

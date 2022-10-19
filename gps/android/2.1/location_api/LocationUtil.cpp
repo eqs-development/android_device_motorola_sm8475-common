@@ -90,7 +90,7 @@ void convertGnssLocation(Location& in, V2_0::GnssLocation& out)
     memset(&out, 0, sizeof(V2_0::GnssLocation));
     convertGnssLocation(in, out.v1_0);
 
-    if (in.flags & LOCATION_HAS_ELAPSED_REAL_TIME) {
+    if (in.flags & LOCATION_HAS_ELAPSED_REAL_TIME_BIT) {
         out.elapsedRealtime.flags |= ElapsedRealtimeFlags::HAS_TIMESTAMP_NS;
         out.elapsedRealtime.timestampNs = in.elapsedRealTime;
         out.elapsedRealtime.flags |= ElapsedRealtimeFlags::HAS_TIME_UNCERTAINTY_NS;

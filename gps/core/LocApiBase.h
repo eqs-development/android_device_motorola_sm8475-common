@@ -1,4 +1,4 @@
-/* Copyright (c) 2011-2014, 2016-2020 The Linux Foundation. All rights reserved.
+/* Copyright (c) 2011-2014, 2016-2021 The Linux Foundation. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are
@@ -31,6 +31,7 @@
 
 #include <stddef.h>
 #include <ctype.h>
+#include <loc_pla.h>
 #include <gps_extended.h>
 #include <LocationAPI.h>
 #include <MsgTask.h>
@@ -38,6 +39,7 @@
 #include <log_util.h>
 #ifdef NO_UNORDERED_SET_OR_MAP
     #include <map>
+    #define unordered_map map
 #else
     #include <unordered_map>
 #endif
@@ -101,6 +103,9 @@ public:
     inline virtual void* getSibling2() { return NULL; }
     inline virtual double getGloRfLoss(uint32_t left,
             uint32_t center, uint32_t right, uint8_t gloFrequency) { return 0.0; }
+    inline virtual bool getSatellitePVT(GnssSvPolynomial& svPolynomial,
+            GnssSvMeasurementHeader& svMeasSetHeader,
+            GnssMeasurementsData& measurementData) { return false; }
     inline virtual float getGeoidalSeparation(double latitude, double longitude) { return 0.0; }
 };
 
@@ -185,7 +190,8 @@ public:
     void requestXtraData();
     void requestTime();
     void requestLocation();
-    void requestATL(int connHandle, LocAGpsType agps_type, LocApnTypeMask apn_type_mask);
+    void requestATL(int connHandle, LocAGpsType agps_type,
+                    LocApnTypeMask apn_type_mask, LocSubId sub_id=LOC_DEFAULT_SUB);
     void releaseATL(int connHandle);
     void requestNiNotify(GnssNiNotification &notify, const void* data,
                          const LocInEmergency emergencyState);
@@ -230,6 +236,8 @@ public:
     virtual void injectPosition(const GnssLocationInfoNotification &locationInfo,
             bool onDemandCpi=false);
     virtual void injectPosition(const Location& location, bool onDemandCpi);
+    virtual void injectPositionAndCivicAddress(const Location& location,
+                                               const GnssCivicAddress& addr);
     virtual void setTime(LocGpsUtcTime time, int64_t timeReference, int uncertainty);
     virtual void atlOpenStatus(int handle, int is_succ, char* apn, uint32_t apnLen,
             AGpsBearerType bear, LocAGpsType agpsType, LocApnTypeMask mask);
@@ -348,6 +356,12 @@ public:
 };
 
 class ElapsedRealtimeEstimator {
+    typedef struct {
+        GPSTimeStruct gpsTime;
+        int64_t qtimerTick;
+        float timeUncMsec; // in milli-seconds
+    } GpsTimeQtimerTickPair;
+
 private:
     int64_t mCurrentClockDiff;
     int64_t mPrevUtcTimeNanos;
@@ -355,16 +369,26 @@ private:
     int64_t mFixTimeStablizationThreshold;
     int64_t mInitialTravelTime;
     int64_t mPrevDataTimeNanos;
-public:
+    // association between gps time and qtimer value
+    // the two variable saves a pair of gps time and qtimer time
+    // read at the same point
+    GpsTimeQtimerTickPair mTimePairPVTReport;
+    GpsTimeQtimerTickPair mTimePairMeasReport;
 
-    ElapsedRealtimeEstimator(int64_t travelTimeNanosEstimate):
-            mInitialTravelTime(travelTimeNanosEstimate) {reset();}
+public:
+    inline ElapsedRealtimeEstimator(int64_t travelTimeNanosEstimate) :
+            mInitialTravelTime(travelTimeNanosEstimate) {
+        reset();
+    }
     int64_t getElapsedRealtimeEstimateNanos(int64_t curDataTimeNanos,
-            bool isCurDataTimeTrustable, int64_t tbf);
+            bool isCurDataTimeTrustable, int64_t tbfNanos);
     inline int64_t getElapsedRealtimeUncNanos() { return 5000000;}
     void reset();
-
     static int64_t getElapsedRealtimeQtimer(int64_t qtimerTicksAtOrigin);
+    bool getElapsedRealtimeForGpsTime(const GPSTimeStruct& gpsTimeAtOrigin,
+                            int64_t &elapsedTime, float & elpasedTimeUnc);
+    void saveGpsTimeAndQtimerPairInPvtReport(const GpsLocationExtended& locationExtended);
+    void saveGpsTimeAndQtimerPairInMeasReport(const GnssSvMeasurementSet& svMeasurementSet);
     static bool getCurrentTime(struct timespec& currentTime, int64_t& sinceBootTimeNanos);
 };
 

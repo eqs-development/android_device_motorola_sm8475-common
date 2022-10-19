@@ -1,4 +1,4 @@
-/* Copyright (c) 2011-2017, 2020, The Linux Foundation. All rights reserved.
+/* Copyright (c) 2011-2017, 2020-2021 The Linux Foundation. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are
@@ -31,12 +31,14 @@
 
 #include <stdbool.h>
 #include <ctype.h>
+#include <loc_pla.h>
 #include <MsgTask.h>
 #include <LocApiBase.h>
 #include <LBSProxyBase.h>
 #include <loc_cfg.h>
 #ifdef NO_UNORDERED_SET_OR_MAP
     #include <map>
+    #define unordered_map map
 #else
     #include <unordered_map>
 #endif
@@ -76,13 +78,13 @@ typedef struct loc_gps_cfg_s
     double         CONSTRAINED_TIME_UNCERTAINTY_THRESHOLD;
     uint32_t       CONSTRAINED_TIME_UNCERTAINTY_ENERGY_BUDGET;
     uint32_t       POSITION_ASSISTED_CLOCK_ESTIMATOR_ENABLED;
-    char           PROXY_APP_PACKAGE_NAME[LOC_MAX_PARAM_STRING];
     uint32_t       CP_MTLR_ES;
     uint32_t       GNSS_DEPLOYMENT;
     uint32_t       CUSTOM_NMEA_GGA_FIX_QUALITY_ENABLED;
     uint32_t       NI_SUPL_DENY_ON_NFW_LOCKED;
     uint32_t       ENABLE_NMEA_PRINT;
     uint32_t       NMEA_TAG_BLOCK_GROUPING_ENABLED;
+    uint32_t       ROBUST_LOCATION_ENABLED;
 } loc_gps_cfg_s_type;
 
 /* NOTE: the implementation of the parser casts number
@@ -154,6 +156,7 @@ public:
     inline bool hasAgpsExtendedCapabilities() { return mLBSProxy->hasAgpsExtendedCapabilities(); }
     inline bool hasNativeXtraClient() { return mLBSProxy->hasNativeXtraClient(); }
     inline void modemPowerVote(bool power) const { return mLBSProxy->modemPowerVote(power); }
+    inline const LBSProxyBase* getLBSProxyBase() { return mLBSProxy; }
     inline IzatDevId_t getIzatDevId() const {
         return mLBSProxy->getIzatDevId();
     }
@@ -271,6 +274,13 @@ public:
                        sQwesFeatureMask |= LOCATION_CAPABILITIES_QWES_VPE;
                    } else {
                        sQwesFeatureMask &= ~LOCATION_CAPABILITIES_QWES_VPE;
+                   }
+               break;
+               case LOCATION_QWES_FEATURE_TYPE_DGNSS:
+                   if (itr->second) {
+                       sQwesFeatureMask |= LOCATION_CAPABILITIES_QWES_DGNSS;
+                   } else {
+                       sQwesFeatureMask &= ~LOCATION_CAPABILITIES_QWES_DGNSS;
                    }
                break;
            }

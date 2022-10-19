@@ -1,4 +1,4 @@
-/* Copyright (c) 2011-2014, 2016-2020 The Linux Foundation. All rights reserved.
+/* Copyright (c) 2011-2014, 2016-2018, 2020-2021 The Linux Foundation. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are
@@ -102,8 +102,7 @@ void LocAdapterBase::
 }
 
 void LocAdapterBase::
-    reportSvEvent(const GnssSvNotification& /*svNotify*/,
-                  bool /*fromEngineHub*/)
+    reportSvEvent(const GnssSvNotification& /*svNotify*/)
 DEFAULT_IMPL()
 
 void LocAdapterBase::
@@ -152,7 +151,7 @@ DEFAULT_IMPL(false)
 
 bool LocAdapterBase::
     requestATL(int /*connHandle*/, LocAGpsType /*agps_type*/,
-               LocApnTypeMask /*apn_type_mask*/)
+               LocApnTypeMask /*apn_type_mask*/, LocSubId /*sub_id*/)
 DEFAULT_IMPL(false)
 
 bool LocAdapterBase::
@@ -319,8 +318,12 @@ LocAdapterBase::getCapabilities()
         if (ContextBase::isFeatureSupported(LOC_SUPPORTED_FEATURE_ROBUST_LOCATION)) {
             mask |= LOCATION_CAPABILITIES_CONFORMITY_INDEX_BIT;
         }
-        if (ContextBase::isFeatureSupported(LOC_SUPPORTED_FEATURE_EDGNSS)) {
+        if (ContextBase::isFeatureSupported(LOC_SUPPORTED_FEATURE_EDGNSS) ||
+            (ContextBase::getQwesFeatureStatus() & LOCATION_CAPABILITIES_QWES_DGNSS)) {
             mask |= LOCATION_CAPABILITIES_EDGNSS_BIT;
+        }
+        if ((ContextBase::getQwesFeatureStatus() & LOCATION_CAPABILITIES_QWES_PPE)) {
+            mask |= LOCATION_CAPABILITIES_QWES_PPE;
         }
     } else {
         LOC_LOGE("%s]: attempt to get capabilities before they are known.", __func__);
@@ -344,7 +347,7 @@ LocAdapterBase::updateClientsEventMask()
 DEFAULT_IMPL()
 
 void
-LocAdapterBase::stopClientSessions(LocationAPI* client)
+LocAdapterBase::stopClientSessions(LocationAPI* client, bool eraseSession)
 DEFAULT_IMPL()
 
 void

@@ -43,6 +43,7 @@ LOCAL_SHARED_LIBRARIES := \
     android.hardware.gnss@1.1 \
     android.hardware.health@1.0 \
     android.hardware.health@2.0 \
+    android.hardware.health@2.1 \
     android.hardware.power@1.2 \
     libbase
 
@@ -85,7 +86,7 @@ LOCAL_SHARED_LIBRARIES := \
     libbase \
     libutils \
     libgps.utils \
-    libqti_vndfwk_detect \
+    libqti_vndfwk_detect_vendor \
 
 LOCAL_SHARED_LIBRARIES += \
     libhidlbase \
@@ -93,9 +94,5 @@ LOCAL_SHARED_LIBRARIES += \
     android.hardware.gnss@1.1 \
 
 LOCAL_CFLAGS += $(GNSS_CFLAGS)
-
-ifneq ($(LOC_HIDL_VERSION),)
-LOCAL_CFLAGS += -DLOC_HIDL_VERSION='"$(LOC_HIDL_VERSION)"'
-endif
 
 include $(BUILD_EXECUTABLE)

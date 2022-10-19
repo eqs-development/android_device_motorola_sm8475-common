@@ -128,15 +128,12 @@ Return<bool> GnssVisibilityControl::enableNfwLocationAccess(const hidl_vec<::and
         return false;
     }
 
-    /* If the vector is empty we need to disable all NFW clients
-       If there is at least one app in the vector we need to enable
-       all NFW clients */
-    if (0 == proxyApps.size()) {
-        mGnss->getGnssInterface()->enableNfwLocationAccess(false);
-    } else {
-        mGnss->getGnssInterface()->enableNfwLocationAccess(true);
+    std::vector<std::string> apps;
+    for (auto i = 0; i < proxyApps.size(); i++) {
+        apps.push_back((std::string)proxyApps[i]);
     }
 
+    mGnss->getGnssInterface()->enableNfwLocationAccess(apps);
     return true;
 }
 /**

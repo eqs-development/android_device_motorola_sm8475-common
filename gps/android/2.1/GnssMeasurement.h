@@ -39,7 +39,7 @@ using ::android::sp;
 
 class MeasurementAPIClient;
 struct GnssMeasurement : public V2_1::IGnssMeasurement {
-    GnssMeasurement();
+    GnssMeasurement(const sp<GnssMeasurement>& self);
     ~GnssMeasurement();
 
     /*
@@ -66,15 +66,20 @@ struct GnssMeasurement : public V2_1::IGnssMeasurement {
 
  private:
     struct GnssMeasurementDeathRecipient : hidl_death_recipient {
-        GnssMeasurementDeathRecipient(sp<GnssMeasurement> gnssMeasurement) :
+        GnssMeasurementDeathRecipient(const sp<GnssMeasurement>& gnssMeasurement) :
             mGnssMeasurement(gnssMeasurement) {
         }
         ~GnssMeasurementDeathRecipient() = default;
         virtual void serviceDied(uint64_t cookie, const wp<IBase>& who) override;
-        sp<GnssMeasurement> mGnssMeasurement;
+        const wp<GnssMeasurement> mGnssMeasurement;
     };
 
+    void handleClientDeath();
+
  private:
+    // this has to be a reference, not a copy
+    // because the pointer is not set when mSelf is assigned
+    const sp<GnssMeasurement>& mSelf;
     sp<GnssMeasurementDeathRecipient> mGnssMeasurementDeathRecipient = nullptr;
     sp<V1_0::IGnssMeasurementCallback> mGnssMeasurementCbIface = nullptr;
     sp<V1_1::IGnssMeasurementCallback> mGnssMeasurementCbIface_1_1 = nullptr;

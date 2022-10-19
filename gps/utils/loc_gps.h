@@ -13,6 +13,41 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+/*
+Changes from Qualcomm Innovation Center are provided under the following license:
+
+Copyright (c) 2022 Qualcomm Innovation Center, Inc. All rights reserved.
+
+Redistribution and use in source and binary forms, with or without
+modification, are permitted (subject to the limitations in the
+disclaimer below) provided that the following conditions are met:
+
+    * Redistributions of source code must retain the above copyright
+      notice, this list of conditions and the following disclaimer.
+
+    * Redistributions in binary form must reproduce the above
+      copyright notice, this list of conditions and the following
+      disclaimer in the documentation and/or other materials provided
+      with the distribution.
+
+    * Neither the name of Qualcomm Innovation Center, Inc. nor the names of its
+      contributors may be used to endorse or promote products derived
+      from this software without specific prior written permission.
+
+NO EXPRESS OR IMPLIED LICENSES TO ANY PARTY'S PATENT RIGHTS ARE
+GRANTED BY THIS LICENSE. THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT
+HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED
+WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
+MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
+IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR
+ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE
+GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER
+IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR
+OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN
+IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+*/
 
 #ifndef LOC_GPS_H
 #define LOC_GPS_H
@@ -99,15 +134,15 @@ typedef uint16_t LocGpsLocationFlags;
 /** LocGpsLocation has valid accuracy. */
 #define LOC_GPS_LOCATION_HAS_ACCURACY   0x0010
 /** LocGpsLocation has valid vertical uncertainity */
-#define LOC_GPS_LOCATION_HAS_VERT_UNCERTAINITY   0x0040
-/** LocGpsLocation has valid spoof mask */
-#define LOC_GPS_LOCATION_HAS_SPOOF_MASK   0x0080
+#define LOC_GPS_LOCATION_HAS_VERT_UNCERTAINITY   0x0020
 /** LocGpsLocation has valid speed accuracy */
-#define LOC_GPS_LOCATION_HAS_SPEED_ACCURACY   0x0100
+#define LOC_GPS_LOCATION_HAS_SPEED_ACCURACY   0x0040
 /** LocGpsLocation has valid bearing accuracy */
-#define LOC_GPS_LOCATION_HAS_BEARING_ACCURACY 0x0200
-/** LocGpsLocation has valid Real Time and Real Time Uncertainty */
-#define LOC_GPS_LOCATION_HAS_ELAPSED_REAL_TIME 0x0400
+#define LOC_GPS_LOCATION_HAS_BEARING_ACCURACY 0x0080
+/** LocGpsLocation has valid spoof mask */
+#define LOC_GPS_LOCATION_HAS_SPOOF_MASK   0x0100
+/** Location has valid source information. */
+#define LOC_GPS_LOCATION_HAS_SOURCE_INFO   0x0200
 
 /** Spoof mask in LocGpsLocation */
 typedef uint32_t LocGpsSpoofMask;
@@ -169,6 +204,12 @@ typedef uint16_t LocAGpsType;
 #define LOC_AGPS_TYPE_WWAN_ANY      3
 #define LOC_AGPS_TYPE_WIFI          4
 #define LOC_AGPS_TYPE_SUPL_ES       5
+
+typedef uint16_t LocSubId;
+#define LOC_DEFAULT_SUB    0
+#define LOC_PRIMARY_SUB    1
+#define LOC_SECONDARY_SUB  2
+#define LOC_TERTIARY_SUB   3
 
 typedef uint16_t LocAGpsSetIDType;
 #define LOC_AGPS_SETID_TYPE_NONE    0
@@ -1276,6 +1317,13 @@ typedef struct {
 #define LOC_GPS_GEOFENCE_ENTERED     (1<<0L)
 #define LOC_GPS_GEOFENCE_EXITED      (1<<1L)
 #define LOC_GPS_GEOFENCE_UNCERTAIN   (1<<2L)
+
+#define LOC_GPS_GEOFENCE_DWELL_INSIDE  (1<<0L)
+#define LOC_GPS_GEOFENCE_DWELL_OUTSIDE (1<<1L)
+
+#define LOC_GPS_GEOFENCE_CONFIDENCE_LOW    1
+#define LOC_GPS_GEOFENCE_CONFIDENCE_MEDIUM 2
+#define LOC_GPS_GEOFENCE_CONFIDENCE_HIGH   3
 
 #define LOC_GPS_GEOFENCE_UNAVAILABLE (1<<0L)
 #define LOC_GPS_GEOFENCE_AVAILABLE   (1<<1L)

@@ -1,4 +1,4 @@
-/* Copyright (c) 2018-2020 The Linux Foundation. All rights reserved.
+/* Copyright (c) 2018-2021 The Linux Foundation. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are
@@ -26,6 +26,41 @@
  * IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
+/*
+Changes from Qualcomm Innovation Center are provided under the following license:
+
+Copyright (c) 2022 Qualcomm Innovation Center, Inc. All rights reserved.
+
+Redistribution and use in source and binary forms, with or without
+modification, are permitted (subject to the limitations in the
+disclaimer below) provided that the following conditions are met:
+
+    * Redistributions of source code must retain the above copyright
+      notice, this list of conditions and the following disclaimer.
+
+    * Redistributions in binary form must reproduce the above
+      copyright notice, this list of conditions and the following
+      disclaimer in the documentation and/or other materials provided
+      with the distribution.
+
+    * Neither the name of Qualcomm Innovation Center, Inc. nor the names of its
+      contributors may be used to endorse or promote products derived
+      from this software without specific prior written permission.
+
+NO EXPRESS OR IMPLIED LICENSES TO ANY PARTY'S PATENT RIGHTS ARE
+GRANTED BY THIS LICENSE. THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT
+HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED
+WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
+MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
+IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR
+ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE
+GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER
+IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR
+OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN
+IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+*/
 #ifndef LOCATIONDATATYPES_H
 #define LOCATIONDATATYPES_H
 
@@ -76,9 +111,11 @@ typedef enum {
     LOCATION_HAS_VERTICAL_ACCURACY_BIT = (1<<5), // location has valid vertical accuracy
     LOCATION_HAS_SPEED_ACCURACY_BIT    = (1<<6), // location has valid speed accuracy
     LOCATION_HAS_BEARING_ACCURACY_BIT  = (1<<7), // location has valid bearing accuracy
-    LOCATION_HAS_SPOOF_MASK            = (1<<8), // location has valid spoof mask
-    LOCATION_HAS_ELAPSED_REAL_TIME     = (1<<9), // location has valid elapsed real time
+    LOCATION_HAS_SPOOF_MASK_BIT        = (1<<8), // location has valid spoof mask
+    LOCATION_HAS_ELAPSED_REAL_TIME_BIT = (1<<9), // location has valid elapsed real time
     LOCATION_HAS_CONFORMITY_INDEX_BIT  = (1<<10), // location has valid conformity index
+    LOCATION_HAS_QUALITY_TYPE_BIT      = (1<<11), // location has valid quality type
+    LOCATION_HAS_TECH_MASK_BIT         = (1<<12), // location has valid tech mask
 } LocationFlagsBits;
 
 typedef uint16_t LocationTechnologyMask;
@@ -96,6 +133,7 @@ typedef enum {
     LOCATION_TECHNOLOGY_VEH_BIT                      = (1<<9), // using vehicular data
     LOCATION_TECHNOLOGY_VIS_BIT                      = (1<<10), // using visual data
     LOCATION_TECHNOLOGY_DGNSS_BIT                    = (1<<11),  // DGNSS
+    LOCATION_TECHNOLOGY_HYBRID_ALE_BIT               = (1<<12), // HYBRID using ALE POS
 } LocationTechnologyBits;
 
 typedef uint32_t LocationSpoofMask;
@@ -236,6 +274,12 @@ typedef enum {
     GEOFENCE_STATUS_AVAILABILE_YES,
 } GeofenceStatusAvailable;
 
+typedef enum {
+    GEOFENCE_CONFIDENCE_LOW = 1,
+    GEOFENCE_CONFIDENCE_MEDIUM,
+    GEOFENCE_CONFIDENCE_HIGH,
+} GeofenceConfidence;
+
 // Set of masks for Modem and QWES capabilities.
 typedef uint64_t LocationCapabilitiesMask;
 typedef enum {
@@ -308,6 +352,8 @@ typedef enum {
     // This mask indicates QDR3_C license bundle is enabled. This
     // bundle includes features for SV Polynomial.
     LOCATION_CAPABILITIES_QWES_QDR3                         = (1<<26),
+    // This mask indicates DGNSS license bundle is enabled.
+    LOCATION_CAPABILITIES_QWES_DGNSS                        = (1<<27),
 } LocationCapabilitiesBits;
 
 typedef uint8_t LocationQwesFeatureType;
@@ -347,6 +393,8 @@ typedef enum {
     // This indicates VEPP license bundle is enabled. VEPP
     // bundle include Carrier Phase and SV Polynomial features.
     LOCATION_QWES_FEATURE_TYPE_VPE,
+    // This indicates DGNSS license is enabled.
+    LOCATION_QWES_FEATURE_TYPE_DGNSS,
     // Max value
     LOCATION_QWES_FEATURE_TYPE_MAX
 } LocationQwesFeatureTypes;
@@ -356,13 +404,43 @@ typedef enum {
 } LocationTechnologyType;
 
 // Configures how GPS is locked when GPS is disabled (through GnssDisable)
+/*
+There are several interpretations for GnssConfigGpsLock as follows:
+1. S behavior. This is identified by mSupportNfwControl being 1 and
+    isFeatureSupported(LOC_SUPPORTED_FEATURE_MULTIPLE_ATTRIBUTION_APPS)
+    In this case the bits GNSS_CONFIG_GPS_NFW_XXX below come into play,
+    a 1 will lock the corresponding NFW client while a 0 will unlock it.
+2. Q behavior. This is identified by mSupportNfwControl being 1. In this case
+    ContextBase::mGps_conf.GPS_LOCK is a "state", meaning it should reflect the
+    NV value. Therefore we will set the NV to ContextBase::mGps_conf.GPS_LOCK
+    GNSS_CONFIG_GPS_LOCK_NI bit will be 0 (enabled) if either GNSS_CONFIG_GPS_NFW_XXX
+    is 1 (enabled).
+3. P behavior. This is identified by mSupportNfwControl being 0. In this case
+    ContextBase::mGps_conf.GPS_LOCK is a "configuration", meaning it should hold
+    the "mask" for NI.
+*/
 enum {
-    GNSS_CONFIG_GPS_LOCK_NONE = 0, // gps is not locked when GPS is disabled (GnssDisable)
-    GNSS_CONFIG_GPS_LOCK_MO,       // gps mobile originated (MO) is locked when GPS is disabled
-    GNSS_CONFIG_GPS_LOCK_NI,       // gps network initiated (NI) is locked when GPS is disabled
-    GNSS_CONFIG_GPS_LOCK_MO_AND_NI,// gps MO and NI is locked when GPS is disabled
+    // gps is not locked when GPS is disabled (GnssDisable)
+    GNSS_CONFIG_GPS_LOCK_NONE               = 0x00000000,
+    // gps mobile originated (MO) is locked when GPS is disabled
+    GNSS_CONFIG_GPS_LOCK_MO                 = 0x00000001,
+    GNSS_CONFIG_GPS_LOCK_NFW_IMS            = 0x00000002,
+    GNSS_CONFIG_GPS_LOCK_NFW_SIM            = 0x00000004,
+    GNSS_CONFIG_GPS_LOCK_NFW_MDT            = 0x00000008,
+    GNSS_CONFIG_GPS_LOCK_NFW_TLOC           = 0x00000010,
+    GNSS_CONFIG_GPS_LOCK_NFW_RLOC           = 0x00000020,
+    GNSS_CONFIG_GPS_LOCK_NFW_V2X            = 0x00000040,
+    GNSS_CONFIG_GPS_LOCK_NFW_R1             = 0x00000080,
+    GNSS_CONFIG_GPS_LOCK_NFW_R2             = 0x00000100,
+    GNSS_CONFIG_GPS_LOCK_NFW_R3             = 0x00000200,
+    GNSS_CONFIG_GPS_LOCK_NFW_SUPL           = 0x00000400,
+    GNSS_CONFIG_GPS_LOCK_NFW_CP             = 0X00000800,
+    GNSS_CONFIG_GPS_LOCK_NFW_ALL            =
+            (((GNSS_CONFIG_GPS_LOCK_NFW_CP << 1) - 1) & ~GNSS_CONFIG_GPS_LOCK_MO),
+    GNSS_CONFIG_GPS_LOCK_MO_AND_NI          =
+            (GNSS_CONFIG_GPS_LOCK_MO | GNSS_CONFIG_GPS_LOCK_NFW_ALL),
 };
-typedef int32_t GnssConfigGpsLock;
+typedef uint32_t GnssConfigGpsLock;
 
 // SUPL version
 typedef enum {
@@ -390,6 +468,8 @@ typedef enum {
     GNSS_CONFIG_LPPE_CONTROL_PLANE_SRN_AP_MEASUREMENTS_BIT = (1<<2), // SRN_AP_MEASUREMENTS
     GNSS_CONFIG_LPPE_CONTROL_PLANE_SENSOR_BARO_MEASUREMENTS_BIT = (1<<3),
                                                              // SENSOR_BARO_MEASUREMENTS
+    GNSS_CONFIG_LPPE_CONTROL_PLANE_NON_E911_BIT = (1<<4), // NON_E911
+    GNSS_CONFIG_LPPE_CONTROL_PLANE_CIV_ADDRESS_BIT          = (1<<5), // CIV_ADDRESS
 } GnssConfigLppeControlPlaneBits;
 
 // Technology for LPPe User Plane
@@ -400,6 +480,8 @@ typedef enum {
     GNSS_CONFIG_LPPE_USER_PLANE_SRN_AP_MEASUREMENTS_BIT = (1<<2), // SRN_AP_MEASUREMENTS
     GNSS_CONFIG_LPPE_USER_PLANE_SENSOR_BARO_MEASUREMENTS_BIT = (1<<3),
                                                             // SENSOR_BARO_MEASUREMENTS
+    GNSS_CONFIG_LPPE_USER_PLANE_NON_E911_BIT = (1<<4), // NON_E911
+    GNSS_CONFIG_LPPE_USER_PLANE_CIV_ADDRESS_BIT           = (1<<5), // CIV_ADDRESS
 } GnssConfigLppeUserPlaneBits;
 
 // Positioning Protocol on A-GLONASS system
@@ -512,7 +594,8 @@ typedef enum {
     GNSS_SV_OPTIONS_HAS_ALMANAC_BIT             = (1<<1),
     GNSS_SV_OPTIONS_USED_IN_FIX_BIT             = (1<<2),
     GNSS_SV_OPTIONS_HAS_CARRIER_FREQUENCY_BIT   = (1<<3),
-    GNSS_SV_OPTIONS_HAS_GNSS_SIGNAL_TYPE_BIT    = (1<<4)
+    GNSS_SV_OPTIONS_HAS_GNSS_SIGNAL_TYPE_BIT          = (1<<4),
+    GNSS_SV_OPTIONS_HAS_BASEBAND_CARRIER_TO_NOISE_BIT = (1<<5),
 } GnssSvOptionsBits;
 
 typedef enum {
@@ -592,6 +675,9 @@ typedef enum {
     GNSS_MEASUREMENTS_DATA_SATELLITE_ISB_BIT                = (1<<20),
     GNSS_MEASUREMENTS_DATA_SATELLITE_ISB_UNCERTAINTY_BIT    = (1<<21),
     GNSS_MEASUREMENTS_DATA_CYCLE_SLIP_COUNT_BIT             = (1<<22),
+    GNSS_MEASUREMENTS_DATA_SATELLITE_PVT_BIT                = (1<<23),
+    GNSS_MEASUREMENTS_DATA_CORRELATION_VECTOR_BIT           = (1<<24),
+    GNSS_MEASUREMENTS_DATA_GNSS_SIGNAL_TYPE_BIT             = (1<<25),
 } GnssMeasurementsDataFlagsBits;
 
 typedef uint32_t GnssMeasurementsStateMask;
@@ -894,6 +980,18 @@ typedef enum {
     DR_GYRO_CALIBRATION_NEEDED  = (1<<4)
 } DrCalibrationStatusBits;
 
+typedef enum {
+    /**< Position calculated by standard alone postion engine. */
+    LOCATION_STANDALONE_QUALITY_TYPE = 0,
+    /**< Position calculated by using DGNSS technology. */
+    LOCATION_DGNSS_QUALITY_TYPE = 1,
+    /**< Position accuracy in RTK or PPP float performance. */
+    LOCATION_FLOAT_QUALITY_TYPE = 2,
+    /**< Position accuracy in RTK or PPP fixed performance. */
+    LOCATION_FIXED_QUALITY_TYPE = 3,
+} LocationQualityType;
+
+
 typedef struct {
     uint32_t size;           // set to sizeof(Location)
     LocationFlagsMask flags; // bitwise OR of LocationFlagsBits to mark which params are valid
@@ -901,17 +999,22 @@ typedef struct {
     double latitude;         // in degrees
     double longitude;        // in degrees
     double altitude;         // in meters above the WGS 84 reference ellipsoid
-    float speed;             // in meters per second
+    float speed;             // horizontal speed, in meters per second
     float bearing;           // in degrees; range [0, 360)
-    float accuracy;          // in meters
+    float accuracy;          // horizontal acuracy, in meters
+                             // confidence level is at 68%
     float verticalAccuracy;  // in meters
-    float speedAccuracy;     // in meters/second
+                             // confidence level is at 68%
+    float speedAccuracy;     // horizontal speed unc, in meters/second
+                             // confidence level is at 68%
     float bearingAccuracy;   // in degrees (0 to 359.999)
+                             // confidence level is at 68%
     float conformityIndex;   // in range [0, 1]
     LocationTechnologyMask techMask;
     LocationSpoofMask spoofMask;
     uint64_t elapsedRealTime;    // in ns
     uint64_t elapsedRealTimeUnc; // in ns
+    LocationQualityType qualityType; // position quality
 } Location;
 
 typedef enum {
@@ -956,18 +1059,28 @@ typedef enum {
     GNSS_POWER_MODE_M5   /* Background Mode */
 } GnssPowerMode;
 
+typedef enum {
+    QUALITY_HIGH_ACCU_FIX_ONLY = 0,       /* Only allow valid fix with high accuracy */
+    QUALITY_ANY_VALID_FIX,                /* Allow fix with any accuracy, like intermediate fix */
+    QUALITY_ANY_OR_FAILED_FIX,            /* Allow fix of any type, even failed fix */
+} FixQualityLevel;
+
 struct TrackingOptions : LocationOptions {
     GnssPowerMode powerMode; /* Power Mode to be used for time based tracking
                                 sessions */
     uint32_t tbm;  /* Time interval between measurements specified in millis.
                       Applicable to background power modes */
+    FixQualityLevel qualityLevelAccepted; /* Send through position reports with which accuracy. */
 
     inline TrackingOptions() :
-            LocationOptions(), powerMode(GNSS_POWER_MODE_INVALID), tbm(0) {}
+            LocationOptions(), powerMode(GNSS_POWER_MODE_INVALID), tbm(0),
+            qualityLevelAccepted(QUALITY_HIGH_ACCU_FIX_ONLY) {}
     inline TrackingOptions(uint32_t s, GnssPowerMode m, uint32_t t) :
-            LocationOptions(), powerMode(m), tbm(t) { LocationOptions::size = s; }
+            LocationOptions(), powerMode(m), tbm(t),
+            qualityLevelAccepted(QUALITY_HIGH_ACCU_FIX_ONLY) { LocationOptions::size = s; }
     inline TrackingOptions(const LocationOptions& options) :
-            LocationOptions(options), powerMode(GNSS_POWER_MODE_INVALID), tbm(0) {}
+            LocationOptions(options), powerMode(GNSS_POWER_MODE_INVALID), tbm(0),
+            qualityLevelAccepted(QUALITY_HIGH_ACCU_FIX_ONLY) {}
     inline void setLocationOptions(const LocationOptions& options) {
         size = sizeof(TrackingOptions);
         minInterval = options.minInterval;
@@ -1012,6 +1125,7 @@ typedef struct {
     GeofenceBreachTypeMask breachTypeMask;  // bitwise OR of GeofenceBreachTypeBits
     uint32_t responsiveness;                // in milliseconds
     uint32_t dwellTime;                     // in seconds
+    GeofenceConfidence confidence;          // confidence of breach event
 } GeofenceOption;
 
 typedef struct {
@@ -1069,22 +1183,31 @@ typedef struct {
     float yawRate;                             // Heading Rate (Radians/second)
     float pitch;                               // Body pitch (Radians)
     float longAccelUnc;   // Uncertainty of Forward Acceleration in body frame
+                          // Confidence level is at 68%
     float latAccelUnc;    // Uncertainty of Side-ward Acceleration in body frame
+                          // Confidence level is at 68%
     float vertAccelUnc;   // Uncertainty of Vertical Acceleration in body frame
+                          // Confidence level is at 68%
     float yawRateUnc;     // Uncertainty of Heading Rate
+                          // Confidence level is at 68%
     float pitchUnc;       // Uncertainty of Body pitch
+                          // Confidence level is at 68%
 } GnssLocationPositionDynamics;
 
 typedef struct {
     GnssLocationPosDataMaskExt bodyFrameDataMask; // Contains Ext Body frame LocPosDataMask bits
     float pitchRate;      // Body pitch rate (Radians/second)
     float pitchRateUnc;   // Uncertainty of pitch rate (Radians/second)
+                          // Confidence level is at 68%
     float roll;           // Roll of body frame. Clockwise positive. (radian
-    float rollUnc;        // Uncertainty of Roll, 68% confidence level (radian)
+    float rollUnc;        // Uncertainty of Roll (radian)
+                          // Confidence level is at 68%
     float rollRate;       // Roll rate of body frame. Clockwise positive. (radian/second)
-    float rollRateUnc;    // Uncertainty of Roll rate, 68% confidence level (radian/second)
+    float rollRateUnc;    // Uncertainty of Roll rate (radian/second)
+                          // Confidence level is at 68%
     float yaw;            // Yaw of body frame. Clockwise positive (radian)
-    float yawUnc;         // Uncertainty of Yaw, 68% confidence level (radian)
+    float yawUnc;         // Uncertainty of Yaw (radian)
+                          // Confidence level is at 68%
 } GnssLocationPositionDynamicsExt;
 
 typedef struct {
@@ -1206,16 +1329,20 @@ typedef struct {
     LocationReliability horReliability; // horizontal reliability
     LocationReliability verReliability; // vertical reliability
     float horUncEllipseSemiMajor;       // horizontal elliptical accuracy semi-major axis
+                                        // Confidence level is at 39%
     float horUncEllipseSemiMinor;       // horizontal elliptical accuracy semi-minor axis
+                                        // Confidence level is at 39%
     float horUncEllipseOrientAzimuth;   // horizontal elliptical accuracy azimuth
     float northStdDeviation;            // North standard deviation Unit: Meters
+                                        // Confidence level is at 68%
     float eastStdDeviation;             // East standard deviation. Unit: Meters
+                                        // Confidence level is at 68%
     float northVelocity;                // North Velocity.Unit: Meters/sec
     float eastVelocity;                 // East Velocity Unit Meters/sec
     float upVelocity;                   // Up Velocity. Unit Meters/sec
-    float northVelocityStdDeviation;
-    float eastVelocityStdDeviation;
-    float upVelocityStdDeviation;
+    float northVelocityStdDeviation;    // Confidence level is at 68%
+    float eastVelocityStdDeviation;     // Confidence level is at 68%
+    float upVelocityStdDeviation;       // Confidence level is at 68%
     uint16_t numSvUsedInPosition;
     GnssLocationSvUsedInPosition svUsedInPosition;// Gnss sv used in position data
     GnssLocationNavSolutionMask navSolutionMask;  // Nav solution mask to indicate sbas corrections
@@ -1226,6 +1353,8 @@ typedef struct {
     GnssMeasUsageInfo measUsageInfo[GNSS_SV_MAX]; // GNSS Measurement Usage info
     uint8_t leapSeconds;                          // leap second
     float timeUncMs;                              // Time uncertainty in milliseconds
+                                                  // SPE report: confidence level is 99%
+                                                  // Other engine report: confidence not unspecified
     uint8_t calibrationConfidence;                // Sensor calibration confidence percent,
                                                   // in range of [0, 100]
     DrCalibrationStatusMask calibrationStatus;    // Sensor calibration status
@@ -1307,7 +1436,7 @@ typedef struct {
     float elevation;   // elevation of SV (in degrees)
     float azimuth;     // azimuth of SV (in degrees)
     GnssSvOptionsMask gnssSvOptionsMask; // Bitwise OR of GnssSvOptionsBits
-    float carrierFrequencyHz; // carrier frequency of the signal tracked
+    double carrierFrequencyHz; // carrier frequency of the signal tracked
     GnssSignalTypeMask gnssSignalTypeMask; // Specifies GNSS signal type
     double basebandCarrierToNoiseDbHz; // baseband signal strength
     uint16_t  gloFrequency; // GLONASS Frequency channel number
@@ -1330,6 +1459,42 @@ struct GnssConfigSetAssistanceServer {
     }
 };
 
+typedef uint32_t GnssSatellitePvtFlagsMask;
+typedef enum {
+    GNSS_SATELLITE_PVT_POSITION_VELOCITY_CLOCK_INFO_BIT = (1 << 0),
+    GNSS_SATELLITE_PVT_IONO_BIT = (1 << 1),
+    GNSS_SATELLITE_PVT_TROPO_BIT = (1 << 2),
+} GnssSatellitePvtFlagsBits;
+
+typedef struct {
+    double posXMeters;
+    double posYMeters;
+    double posZMeters;
+    double ureMeters;
+} GnssSatellitePositionEcef;
+
+typedef struct {
+    double velXMps;
+    double velYMps;
+    double velZMps;
+    double ureRateMps;
+} GnssSatelliteVelocityEcef;
+
+typedef struct {
+    double satHardwareCodeBiasMeters;
+    double satTimeCorrectionMeters;
+    double satClkDriftMps;
+} GnssSatelliteClockInfo;
+
+typedef struct {
+    GnssSatellitePvtFlagsMask flags;
+    GnssSatellitePositionEcef satPosEcef;
+    GnssSatelliteVelocityEcef satVelEcef;
+    GnssSatelliteClockInfo satClockInfo;
+    double ionoDelayMeters;
+    double tropoDelayMeters;
+} GnssSatellitePvt;
+
 typedef struct {
     // set to sizeof(GnssMeasurementsData)
     uint32_t size;
@@ -1342,15 +1507,20 @@ typedef struct {
     GnssSvType svType;
     double timeOffsetNs;
     GnssMeasurementsStateMask stateMask;       // bitwise OR of GnssMeasurementsStateBits
+    // valid when GNSS_MEASUREMENTS_DATA_RECEIVED_SV_TIME_BIT is set
+    // total time is: receivedSvTimeNs + receivedSvTimeSubNs
     int64_t receivedSvTimeNs;
-    int64_t receivedSvTimeUncertaintyNs;
+    // valid when GNSS_MEASUREMENTS_DATA_RECEIVED_SV_TIME_BIT is set
+    // total time is: receivedSvTimeNs + receivedSvTimeSubNs
+    float  receivedSvTimeSubNs;
+    int64_t  receivedSvTimeUncertaintyNs;
     double carrierToNoiseDbHz;
     double pseudorangeRateMps;
     double pseudorangeRateUncertaintyMps;
     GnssMeasurementsAdrStateMask adrStateMask; // bitwise OR of GnssMeasurementsAdrStateBits
     double adrMeters;
     double adrUncertaintyMeters;
-    float carrierFrequencyHz;
+    double carrierFrequencyHz;
     int64_t carrierCycles;
     double carrierPhase;
     double carrierPhaseUncertainty;
@@ -1367,11 +1537,12 @@ typedef struct {
     double satelliteInterSignalBiasUncertaintyNs;
     int16_t gloFrequency;
     uint8_t cycleSlipCount;
+    GnssSatellitePvt satellitePvt;
 } GnssMeasurementsData;
 
 typedef struct {
     GnssSvType svType;
-    float carrierFrequencyHz;
+    double carrierFrequencyHz;
     GnssMeasurementsCodeType codeType;
     char otherCodeTypeName[GNSS_MAX_NAME_LENGTH];
 } GnssMeasurementsSignalType;
@@ -1389,7 +1560,7 @@ typedef struct {
     GnssSingleSatCorrectionMask flags;
     GnssSvType svType;
     uint16_t svId;
-    float carrierFrequencyHz;
+    double carrierFrequencyHz;
     float probSatIsLos;
     float excessPathLengthMeters;
     float excessPathLengthUncertaintyMeters;
@@ -1450,6 +1621,7 @@ typedef struct {
 
 typedef struct {
     uint32_t size;         // set to sizeof(GnssMeasurementsNotification)
+    bool isNhz;            // NHz indicator
     uint32_t count;        // number of items in GnssMeasurements array
     GnssMeasurementsData measurements[GNSS_MEASUREMENTS_MAX];
     GnssMeasurementsClock clock; // clock
@@ -1864,6 +2036,42 @@ struct DeadReckoningEngineConfig{
     float gyroScaleFactorUnc;
 };
 
+/*  Specify the NMEA sentence types that are generated by GNSS
+ *  stack on HLOS.
+ *
+ *  Please note that this setting is only applicable if
+ *  NMEA_PROVIDER in gps.conf is set to 0 to use HLOS
+ *  generated NMEA. */
+enum GnssNmeaTypesMask {
+    NMEA_TYPE_NONE     = (0x0),
+    // GGA NMEA sentence.
+    NMEA_TYPE_GGA      = (1<<0),
+    // RMC NMEA sentence.
+    NMEA_TYPE_RMC      = (1<<1),
+    // GSA NMEA sentence.
+    NMEA_TYPE_GSA      = (1<<2),
+    // VTG NMEA sentence.
+    NMEA_TYPE_VTG      = (1<<3),
+    // GNS NMEA sentence.
+    NMEA_TYPE_GNS      = (1<<4),
+    // DTM NMEA sentence.
+    NMEA_TYPE_DTM      = (1<<5),
+    // GPGSV NMEA sentence for SVs from GPS constellation.
+    NMEA_TYPE_GPGSV    = (1<<6),
+    // GLGSV NMEA sentence for SVs from GLONASS constellation.
+    NMEA_TYPE_GLGSV    = (1<<7),
+    // GAGSV NMEA sentence for SVs from GALILEO constellation
+    NMEA_TYPE_GAGSV    = (1<<8),
+    // GQGSV NMEA sentence for SVs from QZSS constellation.
+    NMEA_TYPE_GQGSV    = (1<<9),
+    // GBGSV NMEA sentence for SVs from BEIDOU constellation.
+    NMEA_TYPE_GBGSV    = (1<<10),
+    // GIGSV NMEA sentence for SVs from NAVIC constellation.
+    NMEA_TYPE_GIGSV    = (1<<11),
+    // All HLOS supported NMEA  sentences.
+    NMEA_TYPE_ALL        = 0xffffffff,
+};
+
 /* Provides the capabilities of the system
    capabilities callback is called once soon after createInstance is called */
 typedef std::function<void(
@@ -2013,6 +2221,7 @@ typedef struct {
     gnssNmeaCallback gnssNmeaCb;                     // optional
     gnssDataCallback gnssDataCb;                     // optional
     gnssMeasurementsCallback gnssMeasurementsCb;     // optional
+    gnssMeasurementsCallback gnssNHzMeasurementsCb;  // optional
     batchingStatusCallback batchingStatusCb;         // optional
     locationSystemInfoCallback locationSystemInfoCb; // optional
     engineLocationsInfoCallback engineLocationsInfoCb;     // optional
@@ -2066,5 +2275,35 @@ typedef struct {
     uint64_t hlosQtimer4;
     uint64_t hlosQtimer5;
 } GnssLatencyInfo;
+
+typedef struct {
+    uint32_t size;
+    std::string adminArea;
+    std::string countryCode;
+    std::string countryName;
+    std::string featureName;
+    bool hasLatitude;
+    double latitude;
+    bool hasLongitude;
+    double longitude;
+    std::string locale;
+    std::string locality;
+    std::string phone;
+    std::string postalCode;
+    std::string premises;
+    std::string subAdminArea;
+    std::string subLocality;
+    std::string thoroughfare;
+    std::string subThoroughfare;
+    std::string url;
+} GnssCivicAddress;
+
+enum PowerStateType {
+    POWER_STATE_UNKNOWN = 0,
+    POWER_STATE_SUSPEND = 1,
+    POWER_STATE_RESUME  = 2,
+    POWER_STATE_SHUTDOWN = 3
+};
+
 
 #endif /* LOCATIONDATATYPES_H */

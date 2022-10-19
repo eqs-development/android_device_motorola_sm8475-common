@@ -1,4 +1,4 @@
-/* Copyright (c) 2015, 2017 The Linux Foundation. All rights reserved.
+/* Copyright (c) 2015, 2017, 2020 The Linux Foundation. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are
@@ -30,7 +30,7 @@
 #ifndef __IDATAITEMOBSERVER_H__
 #define __IDATAITEMOBSERVER_H__
 
-#include  <list>
+#include <unordered_set>
 #include <string>
 
 using namespace std;
@@ -60,9 +60,9 @@ public:
      * @brief Notify updated values of Data Items
      * @details Notifys updated values of Data items
      *
-     * @param dlist List of updated data items
+     * @param dunordered_set Set of updated data items
      */
-    virtual void notify (const std :: list <IDataItemCore *> & dlist)  = 0;
+    virtual void notify (const std :: unordered_set <IDataItemCore *> & dlist)  = 0;
 
     /**
      * @brief Destructor

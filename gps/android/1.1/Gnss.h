@@ -116,12 +116,14 @@ struct Gnss : public IGnss {
 
  private:
     struct GnssDeathRecipient : hidl_death_recipient {
-        GnssDeathRecipient(sp<Gnss> gnss) : mGnss(gnss) {
+        GnssDeathRecipient(const sp<Gnss>& gnss) : mGnss(gnss) {
         }
         ~GnssDeathRecipient() = default;
         virtual void serviceDied(uint64_t cookie, const wp<IBase>& who) override;
-        sp<Gnss> mGnss;
+        const wp<Gnss> mGnss;
     };
+
+    void handleClientDeath();
 
  private:
     sp<GnssDeathRecipient> mGnssDeathRecipient = nullptr;

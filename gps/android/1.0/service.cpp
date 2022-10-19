@@ -60,23 +60,7 @@ int main() {
 
     status = registerPassthroughServiceImplementation<IGnss>();
     if (status == OK) {
-        if (vendorEnhanced) {
-    #ifdef LOC_HIDL_VERSION
-            #define VENDOR_ENHANCED_LIB "vendor.qti.gnss@" LOC_HIDL_VERSION "-service.so"
-
-            void* libHandle = NULL;
-            vendorEnhancedServiceMain* vendorEnhancedMainMethod = (vendorEnhancedServiceMain*)
-                    dlGetSymFromLib(libHandle, VENDOR_ENHANCED_LIB, "main");
-            if (NULL != vendorEnhancedMainMethod) {
-                (*vendorEnhancedMainMethod)(0, NULL);
-            }
-    #else
-            ALOGE("LOC_HIDL_VERSION not defined.");
-    #endif
-        }
-
         joinRpcThreadpool();
-
     } else {
         ALOGE("Error while registering IGnss 1.0 service: %d", status);
     }

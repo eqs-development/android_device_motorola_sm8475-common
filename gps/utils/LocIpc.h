@@ -1,4 +1,4 @@
-/* Copyright (c) 2017-2018, 2020 The Linux Foundation. All rights reserved.
+/* Copyright (c) 2017-2018, 2020-2021 The Linux Foundation. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are
@@ -35,11 +35,16 @@
 #include <unistd.h>
 #include <sys/socket.h>
 #include <sys/un.h>
-#include <unordered_set>
 #include <mutex>
 #include <LocThread.h>
 
 using namespace std;
+#ifdef NO_UNORDERED_SET_OR_MAP
+    #include <set>
+    #define unordered_set set
+#else
+    #include <unordered_set>
+#endif
 
 namespace loc_util {
 
@@ -149,6 +154,9 @@ public:
                      uint32_t length, int32_t msgId = -1);
 
 private:
+    static std::string generateThreadName(const std::string& recverName);
+
+private:
     LocThread mThread;
 };
 
@@ -169,7 +177,7 @@ public:
     virtual unique_ptr<LocIpcRecver> getRecver(const shared_ptr<ILocIpcListener>& listener) {
         return nullptr;
     }
-    inline virtual void copyDestAddrFrom(const LocIpcSender& otherSender) {}
+    inline virtual bool copyDestAddrFrom(const LocIpcSender& otherSender) { return true; }
 };
 
 class LocIpcRecver {

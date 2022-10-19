@@ -1,4 +1,4 @@
-/* Copyright (c) 2018-2020 The Linux Foundation. All rights reserved.
+/* Copyright (c) 2018-2021 The Linux Foundation. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are
@@ -401,6 +401,51 @@ public:
     */
     virtual uint32_t configEngineRunState(PositioningEngineMask engType,
                                           LocEngineRunState engState) = 0;
+
+     /** @brief
+        This API is used to config the NMEA sentence types.
+
+        Without prior calling this API, all NMEA sentences supported
+        in the system, as defined in NmeaTypesMask, will get
+        generated and delivered to all the location clients that
+        register to receive NMEA sentences.
+
+        The NMEA sentence types are per-device setting and calling
+        this API will impact all the location api clients that
+        register to receive NMEA sentences. This API call is not
+        incremental and the new NMEA sentence types will completely
+        overwrite the previous call.
+
+        If one or more unspecified bits are set in the NMEA mask,
+        those bits will be ignored, but the rest of the
+        configuration will get applied.
+
+        Please note that the configured NMEA sentence types are not
+        persistent.
+
+        @param
+        enabledNmeaTypes: specify the set of NMEA sentences the
+        device will generate and deliver to the location api clients
+        that register to receive NMEA sentences. <br/>
+
+        @return
+        A session id that will be returned in responseCallback to
+        match command with response.
+    */
+    virtual uint32_t configOutputNmeaTypes(
+            GnssNmeaTypesMask enabledNmeaTypes) = 0;
+
+  /** @brief
+        This API is used to send platform power events to GNSS adapters in order
+        to handle GNSS sessions as per platform power event.
+
+        @param
+        powerState: Current vehicle/platform power state.
+
+        @return
+        No return value.
+    */
+    virtual void powerStateEvent(PowerStateType powerState) {};
 };
 
 #endif /* ILOCATIONAPI_H */

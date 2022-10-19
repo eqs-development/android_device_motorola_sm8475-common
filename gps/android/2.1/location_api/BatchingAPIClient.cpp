@@ -114,10 +114,12 @@ void BatchingAPIClient::setCallbacks()
 void BatchingAPIClient::gnssUpdateCallbacks(const sp<V1_0::IGnssBatchingCallback>& callback)
 {
     mMutex.lock();
+    bool cbWasNull = (mGnssBatchingCbIface == nullptr);
     mGnssBatchingCbIface = callback;
+    mGnssBatchingCbIface_2_0 = nullptr;
     mMutex.unlock();
 
-    if (mGnssBatchingCbIface != nullptr) {
+    if (cbWasNull) {
         setCallbacks();
     }
 }
@@ -125,10 +127,12 @@ void BatchingAPIClient::gnssUpdateCallbacks(const sp<V1_0::IGnssBatchingCallback
 void BatchingAPIClient::gnssUpdateCallbacks_2_0(const sp<V2_0::IGnssBatchingCallback>& callback)
 {
     mMutex.lock();
+    bool cbWasNull = (mGnssBatchingCbIface_2_0 == nullptr);
+    mGnssBatchingCbIface = nullptr;
     mGnssBatchingCbIface_2_0 = callback;
     mMutex.unlock();
 
-    if (mGnssBatchingCbIface_2_0 != nullptr) {
+    if (cbWasNull) {
         setCallbacks();
     }
 }

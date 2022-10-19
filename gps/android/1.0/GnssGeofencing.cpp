@@ -34,13 +34,10 @@ void GnssGeofencing::GnssGeofencingDeathRecipient::serviceDied(
         uint64_t cookie, const wp<IBase>& who) {
     LOC_LOGE("%s] service died. cookie: %llu, who: %p",
             __FUNCTION__, static_cast<unsigned long long>(cookie), &who);
-    if (mGnssGeofencing != nullptr) {
-        mGnssGeofencing->removeAllGeofences();
+    auto gnssGeofencing = mGnssGeofencing.promote();
+    if (gnssGeofencing != nullptr) {
+        gnssGeofencing->handleClientDeath();
     }
-}
-
-GnssGeofencing::GnssGeofencing() : mApi(nullptr) {
-    mGnssGeofencingDeathRecipient = new GnssGeofencingDeathRecipient(this);
 }
 
 GnssGeofencing::~GnssGeofencing() {
@@ -50,14 +47,26 @@ GnssGeofencing::~GnssGeofencing() {
     }
 }
 
+void GnssGeofencing::handleClientDeath() {
+
+    removeAllGeofences();
+    if (mApi != nullptr) {
+        mApi->upcateCallback(nullptr);
+    }
+    mGnssGeofencingCbIface = nullptr;
+}
+
 // Methods from ::android::hardware::gnss::V1_0::IGnssGeofencing follow.
 Return<void> GnssGeofencing::setCallback(const sp<IGnssGeofenceCallback>& callback)  {
-    if (mApi != nullptr) {
-        LOC_LOGE("%s]: mApi is NOT nullptr", __FUNCTION__);
-        return Void();
+    if (mGnssGeofencingDeathRecipient == nullptr) {
+        mGnssGeofencingDeathRecipient = new GnssGeofencingDeathRecipient(mSelf);
     }
 
-    mApi = new GeofenceAPIClient(callback);
+    if (mApi != nullptr) {
+        mApi->upcateCallback(callback);
+    } else {
+        mApi = new GeofenceAPIClient(callback);
+    }
     if (mApi == nullptr) {
         LOC_LOGE("%s]: failed to create mApi", __FUNCTION__);
     }

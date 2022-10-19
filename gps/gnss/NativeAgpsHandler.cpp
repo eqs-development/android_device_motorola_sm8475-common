@@ -32,7 +32,7 @@
 #include <SystemStatus.h>
 #include <DataItemId.h>
 #include <DataItemsFactoryProxy.h>
-#include <DataItemConcreteTypesBase.h>
+#include <DataItemConcreteTypes.h>
 #include <loc_log.h>
 #include <NativeAgpsHandler.h>
 #include <GnssAdapter.h>
@@ -44,26 +44,25 @@ void NativeAgpsHandler::getName(string& name) {
     name = "NativeAgpsHandler";
 }
 
-void NativeAgpsHandler::notify(const list<IDataItemCore*>& dlist) {
+void NativeAgpsHandler::notify(const unordered_set<IDataItemCore*>& dlist) {
     for (auto each : dlist) {
         switch (each->getId()) {
             case NETWORKINFO_DATA_ITEM_ID: {
-                    NetworkInfoDataItemBase* networkInfo =
-                        static_cast<NetworkInfoDataItemBase*>(each);
-                    uint64_t mobileBit = (uint64_t )1 << loc_core::TYPE_MOBILE;
-                    uint64_t allTypes = networkInfo->mAllTypes;
-                    mConnected = ((networkInfo->mAllTypes & mobileBit) == mobileBit);
-                    /**
-                     * mApn Telephony preferred Access Point Name to use for
-                     * carrier data connection when connected to a cellular network.
-                     * Empty string, otherwise.
-                     */
-                    mApn = networkInfo->mApn;
-                    LOC_LOGd("updated mConnected:%d, mApn: %s", mConnected, mApn.c_str());
-                    break;
+                NetworkInfoDataItem* networkInfo = static_cast<NetworkInfoDataItem*>(each);
+                uint64_t mobileBit = (uint64_t )1 << loc_core::TYPE_MOBILE;
+                uint64_t allTypes = networkInfo->mAllTypes;
+                mConnected = ((networkInfo->mAllTypes & mobileBit) == mobileBit);
+                /**
+                 * mApn Telephony preferred Access Point Name to use for
+                 * carrier data connection when connected to a cellular network.
+                 * Empty string, otherwise.
+                 */
+                mApn = networkInfo->mApn;
+                LOC_LOGd("updated mConnected:%d, mApn: %s", mConnected, mApn.c_str());
+                break;
             }
             default:
-                    break;
+                break;
         }
     }
 }
@@ -72,14 +71,14 @@ NativeAgpsHandler* NativeAgpsHandler::sLocalHandle = nullptr;
 NativeAgpsHandler::NativeAgpsHandler(IOsObserver* sysStatObs, GnssAdapter& adapter) :
         mSystemStatusObsrvr(sysStatObs), mConnected(false), mAdapter(adapter) {
     sLocalHandle = this;
-    list<DataItemId> subItemIdList = {NETWORKINFO_DATA_ITEM_ID};
+    unordered_set<DataItemId> subItemIdList = {NETWORKINFO_DATA_ITEM_ID};
     mSystemStatusObsrvr->subscribe(subItemIdList, this);
 }
 
 NativeAgpsHandler::~NativeAgpsHandler() {
     if (nullptr != mSystemStatusObsrvr) {
         LOC_LOGd("Unsubscribe for network info.");
-        list<DataItemId> subItemIdList = {NETWORKINFO_DATA_ITEM_ID};
+        unordered_set<DataItemId> subItemIdList = {NETWORKINFO_DATA_ITEM_ID};
         mSystemStatusObsrvr->unsubscribe(subItemIdList, this);
     }
     sLocalHandle = nullptr;

@@ -30,6 +30,7 @@
 #ifndef BATCHING_API_CLINET_H
 #define BATCHING_API_CLINET_H
 
+#include <mutex>
 #include <android/hardware/gnss/1.0/IGnssBatching.h>
 #include <android/hardware/gnss/1.0/IGnssBatchingCallback.h>
 #include <pthread.h>
@@ -46,6 +47,7 @@ class BatchingAPIClient : public LocationAPIClientBase
 {
 public:
     BatchingAPIClient(const sp<V1_0::IGnssBatchingCallback>& callback);
+    void gnssUpdateCallbacks(const sp<V1_0::IGnssBatchingCallback>& callback);
     int getBatchSize();
     int startSession(const V1_0::IGnssBatching::Options& options);
     int updateSessionOptions(const V1_0::IGnssBatching::Options& options);
@@ -61,7 +63,7 @@ public:
 
 private:
     ~BatchingAPIClient();
-
+    std::mutex mMutex;
     sp<V1_0::IGnssBatchingCallback> mGnssBatchingCbIface;
     uint32_t mDefaultId;
     LocationCapabilitiesMask mLocationCapabilitiesMask;

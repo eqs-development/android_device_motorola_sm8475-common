@@ -27,6 +27,7 @@
  *
  */
 
+#include <gps_extended_c.h>
 #include <LocationUtil.h>
 
 namespace android {

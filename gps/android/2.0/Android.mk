@@ -95,7 +95,7 @@ LOCAL_SHARED_LIBRARIES := \
     libbase \
     libutils \
     libgps.utils \
-    libqti_vndfwk_detect \
+    libqti_vndfwk_detect_vendor \
 
 LOCAL_SHARED_LIBRARIES += \
     libhidlbase \
@@ -104,9 +104,5 @@ LOCAL_SHARED_LIBRARIES += \
     android.hardware.gnss@2.0 \
 
 LOCAL_CFLAGS += $(GNSS_CFLAGS)
-
-ifneq ($(LOC_HIDL_VERSION),)
-LOCAL_CFLAGS += -DLOC_HIDL_VERSION='"$(LOC_HIDL_VERSION)"'
-endif
 
 include $(BUILD_EXECUTABLE)

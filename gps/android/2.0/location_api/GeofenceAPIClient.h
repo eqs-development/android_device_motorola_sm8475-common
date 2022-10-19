@@ -30,7 +30,7 @@
 #ifndef GEOFENCE_API_CLINET_H
 #define GEOFENCE_API_CLINET_H
 
-
+#include <mutex>
 #include <android/hardware/gnss/1.0/IGnssGeofenceCallback.h>
 #include <LocationAPIClientBase.h>
 
@@ -46,7 +46,7 @@ class GeofenceAPIClient : public LocationAPIClientBase
 {
 public:
     GeofenceAPIClient(const sp<V1_0::IGnssGeofenceCallback>& callback);
-
+    void upcateCallback(const sp<V1_0::IGnssGeofenceCallback>& callback);
     void geofenceAdd(uint32_t geofence_id, double latitude, double longitude,
             double radius_meters, int32_t last_transition, int32_t monitor_transitions,
             uint32_t notification_responsiveness_ms, uint32_t unknown_timer_ms);
@@ -65,7 +65,7 @@ public:
 
 private:
     virtual ~GeofenceAPIClient() = default;
-
+    std::mutex mMutex;
     sp<V1_0::IGnssGeofenceCallback> mGnssGeofencingCbIface;
 };
 

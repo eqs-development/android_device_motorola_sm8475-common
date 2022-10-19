@@ -1,4 +1,4 @@
-/* Copyright (c) 2013-2020 The Linux Foundation. All rights reserved.
+/* Copyright (c) 2013-2021 The Linux Foundation. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are
@@ -25,7 +25,39 @@
  * OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN
  * IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
+/*
+Copyright (c) 2022 Qualcomm Innovation Center, Inc. All rights reserved.
 
+Redistribution and use in source and binary forms, with or without
+modification, are permitted (subject to the limitations in the
+disclaimer below) provided that the following conditions are met:
+
+    * Redistributions of source code must retain the above copyright
+      notice, this list of conditions and the following disclaimer.
+
+    * Redistributions in binary form must reproduce the above
+      copyright notice, this list of conditions and the following
+      disclaimer in the documentation and/or other materials provided
+      with the distribution.
+
+    * Neither the name of Qualcomm Innovation Center, Inc. nor the names of its
+      contributors may be used to endorse or promote products derived
+      from this software without specific prior written permission.
+
+NO EXPRESS OR IMPLIED LICENSES TO ANY PARTY'S PATENT RIGHTS ARE
+GRANTED BY THIS LICENSE. THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT
+HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED
+WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
+MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
+IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR
+ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE
+GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER
+IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR
+OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN
+IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+*/
 #ifndef GPS_EXTENDED_C_H
 #define GPS_EXTENDED_C_H
 
@@ -51,22 +83,8 @@ struct timespec32_t {
 extern "C" {
 #endif /* __cplusplus */
 
-/** Location has valid source information. */
-#define LOCATION_HAS_SOURCE_INFO   0x0020
-/** LocGpsLocation has valid "is indoor?" flag */
-#define LOC_GPS_LOCATION_HAS_IS_INDOOR   0x0040
-/** LocGpsLocation has valid floor number */
-#define LOC_GPS_LOCATION_HAS_FLOOR_NUMBER   0x0080
-/** LocGpsLocation has valid map URL*/
-#define LOC_GPS_LOCATION_HAS_MAP_URL   0x0100
-/** LocGpsLocation has valid map index */
-#define LOC_GPS_LOCATION_HAS_MAP_INDEX   0x0200
 
 #define GNSS_INVALID_JAMMER_IND 0x7FFFFFFF
-
-/** Sizes for indoor fields */
-#define GPS_LOCATION_MAP_URL_SIZE 400
-#define GPS_LOCATION_MAP_INDEX_SIZE 16
 
 /** Position source is ULP */
 #define ULP_LOCATION_IS_FROM_HYBRID   0x0001
@@ -117,6 +135,9 @@ typedef uint32_t LocPosTechMask;
 #define LOC_POS_TECH_MASK_PPE ((LocPosTechMask)0x00000100)
 #define LOC_POS_TECH_MASK_VEH ((LocPosTechMask)0x00000200)
 #define LOC_POS_TECH_MASK_VIS ((LocPosTechMask)0x00000400)
+#define LOC_POS_TECH_MASK_INS ((LocPosTechMask)0x00000800)
+#define LOC_POS_TECH_MASK_PDR ((LocPosTechMask)0x00001000)
+#define LOC_POS_TECH_MASK_PROPAGATED ((LocPosTechMask)0x00002000)
 
 
 enum loc_registration_mask_status {
@@ -125,21 +146,49 @@ enum loc_registration_mask_status {
     LOC_REGISTRATION_MASK_SET
 };
 
+/* The entries in the following enum should mimic the entries in qmiLocSupportedFeatureEnumT_v02
+   in location_service_v02.h */
 typedef enum {
-    LOC_SUPPORTED_FEATURE_ODCPI_2_V02 = 0, /**<  Support ODCPI version 2 feature  */
-    LOC_SUPPORTED_FEATURE_WIFI_AP_DATA_INJECT_2_V02, /**<  Support Wifi AP data inject version 2 feature  */
-    LOC_SUPPORTED_FEATURE_DEBUG_NMEA_V02, /**< Support debug NMEA feature */
-    LOC_SUPPORTED_FEATURE_GNSS_ONLY_POSITION_REPORT, /**< Support GNSS Only position reports */
-    LOC_SUPPORTED_FEATURE_FDCL, /**< Support FDCL */
-    LOC_SUPPORTED_FEATURE_CONSTELLATION_ENABLEMENT_V02, /**< Support constellation enablement */
-    LOC_SUPPORTED_FEATURE_AGPM_V02, /**< Support AGPM feature */
-    LOC_SUPPORTED_FEATURE_XTRA_INTEGRITY, /**< Support XTRA integrity */
-    LOC_SUPPORTED_FEATURE_FDCL_2, /**< Support FDCL V2 */
-    LOC_SUPPORTED_FEATURE_LOCATION_PRIVACY, /**< Support location privacy */
-    LOC_SUPPORTED_FEATURE_NAVIC, /**< Support NAVIC constellation */
-    LOC_SUPPORTED_FEATURE_MEASUREMENTS_CORRECTION, /**< Support measurements correction */
-    LOC_SUPPORTED_FEATURE_ROBUST_LOCATION, /**<  Support Robust Location feature */
-    LOC_SUPPORTED_FEATURE_EDGNSS /**< Support precise location dgnss */
+    /**<  Support ODCPI version 2 feature  */
+    LOC_SUPPORTED_FEATURE_ODCPI_2_V02 = 0,
+    /**<  Support Wifi AP data inject version 2 feature  */
+    LOC_SUPPORTED_FEATURE_WIFI_AP_DATA_INJECT_2_V02,
+    /**< Support debug NMEA feature */
+    LOC_SUPPORTED_FEATURE_DEBUG_NMEA_V02,
+    /**< Support GNSS Only position reports */
+    LOC_SUPPORTED_FEATURE_GNSS_ONLY_POSITION_REPORT,
+    /**< Support FDCL */
+    LOC_SUPPORTED_FEATURE_FDCL,
+    /**< Support constellation enablement */
+    LOC_SUPPORTED_FEATURE_CONSTELLATION_ENABLEMENT_V02,
+    /**< Support AGPM feature */
+    LOC_SUPPORTED_FEATURE_AGPM_V02,
+    /**< Support XTRA integrity */
+    LOC_SUPPORTED_FEATURE_XTRA_INTEGRITY,
+    /**< Support FDCL V2 */
+    LOC_SUPPORTED_FEATURE_FDCL_2,
+    /**< Support location privacy */
+    LOC_SUPPORTED_FEATURE_LOCATION_PRIVACY,
+    /**< Support NAVIC constellation */
+    LOC_SUPPORTED_FEATURE_NAVIC,
+    /**< Support measurements correction */
+    LOC_SUPPORTED_FEATURE_MEASUREMENTS_CORRECTION,
+    /**<  Support Robust Location feature */
+    LOC_SUPPORTED_FEATURE_ROBUST_LOCATION,
+    /**< Support precise location dgnss */
+    LOC_SUPPORTED_FEATURE_EDGNSS,
+    /**<  Support the multiband GNSS configuration feature   */
+    LOC_SUPPORTED_FEATURE_MULTIBAND_CONFIG,
+    /**<  Support the configuration for DSDA   */
+    LOC_SUPPORTED_FEATURE_DSDA_CONFIGURATION,
+    /**<  Support the Multiple Attribution Apps(UTH clients Lock control) feature   */
+    LOC_SUPPORTED_FEATURE_MULTIPLE_ATTRIBUTION_APPS,
+    /**< Support the FLP, NLP Z-Source provider feature */
+    LOC_SUPPORTED_FEATURE_QMI_FLP_NLP_SOURCE,
+    /**< Support the feature to report engine debug data */
+    LOC_SUPPORTED_FEATURE_ENGINE_DEBUG_DATA,
+    /**< Support the feature to report feature update in QMI_LOC_EVENT_REPORT_IND */
+    LOC_SUPPORTED_FEATURE_DYNAMIC_FEATURE_STATUS
 } loc_supported_feature_enum;
 
 typedef struct {
@@ -415,12 +464,13 @@ typedef uint64_t GpsLocationExtendedFlags;
 #define GPS_LOCATION_EXTENDED_HAS_LLA_VRP_BASED                0x200000000000
 /** GpsLocationExtended has the velocityVRPased. */
 #define GPS_LOCATION_EXTENDED_HAS_ENU_VELOCITY_LLA_VRP_BASED   0x400000000000
-/** GpsLocationExtended has upperTriangleFullCovMatrix. */
-#define GPS_LOCATION_EXTENDED_HAS_UPPER_TRIANGLE_FULL_COV_MATRIX 0x800000000000
 /** GpsLocationExtended has drSolutionStatusMask. */
-#define GPS_LOCATION_EXTENDED_HAS_DR_SOLUTION_STATUS_MASK        0x1000000000000
+#define GPS_LOCATION_EXTENDED_HAS_DR_SOLUTION_STATUS_MASK        0x800000000000
 /** GpsLocationExtended has altitudeAssumed. */
-#define GPS_LOCATION_EXTENDED_HAS_ALTITUDE_ASSUMED               0x2000000000000
+#define GPS_LOCATION_EXTENDED_HAS_ALTITUDE_ASSUMED               0x1000000000000
+#define GPS_LOCATION_EXTENDED_HAS_SYSTEM_TICK                    0x2000000000000
+/** GpsLocationExtended has system tick unc. */
+#define GPS_LOCATION_EXTENDED_HAS_SYSTEM_TICK_UNC                0x4000000000000
 
 typedef uint32_t LocNavSolutionMask;
 /* Bitmask to specify whether SBAS ionospheric correction is used  */
@@ -706,7 +756,6 @@ typedef struct {
     float carrierPhasAmbiguity;
 } GpsMeasUsageInfo;
 
-#define COV_MATRIX_SIZE 12
 /** Represents gps location extended. */
 typedef struct {
     /** set to sizeof(GpsLocationExtended) */
@@ -723,21 +772,26 @@ typedef struct {
     float           vdop;
     /** Contains Magnetic Deviation. */
     float           magneticDeviation;
-    /** vertical uncertainty in meters */
+    /** vertical uncertainty in meters
+     *  confidence level is at 68% */
     float           vert_unc;
-    /** speed uncertainty in m/s */
+    /** horizontal speed uncertainty in m/s
+     *  confidence level is at 68% */
     float           speed_unc;
-    /** heading uncertainty in degrees (0 to 359.999) */
+    /** heading uncertainty in degrees (0 to 359.999)
+     *  confidence level is at 68% */
     float           bearing_unc;
     /** horizontal reliability. */
     LocReliability  horizontal_reliability;
     /** vertical reliability. */
     LocReliability  vertical_reliability;
-    /*  Horizontal Elliptical Uncertainty (Semi-Major Axis) */
+    /**  Horizontal Elliptical Uncertainty (Semi-Major Axis)
+     *   Confidence level is at 39% */
     float           horUncEllipseSemiMajor;
-    /*  Horizontal Elliptical Uncertainty (Semi-Minor Axis) */
+    /**  Horizontal Elliptical Uncertainty (Semi-Minor Axis)
+     *   Confidence level is at 39% */
     float           horUncEllipseSemiMinor;
-    /*    Elliptical Horizontal Uncertainty Azimuth */
+    /**  Elliptical Horizontal Uncertainty Azimuth */
     float           horUncEllipseOrientAzimuth;
 
     Gnss_ApTimeStampStructType               timeStamp;
@@ -774,13 +828,16 @@ typedef struct {
         Unit: Meters/sec */
     float upVelocity;
     /** North Velocity standard deviation.
-        Unit: Meters/sec */
+     *  Unit: Meters/sec.
+     *  Confidence level is at 68% */
     float northVelocityStdDeviation;
     /** East Velocity standard deviation.
-        Unit: Meters/sec */
+     *  Unit: Meters/sec
+     *  Confidence level is at 68%   */
     float eastVelocityStdDeviation;
     /** Up Velocity standard deviation
-        Unit: Meters/sec */
+     *  Unit: Meters/sec
+     *  Confidence level is at 68% */
     float upVelocityStdDeviation;
     /** Estimated clock bias. Unit: Nano seconds */
     float clockbiasMeter;
@@ -803,7 +860,9 @@ typedef struct {
     GpsMeasUsageInfo measUsageInfo[GNSS_SV_MAX];
     /** Leap Seconds */
     uint8_t leapSeconds;
-    /** Time uncertainty in milliseconds   */
+    /** Time uncertainty in milliseconds,
+     *  SPE engine: confidence level is 99%
+     *  all other engines: confidence level is not specified */
     float timeUncMs;
     /** Heading Rate is in NED frame.
         Range: 0 to 359.999. 946
@@ -851,27 +910,6 @@ typedef struct {
     LLAInfo llaVRPBased;
     /** VRR-based east, north, and up velocity */
     float enuVelocityVRPBased[3];
-    /** Upper triangle elements of full matrix of position and
-        velocity estimate in ECEF
-
-         The full covariance matrix of PPE position
-         (x, y, z in ECEF, in the unit of meters) estimate is a 3x3 matrix
-            | px,x  px,y  px,z |
-            | py,x  py,y  py,z |
-            | pz,x  pz,y  pz,z |
-
-         The full covariance matrix of PPE velocity
-         (vx,vy, vz in ECEF, in the unit of m/s) estimate is a 3x3 matrix
-            | pvx,vx  pvx,vy  pvx,vz |
-            | pvy,vx  pvy,vy  pvy,vz |
-            | pvz,vx  pvz,vy  pvz,vz |
-
-        upperTriangleFullCovMatrix =
-          { px,x, px,y, px,z, py,y, py,z, pz,z, pvx,vx, pvx,vy, pvx,vz, pvy,vy, pvy,vz, pvz,vz}
-        Uint: px,x, px,y, px,z, py,y, py,z, pz,z is in meter
-              pvx,vx, pvx,vy, pvx,vz, pvy,vy, pvy,vz, pvz,vz is in meters/seconds
-    */
-    float upperTriangleFullCovMatrix[COV_MATRIX_SIZE];
     DrSolutionStatusMask drSolutionStatusMask;
     /** When this field is valid, it will indicates whether altitude
      *  is assumed or calculated.
@@ -879,6 +917,10 @@ typedef struct {
      *  true:  Altitude is assumed; there may not be enough
      *         satellites to determine the precise altitude. */
     bool altitudeAssumed;
+    /** System Tick at GPS Time */
+    uint64_t systemTick;
+    /** Uncertainty for System Tick at GPS Time in milliseconds   */
+    float systemTickUnc;
 } GpsLocationExtended;
 
 // struct that contains complete position info from engine
@@ -1016,7 +1058,8 @@ enum loc_api_adapter_event_index {
     LOC_API_ADAPTER_LOC_SYSTEM_INFO,                   // Location system info event
     LOC_API_ADAPTER_GNSS_NHZ_MEASUREMENT_REPORT,       // GNSS SV nHz measurement report
     LOC_API_ADAPTER_EVENT_REPORT_INFO,                 // Event report info
-    LOC_API_ADAPTER_LATENCY_INFORMATION_REPORT,       // Latency information report
+    LOC_API_ADAPTER_LATENCY_INFORMATION_REPORT,        // Latency information report
+    LOC_API_ADAPTER_FEATURE_STATUS_UPDATE,             // Dynamic feature status update
     LOC_API_ADAPTER_EVENT_MAX
 };
 
@@ -1060,6 +1103,7 @@ enum loc_api_adapter_event_index {
 #define LOC_API_ADAPTER_BIT_GNSS_NHZ_MEASUREMENT             (1ULL<<LOC_API_ADAPTER_GNSS_NHZ_MEASUREMENT_REPORT)
 #define LOC_API_ADAPTER_BIT_EVENT_REPORT_INFO                (1ULL<<LOC_API_ADAPTER_EVENT_REPORT_INFO)
 #define LOC_API_ADAPTER_BIT_LATENCY_INFORMATION              (1ULL<<LOC_API_ADAPTER_LATENCY_INFORMATION_REPORT)
+#define LOC_API_ADAPTER_BIT_FEATURE_STATUS_UPDATE            (1ULL<<LOC_API_ADAPTER_FEATURE_STATUS_UPDATE)
 
 typedef uint64_t LOC_API_ADAPTER_EVENT_MASK_T;
 
@@ -1118,72 +1162,39 @@ enum ulp_gnss_sv_measurement_valid_flags{
 #define ULP_GNSS_SV_MEAS_BIT_CNO             (1<<ULP_GNSS_SV_MEAS_CNO)
 #define ULP_GNSS_SV_MEAS_BIT_LOSS_OF_LOCK    (1<<ULP_GNSS_SV_MEAS_LOSS_OF_LOCK)
 
-enum ulp_gnss_sv_poly_valid_flags{
-
-    ULP_GNSS_SV_POLY_GLO_FREQ = 0,
-    ULP_GNSS_SV_POLY_T0,
-    ULP_GNSS_SV_POLY_IODE,
-    ULP_GNSS_SV_POLY_FLAG,
-    ULP_GNSS_SV_POLY_POLYCOEFF_XYZ0,
-    ULP_GNSS_SV_POLY_POLYCOEFF_XYZN,
-    ULP_GNSS_SV_POLY_POLYCOEFF_OTHER,
-    ULP_GNSS_SV_POLY_SV_POSUNC,
-    ULP_GNSS_SV_POLY_IONODELAY,
-    ULP_GNSS_SV_POLY_IONODOT,
-    ULP_GNSS_SV_POLY_SBAS_IONODELAY,
-    ULP_GNSS_SV_POLY_SBAS_IONODOT,
-    ULP_GNSS_SV_POLY_TROPODELAY,
-    ULP_GNSS_SV_POLY_ELEVATION,
-    ULP_GNSS_SV_POLY_ELEVATIONDOT,
-    ULP_GNSS_SV_POLY_ELEVATIONUNC,
-    ULP_GNSS_SV_POLY_VELO_COEFF,
-    ULP_GNSS_SV_POLY_ENHANCED_IOD,
-    ULP_GNSS_SV_POLY_GPS_ISC_L1CA,
-    ULP_GNSS_SV_POLY_GPS_ISC_L2C,
-    ULP_GNSS_SV_POLY_GPS_ISC_L5I5,
-    ULP_GNSS_SV_POLY_GPS_ISC_L5Q5,
-    ULP_GNSS_SV_POLY_GPS_TGD,
-    ULP_GNSS_SV_POLY_GLO_TGD_G1G2,
-    ULP_GNSS_SV_POLY_BDS_TGD_B1,
-    ULP_GNSS_SV_POLY_BDS_TGD_B2,
-    ULP_GNSS_SV_POLY_BDS_TGD_B2A,
-    ULP_GNSS_SV_POLY_BDS_ISC_B2A,
-    ULP_GNSS_SV_POLY_GAL_BGD_E1E5A,
-    ULP_GNSS_SV_POLY_GAL_BGD_E1E5B,
-    ULP_GNSS_SV_POLY_NAVIC_TGD_L5
-};
-
-#define ULP_GNSS_SV_POLY_BIT_GLO_FREQ               (1<<ULP_GNSS_SV_POLY_GLO_FREQ)
-#define ULP_GNSS_SV_POLY_BIT_T0                     (1<<ULP_GNSS_SV_POLY_T0)
-#define ULP_GNSS_SV_POLY_BIT_IODE                   (1<<ULP_GNSS_SV_POLY_IODE)
-#define ULP_GNSS_SV_POLY_BIT_FLAG                   (1<<ULP_GNSS_SV_POLY_FLAG)
-#define ULP_GNSS_SV_POLY_BIT_POLYCOEFF_XYZ0         (1<<ULP_GNSS_SV_POLY_POLYCOEFF_XYZ0)
-#define ULP_GNSS_SV_POLY_BIT_POLYCOEFF_XYZN         (1<<ULP_GNSS_SV_POLY_POLYCOEFF_XYZN)
-#define ULP_GNSS_SV_POLY_BIT_POLYCOEFF_OTHER        (1<<ULP_GNSS_SV_POLY_POLYCOEFF_OTHER)
-#define ULP_GNSS_SV_POLY_BIT_SV_POSUNC              (1<<ULP_GNSS_SV_POLY_SV_POSUNC)
-#define ULP_GNSS_SV_POLY_BIT_IONODELAY              (1<<ULP_GNSS_SV_POLY_IONODELAY)
-#define ULP_GNSS_SV_POLY_BIT_IONODOT                (1<<ULP_GNSS_SV_POLY_IONODOT)
-#define ULP_GNSS_SV_POLY_BIT_SBAS_IONODELAY         (1<<ULP_GNSS_SV_POLY_SBAS_IONODELAY)
-#define ULP_GNSS_SV_POLY_BIT_SBAS_IONODOT           (1<<ULP_GNSS_SV_POLY_SBAS_IONODOT)
-#define ULP_GNSS_SV_POLY_BIT_TROPODELAY             (1<<ULP_GNSS_SV_POLY_TROPODELAY)
-#define ULP_GNSS_SV_POLY_BIT_ELEVATION              (1<<ULP_GNSS_SV_POLY_ELEVATION)
-#define ULP_GNSS_SV_POLY_BIT_ELEVATIONDOT           (1<<ULP_GNSS_SV_POLY_ELEVATIONDOT)
-#define ULP_GNSS_SV_POLY_BIT_ELEVATIONUNC           (1<<ULP_GNSS_SV_POLY_ELEVATIONUNC)
-#define ULP_GNSS_SV_POLY_BIT_VELO_COEFF             (1<<ULP_GNSS_SV_POLY_VELO_COEFF)
-#define ULP_GNSS_SV_POLY_BIT_ENHANCED_IOD           (1<<ULP_GNSS_SV_POLY_ENHANCED_IOD)
-#define ULP_GNSS_SV_POLY_BIT_GPS_ISC_L1CA           (1<<ULP_GNSS_SV_POLY_GPS_ISC_L1CA)
-#define ULP_GNSS_SV_POLY_BIT_GPS_ISC_L2C            (1<<ULP_GNSS_SV_POLY_GPS_ISC_L2C)
-#define ULP_GNSS_SV_POLY_BIT_GPS_ISC_L5I5           (1<<ULP_GNSS_SV_POLY_GPS_ISC_L5I5)
-#define ULP_GNSS_SV_POLY_BIT_GPS_ISC_L5Q5           (1<<ULP_GNSS_SV_POLY_GPS_ISC_L5Q5)
-#define ULP_GNSS_SV_POLY_BIT_GPS_TGD                (1<<ULP_GNSS_SV_POLY_GPS_TGD)
-#define ULP_GNSS_SV_POLY_BIT_GLO_TGD_G1G2           (1<<ULP_GNSS_SV_POLY_GLO_TGD_G1G2)
-#define ULP_GNSS_SV_POLY_BIT_BDS_TGD_B1             (1<<ULP_GNSS_SV_POLY_BDS_TGD_B1)
-#define ULP_GNSS_SV_POLY_BIT_BDS_TGD_B2             (1<<ULP_GNSS_SV_POLY_BDS_TGD_B2)
-#define ULP_GNSS_SV_POLY_BIT_BDS_TGD_B2A            (1<<ULP_GNSS_SV_POLY_BDS_TGD_B2A)
-#define ULP_GNSS_SV_POLY_BIT_BDS_ISC_B2A            (1<<ULP_GNSS_SV_POLY_BDS_ISC_B2A)
-#define ULP_GNSS_SV_POLY_BIT_GAL_BGD_E1E5A          (1<<ULP_GNSS_SV_POLY_GAL_BGD_E1E5A)
-#define ULP_GNSS_SV_POLY_BIT_GAL_BGD_E1E5B          (1<<ULP_GNSS_SV_POLY_GAL_BGD_E1E5B)
-#define ULP_GNSS_SV_POLY_BIT_NAVIC_TGD_L5           (1<<ULP_GNSS_SV_POLY_NAVIC_TGD_L5)
+#define ULP_GNSS_SV_POLY_BIT_GLO_FREQ               (0x000000001)
+#define ULP_GNSS_SV_POLY_BIT_T0                     (0x000000002)
+#define ULP_GNSS_SV_POLY_BIT_IODE                   (0x000000004)
+#define ULP_GNSS_SV_POLY_BIT_FLAG                   (0x000000008)
+#define ULP_GNSS_SV_POLY_BIT_POLYCOEFF_XYZ0         (0x000000010)
+#define ULP_GNSS_SV_POLY_BIT_POLYCOEFF_XYZN         (0x000000020)
+#define ULP_GNSS_SV_POLY_BIT_POLYCOEFF_OTHER        (0x000000040)
+#define ULP_GNSS_SV_POLY_BIT_SV_POSUNC              (0x000000080)
+#define ULP_GNSS_SV_POLY_BIT_IONODELAY              (0x000000100)
+#define ULP_GNSS_SV_POLY_BIT_IONODOT                (0x000000200)
+#define ULP_GNSS_SV_POLY_BIT_SBAS_IONODELAY         (0x000000400)
+#define ULP_GNSS_SV_POLY_BIT_SBAS_IONODOT           (0x000000800)
+#define ULP_GNSS_SV_POLY_BIT_TROPODELAY             (0x000001000)
+#define ULP_GNSS_SV_POLY_BIT_ELEVATION              (0x000002000)
+#define ULP_GNSS_SV_POLY_BIT_ELEVATIONDOT           (0x000004000)
+#define ULP_GNSS_SV_POLY_BIT_ELEVATIONUNC           (0x000008000)
+#define ULP_GNSS_SV_POLY_BIT_VELO_COEFF             (0x000010000)
+#define ULP_GNSS_SV_POLY_BIT_ENHANCED_IOD           (0x000020000)
+#define ULP_GNSS_SV_POLY_BIT_GPS_ISC_L1CA           (0x000040000)
+#define ULP_GNSS_SV_POLY_BIT_GPS_ISC_L2C            (0x000080000)
+#define ULP_GNSS_SV_POLY_BIT_GPS_ISC_L5I5           (0x000100000)
+#define ULP_GNSS_SV_POLY_BIT_GPS_ISC_L5Q5           (0x000200000)
+#define ULP_GNSS_SV_POLY_BIT_GPS_TGD                (0x000400000)
+#define ULP_GNSS_SV_POLY_BIT_GLO_TGD_G1G2           (0x000800000)
+#define ULP_GNSS_SV_POLY_BIT_BDS_TGD_B1             (0x001000000)
+#define ULP_GNSS_SV_POLY_BIT_BDS_TGD_B2             (0x002000000)
+#define ULP_GNSS_SV_POLY_BIT_BDS_TGD_B2A            (0x004000000)
+#define ULP_GNSS_SV_POLY_BIT_BDS_ISC_B2A            (0x008000000)
+#define ULP_GNSS_SV_POLY_BIT_GAL_BGD_E1E5A          (0x010000000)
+#define ULP_GNSS_SV_POLY_BIT_GAL_BGD_E1E5B          (0x020000000)
+#define ULP_GNSS_SV_POLY_BIT_NAVIC_TGD_L5           (0x040000000)
+#define ULP_GNSS_SV_POLY_BIT_BDS_TGD_B1C            (0x080000000)
+#define ULP_GNSS_SV_POLY_BIT_BDS_ISC_B1C            (0x100000000)
 
 typedef enum
 {
@@ -1555,6 +1566,7 @@ typedef uint64_t GpsSvMeasHeaderFlags;
 #define GNSS_SV_MEAS_HEADER_HAS_GLOG1G2_TIME_BIAS             0x200000000
 #define GNSS_SV_MEAS_HEADER_HAS_BDSB1IB1C_TIME_BIAS           0x400000000
 #define GNSS_SV_MEAS_HEADER_HAS_GALE1E5B_TIME_BIAS            0x800000000
+#define GNSS_SV_MEAS_HEADER_HAS_REF_COUNT_TICKS_UNC           0x1000000000
 
 typedef struct
 {
@@ -1608,6 +1620,7 @@ typedef struct
 
     /** Receiver tick at frame count */
     uint64_t                                    refCountTicks;
+    float                                       refCountTicksUnc;
 
     /** DGNSS corrections source type RTCM, 3GPP etc, if DGNSS was
      *  used for these measurements. */
@@ -1673,7 +1686,7 @@ typedef struct {
     GnssSvPolyStatusMaskValidity svPolyStatusMaskValidity;
     GnssSvPolyStatusMask         svPolyStatusMask;
 
-    uint32_t    is_valid;
+    uint64_t    is_valid;
 
     uint16_t     iode;
     /* Ephemeris reference time
@@ -1716,6 +1729,8 @@ typedef struct {
     float galBgdE1E5a;
     float galBgdE1E5b;
     float navicTgdL5;
+    float bdsTgdB1c;
+    float bdsIscB1c;
 } GnssSvPolynomial;
 
 typedef enum {
@@ -2255,6 +2270,7 @@ struct AGnssExtStatusIpV4 {
      * 32-bit IPv4 address.
      */
     uint32_t            ipV4Addr;
+    LocSubId            subId;
 };
 
 /*
@@ -2335,7 +2351,13 @@ struct OdcpiRequestInfo {
     OdcpiRequestType type;
     uint32_t tbfMillis;
     bool isEmergencyMode;
+    bool isCivicAddressRequired;
 };
+
+struct EngineServiceInfo {
+    bool ppeIntEnabled; // flag to indicate whether internal ppe is enabled
+};
+
 /* Callback to send ODCPI request to framework */
 typedef std::function<void(const OdcpiRequestInfo& request)> OdcpiRequestCallback;
 
@@ -2388,22 +2410,28 @@ typedef void (*AgnssStatusIpV6Cb)(AGnssExtStatusIpV6 status);
 */
 typedef void(*antennaInfoCb)(std::vector<GnssAntennaInformation> gnssAntennaInformations);
 
+typedef struct {
+    uint32_t size;                        // set to sizeof
+    uint64_t elapsedRealTime;    // in ns
+    uint64_t elapsedRealTimeUnc; // in ns
+    double totalEnergyMilliJoule;
+} GnssPowerStatistics;
+
+/*
+* Callback with Power indication.
+*/
+typedef void(*powerIndicationCb)(GnssPowerStatistics gnssPowerStatistics);
+
 /* Constructs for interaction with loc_net_iface library */
 typedef void (*LocAgpsOpenResultCb)(bool isSuccess, AGpsExtType agpsType, const char* apn,
         AGpsBearerType bearerType, void* userDataPtr);
 
 typedef void (*LocAgpsCloseResultCb)(bool isSuccess, AGpsExtType agpsType, void* userDataPtr);
 
-enum PowerStateType {
-    POWER_STATE_UNKNOWN = 0,
-    POWER_STATE_SUSPEND = 1,
-    POWER_STATE_RESUME  = 2,
-    POWER_STATE_SHUTDOWN = 3
-};
-
 /* Shared resources of LocIpc */
 #define LOC_IPC_HAL                    "/dev/socket/location/socket_hal"
 #define LOC_IPC_XTRA                   "/dev/socket/location/xtra/socket_xtra"
+#define LOC_IPC_DGNSS                  "/dev/socket/location/dgnss/socket_dgnss"
 
 #define SOCKET_DIR_LOCATION            "/dev/socket/location/"
 #define SOCKET_DIR_EHUB                "/dev/socket/location/ehub/"

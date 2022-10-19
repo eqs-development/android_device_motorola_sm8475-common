@@ -1,4 +1,4 @@
-/* Copyright (c) 2017-2020 The Linux Foundation. All rights reserved.
+/* Copyright (c) 2017,2020-2021 The Linux Foundation. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are
@@ -194,7 +194,6 @@ private:
     LocationControlAPI* mLocationControlAPI;
     RequestQueue mRequestQueues[CTRL_REQUEST_MAX];
     bool mEnabled;
-    GnssConfig mConfig;
 };
 
 class LocationAPIClientBase {
@@ -244,7 +243,8 @@ public:
     inline virtual void onGnssDataCb(GnssDataNotification /*gnssDataNotification*/) {}
     inline virtual void onGnssMeasurementsCb(
             GnssMeasurementsNotification /*gnssMeasurementsNotification*/) {}
-
+    inline virtual void onGnssNHzMeasurementsCb(
+            GnssMeasurementsNotification /*gnssMeasurementsNotification*/) {}
     inline virtual void onTrackingCb(Location /*location*/) {}
     inline virtual void onGnssSvCb(GnssSvNotification /*gnssSvNotification*/) {}
     inline virtual void onStartTrackingCb(LocationError /*error*/) {}
@@ -391,11 +391,11 @@ private:
             pthread_mutex_unlock(&mBiDictMutex);
             return ret;
         }
-        std::vector<uint32_t> getAllSessions() {
+        std::vector<uint32_t> getAllIds() {
             std::vector<uint32_t> ret;
             pthread_mutex_lock(&mBiDictMutex);
-            for (auto it = mBackwardMap.begin(); it != mBackwardMap.end(); it++) {
-                ret.push_back(it->first);
+            for (auto idToSessionPair : mForwardMap) {
+                ret.push_back(idToSessionPair.first);
             }
             pthread_mutex_unlock(&mBiDictMutex);
             return ret;

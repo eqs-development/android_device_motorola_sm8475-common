@@ -1,4 +1,4 @@
-/* Copyright (c) 2015-2017 The Linux Foundation. All rights reserved.
+/* Copyright (c) 2015-2017,2021 The Linux Foundation. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are
@@ -72,6 +72,7 @@ typedef enum e_DataItemId {
 
     // 26 -
     BATTERY_LEVEL_DATA_ITEM_ID,
+    IN_EMERGENCY_CALL_DATA_ITEM_ID,
 
     MAX_DATA_ITEM_ID_1_1,
 } DataItemId;

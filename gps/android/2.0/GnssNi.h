@@ -52,16 +52,6 @@ struct GnssNi : public IGnssNi {
                          IGnssNiCallback::GnssUserResponseType userResponse) override;
 
  private:
-    struct GnssNiDeathRecipient : hidl_death_recipient {
-        GnssNiDeathRecipient(sp<GnssNi> gnssNi) : mGnssNi(gnssNi) {
-        }
-        ~GnssNiDeathRecipient() = default;
-        virtual void serviceDied(uint64_t cookie, const wp<IBase>& who) override;
-        sp<GnssNi> mGnssNi;
-    };
-
- private:
-    sp<GnssNiDeathRecipient> mGnssNiDeathRecipient = nullptr;
     sp<IGnssNiCallback> mGnssNiCbIface = nullptr;
     Gnss* mGnss = nullptr;
 };

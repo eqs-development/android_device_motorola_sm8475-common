@@ -145,27 +145,29 @@ struct Gnss : public IGnss {
 
  private:
     struct GnssDeathRecipient : hidl_death_recipient {
-        GnssDeathRecipient(sp<Gnss> gnss) : mGnss(gnss) {
+        GnssDeathRecipient(const sp<Gnss>& gnss) : mGnss(gnss) {
         }
         ~GnssDeathRecipient() = default;
         virtual void serviceDied(uint64_t cookie, const wp<IBase>& who) override;
-        sp<Gnss> mGnss;
+        const wp<Gnss> mGnss;
     };
+
+    void handleClientDeath();
 
  private:
     sp<GnssDeathRecipient> mGnssDeathRecipient = nullptr;
 
     sp<V1_0::IGnssNi> mGnssNi = nullptr;
-    sp<V1_0::IGnssGeofencing> mGnssGeofencingIface = nullptr;
+    sp<GnssGeofencing> mGnssGeofencingIface = nullptr;
     sp<V1_0::IAGnss> mAGnssIface = nullptr;
     sp<V1_0::IGnssCallback> mGnssCbIface = nullptr;
     sp<V1_0::IGnssNiCallback> mGnssNiCbIface = nullptr;
     sp<V1_1::IGnssCallback> mGnssCbIface_1_1 = nullptr;
     sp<V2_0::IAGnss> mAGnssIface_2_0 = nullptr;
     sp<V2_0::IAGnssRil> mGnssRil = nullptr;
-    sp<V2_0::IGnssMeasurement> mGnssMeasurement = nullptr;
+    sp<GnssMeasurement> mGnssMeasurement = nullptr;
     sp<V2_0::IGnssConfiguration> mGnssConfig = nullptr;
-    sp<V2_0::IGnssBatching> mGnssBatching = nullptr;
+    sp<GnssBatching> mGnssBatching = nullptr;
     sp<V2_0::IGnssDebug> mGnssDebug = nullptr;
     sp<V2_0::IGnssCallback> mGnssCbIface_2_0 = nullptr;
     sp<IMeasurementCorrections> mGnssMeasCorr = nullptr;

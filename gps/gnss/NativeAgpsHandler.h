@@ -49,8 +49,8 @@ public:
     ~NativeAgpsHandler();
     AgpsCbInfo getAgpsCbInfo();
     // IDataItemObserver overrides
-    virtual void notify(const list<IDataItemCore*>& dlist);
-    inline virtual void getName(string& name);
+    virtual void notify(const unordered_set<IDataItemCore*>& dlist) override;
+    virtual void getName(string& name) override;
 private:
     static NativeAgpsHandler* sLocalHandle;
     static void agnssStatusIpV4Cb(AGnssExtStatusIpV4 statusInfo);

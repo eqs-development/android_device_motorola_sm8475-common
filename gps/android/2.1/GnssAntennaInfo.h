@@ -67,12 +67,9 @@ struct GnssAntennaInfo : public IGnssAntennaInfo {
 
  private:
     struct GnssAntennaInfoDeathRecipient : hidl_death_recipient {
-        GnssAntennaInfoDeathRecipient(sp<GnssAntennaInfo> gnssAntennaInfo) :
-                mGnssAntennaInfo(gnssAntennaInfo) {
-        }
+        GnssAntennaInfoDeathRecipient() {}
         ~GnssAntennaInfoDeathRecipient() = default;
         virtual void serviceDied(uint64_t cookie, const wp<IBase>& who) override;
-        sp<GnssAntennaInfo> mGnssAntennaInfo;
     };
 
  private:
