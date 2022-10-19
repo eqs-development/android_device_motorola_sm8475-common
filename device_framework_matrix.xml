@@ -193,7 +193,7 @@
     </hal>
     <hal format="hidl" optional="true">
         <name>vendor.display.color</name>
-        <version>1.0-6</version>
+        <version>1.0-7</version>
         <interface>
             <name>IDisplayColor</name>
             <instance>default</instance>
@@ -275,6 +275,13 @@
         <interface>
             <name>ILocHidlGnss</name>
             <instance>gnss_vendor</instance>
+        </interface>
+    </hal>
+    <hal format="aidl" optional="true">
+        <name>vendor.qti.gnss</name>
+        <interface>
+            <name>ILocAidlGnss</name>
+            <instance>default</instance>
         </interface>
     </hal>
     <hal format="hidl" optional="true">
@@ -421,9 +428,17 @@
     <hal format="hidl" optional="true">
         <name>vendor.qti.hardware.display.composer</name>
         <version>2.0-1</version>
-        <version>3.0</version>
+        <version>3.0-1</version>
         <interface>
             <name>IQtiComposer</name>
+            <instance>default</instance>
+        </interface>
+    </hal>
+    <hal format="aidl" optional="true">
+        <name>vendor.qti.hardware.display.config</name>
+        <version>1-5</version>
+        <interface>
+            <name>IDisplayConfig</name>
             <instance>default</instance>
         </interface>
     </hal>
@@ -519,6 +534,14 @@
         </interface>
     </hal>
     <hal format="hidl" optional="true">
+        <name>vendor.qti.hardware.ListenSoundModel</name>
+        <version>1.0</version>
+        <interface>
+            <name>IListenSoundModel</name>
+            <instance>default</instance>
+        </interface>
+    </hal>
+    <hal format="hidl" optional="true">
         <name>vendor.qti.hardware.limits</name>
         <version>1.0</version>
         <interface>
@@ -544,7 +567,7 @@
     </hal>
     <hal format="hidl" optional="true">
         <name>vendor.qti.hardware.perf</name>
-        <version>2.0-2</version>
+        <version>2.0-3</version>
         <interface>
             <name>IPerf</name>
             <instance>default</instance>
@@ -614,6 +637,15 @@
     <hal format="hidl" optional="true">
         <name>vendor.qti.hardware.radio.ims</name>
         <version>1.0-7</version>
+        <interface>
+            <name>IImsRadio</name>
+            <instance>imsradio0</instance>
+            <instance>imsradio1</instance>
+        </interface>
+    </hal>
+    <hal format="aidl" optional="true">
+        <name>vendor.qti.hardware.radio.ims</name>
+        <version>1-6</version>
         <interface>
             <name>IImsRadio</name>
             <instance>imsradio0</instance>
@@ -882,6 +914,7 @@
     <hal format="hidl" optional="true">
         <name>vendor.qti.ims.factory</name>
         <version>1.0-1</version>
+        <version>2.0-1</version>
         <interface>
             <name>IImsFactory</name>
             <instance>default</instance>
@@ -930,6 +963,7 @@
     <hal format="hidl" optional="true">
         <name>vendor.qti.spu</name>
         <version>1.0-1</version>
+        <version>2.0</version>
         <interface>
             <name>ISPUManager</name>
             <instance>default</instance>
