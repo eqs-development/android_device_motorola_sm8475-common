@@ -1,4 +1,4 @@
-/* Copyright (c) 2020 The Linux Foundation. All rights reserved.
+/* Copyright (c) 2020-2021 The Linux Foundation. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are
@@ -44,8 +44,8 @@ enum LocationApiMsgVersion {
     LOCAPI_MSG_VER_MAJOR = 1;
     // Minor - New features / API addition, new message/elemtent addition.
     // Bump the last byte of version i.e. x.2 to x.3
-    // Minor version 4: GTP Single shot WWAN change
-    LOCAPI_MSG_VER_MINOR = 4;
+    // Minor version 6: add nHz measurement subscription
+    LOCAPI_MSG_VER_MINOR = 5;
 }
 
 // ============================================================================
@@ -130,6 +130,7 @@ enum PBELocMsgID {
     PB_E_INTAPI_CONFIG_CONSTELLATION_SECONDARY_BAND_MSG_ID = 209;
     PB_E_INTAPI_CONFIG_ENGINE_RUN_STATE_MSG_ID = 210;
     PB_E_INTAPI_CONFIG_USER_CONSENT_TERRESTRIAL_POSITIONING_MSG_ID = 211;
+    PB_E_INTAPI_CONFIG_OUTPUT_NMEA_TYPES_MSG_ID = 212;
 
     // integration API config retrieval request/response
     PB_E_INTAPI_GET_ROBUST_LOCATION_CONFIG_REQ_MSG_ID  = 300;
@@ -152,31 +153,33 @@ enum PBClientType {
 }
 
 enum PBLocationCallbacksMask {
-    PB_E_LOC_CB_INVALID                    = 0;
+    PB_E_LOC_CB_INVALID                     = 0;
     /**< Register for DBT location report */
-    PB_E_LOC_CB_DISTANCE_BASED_TRACKING_BIT = 1;
+    PB_E_LOC_CB_TRACKING_BIT                = 0x1;
     /**< Register for GNSS Location */
-    PB_E_LOC_CB_GNSS_LOCATION_INFO_BIT     = 2;
+    PB_E_LOC_CB_GNSS_LOCATION_INFO_BIT      = 0x2;
     /**< Register for GNSS SV */
-    PB_E_LOC_CB_GNSS_SV_BIT                = 4;
+    PB_E_LOC_CB_GNSS_SV_BIT                 = 0x4;
     /**< Register for GNSS NMEA */
-    PB_E_LOC_CB_GNSS_NMEA_BIT              = 8;
+    PB_E_LOC_CB_GNSS_NMEA_BIT               = 0x8;
     /**< Register for GNSS DATA */
-    PB_E_LOC_CB_GNSS_DATA_BIT              = 16;
+    PB_E_LOC_CB_GNSS_DATA_BIT               = 0x10;
     /**< Register for Location system info */
-    PB_E_LOC_CB_SYSTEM_INFO_BIT            = 32;
+    PB_E_LOC_CB_SYSTEM_INFO_BIT             = 0x20;
     /**< Register for Batching */
-    PB_E_LOC_CB_BATCHING_BIT               = 64;
+    PB_E_LOC_CB_BATCHING_BIT                = 0x40;
     /**< Register for Batching  Status*/
-    PB_E_LOC_CB_BATCHING_STATUS_BIT        = 128;
+    PB_E_LOC_CB_BATCHING_STATUS_BIT         = 0x80;
     /**< Register for Geofence Breach */
-    PB_E_LOC_CB_GEOFENCE_BREACH_BIT        = 256;
+    PB_E_LOC_CB_GEOFENCE_BREACH_BIT         = 0x100;
     /**< Register for multiple engine reports */
-    PB_E_LOC_CB_ENGINE_LOCATIONS_INFO_BIT  = 512;
+    PB_E_LOC_CB_ENGINE_LOCATIONS_INFO_BIT   = 0x200;
     /**< Register for simple location */
-    PB_E_LOC_CB_SIMPLE_LOCATION_INFO_BIT   = 1024;
-    /**< Register for GNSS Measurements */
-    PB_E_LOC_CB_GNSS_MEAS_BIT              = 2048;
+    PB_E_LOC_CB_SIMPLE_LOCATION_INFO_BIT    = 0x400;
+    /**< Register for 1Hz GNSS Measurements */
+    PB_E_LOC_CB_GNSS_MEAS_BIT               = 0x800;
+    /**< Register for nHz GNSS Measurements */
+    PB_E_LOC_CB_GNSS_NHZ_MEAS_BIT           = 0x1000;
 }
 
 enum PBEngineInfoCallbacksMask {
@@ -519,6 +522,12 @@ message PBLocConfigEngineRunStateReqMsg {
 // PB_E_INTAPI_CONFIG_USER_CONSENT_TERRESTRIAL_POSITIONING_MSG_ID
 message PBLocConfigUserConsentTerrestrialPositioningReqMsg {
     bool userConsent = 1;
+}
+
+// defintion for message with msg id of
+// PB_E_INTAPI_CONFIG_OUTPUT_NMEA_TYPES_MSG_ID
+message PBLocConfigOutputNmeaTypesReqMsg {
+    uint32 nmeaTypesMask = 1;
 }
 
 //******************************************************************************

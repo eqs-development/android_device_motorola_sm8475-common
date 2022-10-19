@@ -556,5 +556,51 @@ bool LocationIntegrationApi::setUserConsentForTerrestrialPositioning(bool userCo
     }
 }
 
+bool LocationIntegrationApi::configOutputNmeaTypes(NmeaTypesMask enabledNMEATypes) {
+    if (mApiImpl) {
+        uint32_t halNmeaTypes = ::NMEA_TYPE_NONE;
+        if (enabledNMEATypes & NMEA_TYPE_GGA) {
+            halNmeaTypes |= ::NMEA_TYPE_GGA;
+        }
+        if (enabledNMEATypes & NMEA_TYPE_RMC) {
+            halNmeaTypes |= ::NMEA_TYPE_RMC;
+        }
+        if (enabledNMEATypes & NMEA_TYPE_GSA) {
+            halNmeaTypes |= ::NMEA_TYPE_GSA;
+        }
+        if (enabledNMEATypes & NMEA_TYPE_VTG) {
+            halNmeaTypes |= ::NMEA_TYPE_VTG;
+        }
+        if (enabledNMEATypes & NMEA_TYPE_GNS) {
+            halNmeaTypes |= ::NMEA_TYPE_GNS;
+        }
+        if (enabledNMEATypes & NMEA_TYPE_DTM) {
+            halNmeaTypes |= ::NMEA_TYPE_DTM;
+        }
+        if (enabledNMEATypes & NMEA_TYPE_GPGSV) {
+            halNmeaTypes |= ::NMEA_TYPE_GPGSV;
+        }
+        if (enabledNMEATypes & NMEA_TYPE_GLGSV) {
+            halNmeaTypes |= ::NMEA_TYPE_GLGSV;
+        }
+        if (enabledNMEATypes & NMEA_TYPE_GAGSV) {
+            halNmeaTypes |= ::NMEA_TYPE_GAGSV;
+        }
+        if (enabledNMEATypes & NMEA_TYPE_GQGSV) {
+            halNmeaTypes |= ::NMEA_TYPE_GQGSV;
+        }
+        if (enabledNMEATypes & NMEA_TYPE_GBGSV) {
+            halNmeaTypes |= ::NMEA_TYPE_GBGSV;
+        }
+        if (enabledNMEATypes & NMEA_TYPE_GIGSV) {
+            halNmeaTypes |= ::NMEA_TYPE_GIGSV;
+        }
+        return (mApiImpl->configOutputNmeaTypes((GnssNmeaTypesMask) halNmeaTypes) == 0);
+    } else {
+        LOC_LOGe ("NULL mApiImpl");
+        return false;
+    }
+}
+
 } // namespace location_integration
 

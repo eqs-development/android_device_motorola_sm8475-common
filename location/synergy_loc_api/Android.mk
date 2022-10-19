@@ -19,7 +19,7 @@ LOCAL_SHARED_LIBRARIES := \
     libdl \
     liblog
 
-LOCAL_SRC_FILES = \
+LOCAL_SRC_FILES := \
     SynergyLocApi.cpp
 
 LOCAL_CFLAGS += \

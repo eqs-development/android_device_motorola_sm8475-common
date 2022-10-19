@@ -1,4 +1,4 @@
-/* Copyright (c) 2011-2020, The Linux Foundation. All rights reserved.
+/* Copyright (c) 2011-2021, The Linux Foundation. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are
@@ -31,11 +31,17 @@
 
 #include <stdint.h>
 #include <stdbool.h>
+#include <loc_pla.h>
 #include <LocApiBase.h>
 #include <loc_api_v02_client.h>
 #include <vector>
 #include <functional>
-#include <unordered_map>
+#ifdef NO_UNORDERED_SET_OR_MAP
+    #include <map>
+    #define unordered_map map
+#else
+    #include <unordered_map>
+#endif
 
 #define LOC_SEND_SYNC_REQ(NAME, ID, REQ)  \
     int rv = true; \
@@ -153,26 +159,25 @@ private:
   int  mMsInWeek;
   bool mAgcIsPresent;
   timeBiases mTimeBiases;
+  std::unordered_map<uint16_t, GnssSvPolynomial> mSvPolynomialMap;
 
   size_t mBatchSize, mDesiredBatchSize;
   size_t mTripBatchSize, mDesiredTripBatchSize;
+  int mUseBatching1_0;
   bool mIsFirstFinalFixReported;
   bool mIsFirstStartFixReq;
   uint64_t mHlosQtimer1, mHlosQtimer2;
   uint32_t mRefFCount;
+  std::string mPackageName[eQMI_LOC_R3_V02+1];
 
   // Below two member variables are for elapsedRealTime calculation
   ElapsedRealtimeEstimator mMeasElapsedRealTimeCal;
-  ElapsedRealtimeEstimator mPositionElapsedRealTimeCal;
 
   /* Convert event mask from loc eng to loc_api_v02 format */
   static locClientEventMaskType convertMask(LOC_API_ADAPTER_EVENT_MASK_T mask);
 
   /* Convert GPS LOCK from LocationAPI format to QMI format */
   static qmiLocLockEnumT_v02 convertGpsLockFromAPItoQMI(GnssConfigGpsLock lock);
-
-  /* Convert GPS LOCK from QMI format to LocationAPI format */
-  static GnssConfigGpsLock convertGpsLockFromQMItoAPI(qmiLocLockEnumT_v02 lock);
 
   /* Convert error from loc_api_v02 to loc eng format*/
   static enum loc_api_adapter_err convertErr(locClientStatusEnumType status);
@@ -186,7 +191,7 @@ private:
       qmiLocNiNotifyVerifyEnumT_v02 notif_priv);
 
   /*convert signal type to carrier frequency*/
-  static float convertSignalTypeToCarrierFrequency(
+  static double convertSignalTypeToCarrierFrequency(
       qmiLocGnssSignalTypeMaskT_v02 signalType,
       uint8_t gloFrequency);
 
@@ -218,6 +223,9 @@ private:
   static void convertGnssConestellationMask (
             qmiLocGNSSConstellEnumT_v02 qmiConstellationEnum,
             GnssConstellationTypeMask& constellationMask);
+
+  static GnssSignalTypeMask convertQmiGnssSignalType(
+        qmiLocGnssSignalTypeMaskT_v02 qmiGnssSignalType);
 
   /* If Confidence value is less than 68%, then scale the accuracy value to 68%
      confidence.*/
@@ -320,7 +328,6 @@ private:
   locClientEventMaskType adjustMaskIfNoSessionOrEngineOff(locClientEventMaskType qmiMask);
   bool cacheGnssMeasurementSupport();
   void registerMasterClient();
-  int getGpsLock(uint8_t subType);
   void getRobustLocationConfig(uint32_t sessionId, LocApiResponse* adapterResponse);
   void getMinGpsWeek(uint32_t sessionId, LocApiResponse* adapterResponse);
 
@@ -434,6 +441,9 @@ public:
   virtual void
     injectPosition(const GnssLocationInfoNotification &locationInfo, bool onDemandCpi);
 
+  virtual void injectPositionAndCivicAddress(const Location& location,
+          const GnssCivicAddress& addr);
+
   virtual void
     deleteAidingData(const GnssAidingData& data, LocApiResponse *adapterResponse);
 
@@ -509,8 +519,6 @@ public:
   virtual LocationError setEmergencyExtensionWindowSync(const uint32_t emergencyExtensionSeconds);
   virtual void setMeasurementCorrections(
         const GnssMeasurementCorrections& gnssMeasurementCorrections);
-  virtual GnssSignalTypeMask convertQmiGnssSignalType(
-        qmiLocGnssSignalTypeMaskT_v02 qmiGnssSignalType);
 
   void convertQmiBlacklistedSvConfigToGnssConfig(
         const qmiLocGetBlacklistSvIndMsgT_v02& qmiBlacklistConfig,

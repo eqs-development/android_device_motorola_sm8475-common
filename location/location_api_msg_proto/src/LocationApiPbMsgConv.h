@@ -504,9 +504,13 @@ public:
             (const PBLocEngineRunState &pbLocEngRunState) const;
     uint32_t getPBEnumForLocEngineRunState(const LocEngineRunState& locEngineRunState) const;
 
-    // LocEngineRunState to/from PB LocEngineRunState
+    // TerrestrialTechMask to/from PB TerrestrialTechMask
     uint32_t getTerrestrialTechMaskFromPB(const uint32_t &pbTerrestrialTechMask) const;
     uint32_t getPBMaskForTerrestrialTechMask(const uint32_t& terrestrialTechMask) const;
+
+    // NmeaTypesMask to/frmom PB NmeaTypesMask
+    uint32_t getNmeaTypesMaskFromPB(const uint32_t &pbNmeaTypesMask) const;
+    uint32_t getPBMaskForNmeaTypesMask(const uint32_t& nmeaTypesMask) const;
 
     // **** helper function for enum conversion from normal format to protobuf enums.
     PBBatchingMode getPBEnumForBatchingMode(const BatchingMode &batchMode) const;

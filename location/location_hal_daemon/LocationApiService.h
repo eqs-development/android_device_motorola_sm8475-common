@@ -32,6 +32,7 @@
 #include <string>
 #include <mutex>
 
+#include <loc_pla.h>
 #include <MsgTask.h>
 #include <loc_cfg.h>
 #include <LocIpc.h>
@@ -47,6 +48,7 @@
 
 #ifdef NO_UNORDERED_SET_OR_MAP
     #include <map>
+    #define unordered_map map
 #else
     #include <unordered_map>
 #endif
@@ -238,6 +240,7 @@ private:
     void configEngineRunState(const LocConfigEngineRunStateReqMsg* pMsg);
     void configUserConsentTerrestrialPositioning(
             LocConfigUserConsentTerrestrialPositioningReqMsg* pMsg);
+    void configOutputNmeaTypes(const LocConfigOutputNmeaTypesReqMsg* pMsg);
 
     // Location configuration API get/read requests
     void getGnssConfig(const LocAPIMsgHeader* pReqMsg,
@@ -269,6 +272,9 @@ private:
     }
 
     GnssInterface* getGnssInterface();
+    // OSFramework instance
+    void createOSFrameworkInstance();
+    void destroyOSFrameworkInstance();
 
 #ifdef POWERMANAGER_ENABLED
     // power event observer

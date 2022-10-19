@@ -13,7 +13,6 @@ GNSS_CFLAGS = [
     "-Wno-error=undefined-bool-conversion",
     "-Wno-error=tautological-compare",
     "-Wno-error=switch",
-    "-Wno-error=date-time",
 ]
 
 /* Activate the following for debug purposes only,

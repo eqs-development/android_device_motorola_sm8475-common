@@ -1,4 +1,4 @@
-/* Copyright (c) 2011-2020, The Linux Foundation. All rights reserved.
+/* Copyright (c) 2011-2021, The Linux Foundation. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are
@@ -822,6 +822,10 @@ typedef union
     const qmiLocSetMultibandConfigReqMsgT_v02
             *pSetMultibandConfigReq;
     /*QMI_LOC_SET_MULTIBAND_CONFIG_REQ_V02*/
+
+    const qmiLocInjectLocationCivicAddressReqMsgT_v02
+            *pInjectLocationCivicAddressReq;
+    /*QMI_LOC_INJECT_LOCATION_CIVIC_ADDRESS_REQ_V02*/
 }locClientReqUnionType;
 
 

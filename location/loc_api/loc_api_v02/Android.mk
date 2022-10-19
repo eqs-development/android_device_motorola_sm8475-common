@@ -19,7 +19,7 @@ LOCAL_SHARED_LIBRARIES := \
     libdl \
     liblog
 
-LOCAL_SRC_FILES = \
+LOCAL_SRC_FILES := \
     LocApiV02.cpp \
     loc_api_v02_log.cpp \
     loc_api_v02_client.cpp \

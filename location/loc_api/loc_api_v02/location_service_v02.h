@@ -1,4 +1,4 @@
-/* Copyright (c) 2011-2020, The Linux Foundation. All rights reserved.
+/* Copyright (c) 2011-2021, The Linux Foundation. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are
@@ -25,6 +25,41 @@
  * OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN
  * IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
+/*
+Changes from Qualcomm Innovation Center are provided under the following license:
+
+Copyright (c) 2022 Qualcomm Innovation Center, Inc. All rights reserved.
+
+Redistribution and use in source and binary forms, with or without
+modification, are permitted (subject to the limitations in the
+disclaimer below) provided that the following conditions are met:
+
+    * Redistributions of source code must retain the above copyright
+      notice, this list of conditions and the following disclaimer.
+
+    * Redistributions in binary form must reproduce the above
+      copyright notice, this list of conditions and the following
+      disclaimer in the documentation and/or other materials provided
+      with the distribution.
+
+    * Neither the name of Qualcomm Innovation Center, Inc. nor the names of its
+      contributors may be used to endorse or promote products derived
+      from this software without specific prior written permission.
+
+NO EXPRESS OR IMPLIED LICENSES TO ANY PARTY'S PATENT RIGHTS ARE
+GRANTED BY THIS LICENSE. THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT
+HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED
+WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
+MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
+IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR
+ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE
+GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER
+IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR
+OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN
+IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+*/
 #ifndef LOC_SERVICE_02_H
 #define LOC_SERVICE_02_H
 /**
@@ -63,7 +98,7 @@
  *====*====*====*====*====*====*====*====*====*====*====*====*====*====*====*/
 
 /* This file was generated with Tool version 6.14.7
-   It was generated on: Wed Oct 14 2020 (Spin 0)
+   It was generated on: Tue May  3 2022 (Spin 0)
    From IDL File: location_service_v02.idl */
 
 /** @defgroup loc_qmi_consts Constant values defined in the IDL */
@@ -89,11 +124,11 @@ extern "C" {
 /** Major Version Number of the IDL used to generate this file */
 #define LOC_V02_IDL_MAJOR_VERS 0x02
 /** Revision Number of the IDL used to generate this file */
-#define LOC_V02_IDL_MINOR_VERS 0x86
+#define LOC_V02_IDL_MINOR_VERS 0x99
 /** Major Version Number of the qmi_idl_compiler used to generate this file */
 #define LOC_V02_IDL_TOOL_VERS 0x06
 /** Maximum Defined Message ID */
-#define LOC_V02_MAX_MESSAGE_ID 0x00E2
+#define LOC_V02_MAX_MESSAGE_ID 0x00E8
 /**
     @}
   */
@@ -125,6 +160,9 @@ extern "C" {
 
 /**  Maximum number of GNSS signal type  */
 #define QMI_LOC_MAX_GNSS_SIGNAL_TYPE_V02 19
+
+/**  Maximum number of GNSS signal type  */
+#define QMI_LOC_MAX_GNSS_SIGNAL_TYPE_EXT_V02 64
 
 /**  East, North, up array length  */
 #define QMI_LOC_ENU_ARRAY_LENGTH_V02 3
@@ -417,6 +455,122 @@ extern "C" {
 
 /**  Number of INS element size two.    */
 #define QMI_LOC_INS_ELEMENT_SIZE_TWO_V02 2
+
+/**  Max string length of Country field.  */
+#define QMI_LOC_MAX_COUNTRY_STR_LENGTH_V02 2
+
+/**  Max string length of Subdivision A1 field.  */
+#define QMI_LOC_MAX_SUBDIV_A1_STR_LENGTH_V02 32
+
+/**  Max string length of Subdivision A2 field.  */
+#define QMI_LOC_MAX_SUBDIV_A2_STR_LENGTH_V02 32
+
+/**  Max string length of City field.  */
+#define QMI_LOC_MAX_CITY_STR_LENGTH_V02 32
+
+/**  Max string length of City Division field.  */
+#define QMI_LOC_MAX_CITYDIV_STR_LENGTH_V02 32
+
+/**  Max string length of Neighbourhood field.  */
+#define QMI_LOC_MAX_NEIGHBORHOOD_STR_LENGTH_V02 32
+
+/**  Max string length of Street field.  */
+#define QMI_LOC_MAX_STREET_STR_LENGTH_V02 64
+
+/**  Max string length of Leading Street Direction field.  */
+#define QMI_LOC_MAX_LEADING_STREET_DIR_STR_LENGTH_V02 2
+
+/**  Max string length of Trailing Street Suffix field.  */
+#define QMI_LOC_MAX_TRAILING_STREET_SUFFIX_STR_LENGTH_V02 2
+
+/**  Max string length of Street Suffix field.  */
+#define QMI_LOC_MAX_STREET_SUFFIX_STR_LENGTH_V02 16
+
+/**  Max string length of House Number field.  */
+#define QMI_LOC_MAX_HOUSE_NUMBER_STR_LENGTH_V02 16
+
+/**  Max string length of House Number Suffix field.  */
+#define QMI_LOC_MAX_HOUSE_NUMBER_SUFFIX_STR_LENGTH_V02 16
+
+/**  Max string length of Landmark field.  */
+#define QMI_LOC_MAX_LANDMARK_STR_LENGTH_V02 32
+
+/**  Max string length of Additional Location Information field.  */
+#define QMI_LOC_MAX_ADDITIONAL_LOC_INFO_STR_LENGTH_V02 32
+
+/**  Max string length of Floor field.  */
+#define QMI_LOC_MAX_FLOOR_STR_LENGTH_V02 4
+
+/**  Max string length of Name field.  */
+#define QMI_LOC_MAX_NAME_STR_LENGTH_V02 32
+
+/**  Max string length of Postal Code field.  */
+#define QMI_LOC_MAX_POSTAL_CODE_STR_LENGTH_V02 16
+
+/**  Max string length of Positioning method field.  */
+#define QMI_LOC_MAX_POSITIONING_METHOD_STR_LENGTH_V02 16
+
+/**  Max string length of Building field.  */
+#define QMI_LOC_MAX_BUILDING_STR_LENGTH_V02 64
+
+/**  Max string length of Unit field.  */
+#define QMI_LOC_MAX_UNIT_STR_LENGTH_V02 8
+
+/**  Max string length of Room field.  */
+#define QMI_LOC_MAX_ROOM_STR_LENGTH_V02 8
+
+/**  Max string length of Place type field.  */
+#define QMI_LOC_MAX_PLACE_TYPE_STR_LENGTH_V02 16
+
+/**  Max string length of Postal Community type field.  */
+#define QMI_LOC_MAX_POSTAL_COMM_TYPE_STR_LENGTH_V02 32
+
+/**  Max string length of Post Office Box field.  */
+#define QMI_LOC_MAX_POST_OFFICE_BOX_STR_LENGTH_V02 8
+
+/**  Max string length of Additional Code field.  */
+#define QMI_LOC_MAX_ADDITIONAL_CODE_STR_LENGTH_V02 16
+
+/**  Max string length of Seat field.  */
+#define QMI_LOC_MAX_SEAT_STR_LENGTH_V02 8
+
+/**  Max string length of Primary Road field.  */
+#define QMI_LOC_MAX_PRIMARY_ROAD_STR_LENGTH_V02 64
+
+/**  Max string length of Road Section field.  */
+#define QMI_LOC_MAX_ROAD_SECTION_STR_LENGTH_V02 16
+
+/**  Max string length of Road branch field.  */
+#define QMI_LOC_MAX_ROAD_BRANCH_STR_LENGTH_V02 16
+
+/**  Max string length of Road Sub branch field.  */
+#define QMI_LOC_MAX_ROAD_SUB_BRANCH_STR_LENGTH_V02 16
+
+/**  Max string length of Road Pre Modifier field.  */
+#define QMI_LOC_MAX_ROAD_PRE_MODIFIER_STR_LENGTH_V02 16
+
+/**  Max string length of Road Post Modifier field.  */
+#define QMI_LOC_MAX_ROAD_POST_MODIFIER_STR_LENGTH_V02 16
+#define QMI_LOC_MAX_RAW_DATA_PART_LEN_V02 4000
+#define eQMI_LOC_NAV_DATA_TYPE_UNKNOWN_V02 0
+#define eQMI_LOC_NAV_DATA_TYPE_EPH_V02 1
+#define eQMI_LOC_NAV_DATA_TYPE_ALM_V02 2
+#define eQMI_LOC_NAV_DATA_SRC_UNKNOWN_V02 0
+#define eQMI_LOC_NAV_DATA_SRC_DEMODULATED_V02 1
+#define eQMI_LOC_NAV_DATA_SRC_SUPL_PROVIDED_V02 2
+#define eQMI_LOC_NAV_DATA_SRC_OTHER_SERVER_PROVIDED_V02 3
+#define eQMI_LOC_NAV_DATA_SRC_LOCAL_V02 4
+#define eQMI_LOC_EPI_SRC_COARSE_POSITION_V02 1
+#define eQMI_LOC_EPI_SRC_REFERENCE_LOCATION_V02 2
+#define eQMI_LOC_EPI_SRC_TLE_POSITION_V02 3
+#define QMI_LOC_FIX_INFO_HEADING_FILTER_ENGAGED_V02 0x01
+#define QMI_LOC_FIX_INFO_INS_FILTER_ENGAGED_V02 0x02
+#define QMI_LOC_FIX_INFO_PDR_ENGAGED_V02 0x04
+#define QMI_LOC_FIX_INFO_PDR_MAG_CALIBRATED_V02 0x08
+#define QMI_LOC_FIX_STATUS_SUCCESS_V02 0x01
+#define QMI_LOC_FIX_STATUS_TOO_FEW_SVS_V02 0x02
+#define QMI_LOC_FIX_STATUS_HEPE_CHECK_FAILED_V02 0x04
+#define QMI_LOC_FIX_STATUS_LOW_RELIABILITY_V02 0x08
 /**
     @}
   */
@@ -608,7 +762,10 @@ typedef uint64_t qmiLocEventRegMaskT_v02;
 #define QMI_LOC_EVENT_MASK_GNSS_EVENT_REPORT_V02 ((qmiLocEventRegMaskT_v02)0x100000000000ull) /**<  The QMI_LOC_EVENT_REPORT indication. \n  */
 #define QMI_LOC_EVENT_MASK_QUERY_XTRA_INFO_V02 ((qmiLocEventRegMaskT_v02)0x200000000000ull) /**<  Event indication to trigger XTRA config query from the control point. \n */
 #define QMI_LOC_EVENT_MASK_SAP_INS_PARAMETERS_REPORT_V02 ((qmiLocEventRegMaskT_v02)0x400000000000ull) /**<  QMI_LOC_EVENT_SAP_INS_PARAMETERS indication. \n  */
-#define QMI_LOC_EVENT_MASK_LATENCY_INFORMATION_REPORT_V02 ((qmiLocEventRegMaskT_v02)0x800000000000ull) /**<  QMI_LOC_LATENCY_INFORMATION indication.        */
+#define QMI_LOC_EVENT_MASK_LATENCY_INFORMATION_REPORT_V02 ((qmiLocEventRegMaskT_v02)0x800000000000ull) /**<  QMI_LOC_LATENCY_INFORMATION indication.       */
+#define QMI_LOC_EVENT_MASK_PLATFORM_POWER_STATE_CHANGED_V02 ((qmiLocEventRegMaskT_v02)0x0001000000000000ull) /**<  QMI_LOC_EVENT_PLATFORM_POWER_STATE_CHANGED indication.  */
+#define QMI_LOC_EVENT_MASK_ENGINE_DEBUG_DATA_REPORT_V02 ((qmiLocEventRegMaskT_v02)0x0002000000000000ull) /**<  QMI_LOC_ENGINE_DEBUG_DATA indication.  */
+#define QMI_LOC_EVENT_MASK_FEATURE_STATUS_V02 ((qmiLocEventRegMaskT_v02)0x0004000000000000ull) /**<  QMI_LOC_EVENT_REPORT indication when featureStatusReport is valid  */
 /** @addtogroup loc_qmi_enums
     @{
   */
@@ -720,6 +877,9 @@ typedef struct {
       - QMI_LOC_EVENT_MASK_QUERY_XTRA_INFO (0x200000000000) --  Event indication to trigger XTRA config query from the control point. \n
       - QMI_LOC_EVENT_MASK_SAP_INS_PARAMETERS_REPORT (0x400000000000) --  QMI_LOC_EVENT_SAP_INS_PARAMETERS indication. \n
       - QMI_LOC_EVENT_MASK_LATENCY_INFORMATION_REPORT (0x800000000000) --  QMI_LOC_LATENCY_INFORMATION indication.
+      - QMI_LOC_EVENT_MASK_PLATFORM_POWER_STATE_CHANGED (0x0001000000000000) --  QMI_LOC_EVENT_PLATFORM_POWER_STATE_CHANGED indication.
+      - QMI_LOC_EVENT_MASK_ENGINE_DEBUG_DATA_REPORT (0x0002000000000000) --  QMI_LOC_ENGINE_DEBUG_DATA indication.
+      - QMI_LOC_EVENT_MASK_FEATURE_STATUS (0x0004000000000000) --  QMI_LOC_EVENT_REPORT indication when featureStatusReport is valid
 
  Multiple events can be registered by ORing the individual masks and
  sending them in this TLV. Set all unused bits in this mask to 0.
@@ -1098,7 +1258,10 @@ typedef uint32_t qmiLocPosTechMaskT_v02;
 #define QMI_LOC_POS_TECH_MASK_AFLT_V02 ((qmiLocPosTechMaskT_v02)0x00000040) /**<  AFLT was used to generate the fix. \n  */
 #define QMI_LOC_POS_TECH_MASK_HYBRID_V02 ((qmiLocPosTechMaskT_v02)0x00000080) /**<  GNSS and network-provided measurements were used to
         generate the fix. \n  */
-#define QMI_LOC_POS_TECH_MASK_DRE_V02 ((qmiLocPosTechMaskT_v02)0x00000100) /**<  Dead reckoning engine (DRE) was used to generate the fix.  */
+#define QMI_LOC_POS_TECH_MASK_DRE_V02 ((qmiLocPosTechMaskT_v02)0x00000100) /**<  Dead reckoning engine (DRE) was used to generate the fix. \n  */
+#define QMI_LOC_POS_TECH_MASK_INS_V02 ((qmiLocPosTechMaskT_v02)0x00000200) /**<  INS was used to generate the fix. \n  */
+#define QMI_LOC_POS_TECH_MASK_PDR_V02 ((qmiLocPosTechMaskT_v02)0x00000400) /**<  PDR was used to generate the fix. \n  */
+#define QMI_LOC_POS_TECH_MASK_PROPAGATED_V02 ((qmiLocPosTechMaskT_v02)0x00000800) /**<  Fix generated is a propagated fix.  */
 /** @addtogroup loc_qmi_enums
     @{
   */
@@ -1317,6 +1480,8 @@ typedef uint64_t qmiLocGnssSignalTypeMaskT_v02;
 #define QMI_LOC_MASK_GNSS_SIGNAL_TYPE_SBAS_L1_CA_V02 ((qmiLocGnssSignalTypeMaskT_v02)0x00020000ull) /**<  SBAS L1_CA RF band  */
 #define QMI_LOC_MASK_GNSS_SIGNAL_TYPE_NAVIC_L5_V02 ((qmiLocGnssSignalTypeMaskT_v02)0x00040000ull) /**<  NavIC L5 RF band \n */
 #define QMI_LOC_MASK_GNSS_SIGNAL_TYPE_BEIDOU_B2A_Q_V02 ((qmiLocGnssSignalTypeMaskT_v02)0x00080000ull) /**<  BeiDou B2A_Q RF band  */
+#define QMI_LOC_MASK_GNSS_SIGNAL_TYPE_BEIDOU_B2B_I_V02 ((qmiLocGnssSignalTypeMaskT_v02)0x00100000ull) /**<  BeiDou B2B_I RF band (Data)  */
+#define QMI_LOC_MASK_GNSS_SIGNAL_TYPE_BEIDOU_B2B_Q_V02 ((qmiLocGnssSignalTypeMaskT_v02)0x00200000ull) /**<  BeiDou B2B_Q RF band (Pilot)  */
 /** @addtogroup loc_qmi_enums
     @{
   */
@@ -1343,6 +1508,8 @@ typedef enum {
   eQMI_LOC_GNSS_SIGNAL_TYPE_SBAS_L1_CA_V02 = 18, /**<  SBAS L1_CA RF band \n */
   eQMI_LOC_GNSS_SIGNAL_TYPE_NAVIC_L5_V02 = 19, /**<  NavIC L5 RF band \n */
   eQMI_LOC_GNSS_SIGNAL_TYPE_BEIDOU_B2A_Q_V02 = 20, /**<  BeiDou B2A_Q RF band  */
+  eQMI_LOC_GNSS_SIGNAL_TYPE_BEIDOU_B2B_I_V02 = 21, /**<  BeiDou B2B_I RF band (Data)  */
+  eQMI_LOC_GNSS_SIGNAL_TYPE_BEIDOU_B2B_Q_V02 = 22, /**<   BeiDou B2B_Q RF band (Pilot)  */
   QMILOCGNSSSIGNALTYPEENUMT_MAX_ENUM_VAL_V02 = 2147483647 /**< To force a 32 bit signed enum.  Do not change or use*/
 }qmiLocGnssSignalTypeEnumT_v02;
 /**
@@ -1360,6 +1527,46 @@ typedef struct {
   int32_t bpMetricDb;
   /**<   BP metric in 0.01 dB */
 }qmiLocJammerIndicatorStructT_v02;  /* Type */
+/**
+    @}
+  */
+
+/** @addtogroup loc_qmi_aggregates
+    @{
+  */
+typedef struct {
+
+  qmiLocGnssSignalTypeMaskT_v02 gnssSignalType;
+  /**<   GNSS signal type. \n
+      - QMI_LOC_MASK_GNSS_SIGNAL_TYPE_GPS_L1CA (0x00000001) --  GPS L1CA RF band \n
+      - QMI_LOC_MASK_GNSS_SIGNAL_TYPE_GPS_L1C (0x00000002) --  GPS L1C RF band \n
+      - QMI_LOC_MASK_GNSS_SIGNAL_TYPE_GPS_L2C_L (0x00000004) --  GPS L2C_L RF band \n
+      - QMI_LOC_MASK_GNSS_SIGNAL_TYPE_GPS_L5_Q (0x00000008) --  GPS L5_Q RF band \n
+      - QMI_LOC_MASK_GNSS_SIGNAL_TYPE_GLONASS_G1 (0x00000010) --  GLONASS G1 (L1OF) RF band \n
+      - QMI_LOC_MASK_GNSS_SIGNAL_TYPE_GLONASS_G2 (0x00000020) --  GLONASS G2 (L2OF) RF band \n
+      - QMI_LOC_MASK_GNSS_SIGNAL_TYPE_GALILEO_E1_C (0x00000040) --  Galileo E1_C RF band \n
+      - QMI_LOC_MASK_GNSS_SIGNAL_TYPE_GALILEO_E5A_Q (0x00000080) --  Galileo E5A_Q RF band \n
+      - QMI_LOC_MASK_GNSS_SIGNAL_TYPE_GALILEO_E5B_Q (0x00000100) --  Galileo E5B_Q RF band \n
+      - QMI_LOC_MASK_GNSS_SIGNAL_TYPE_BEIDOU_B1_I (0x00000200) --  BeiDou B1_I RF band \n
+      - QMI_LOC_MASK_GNSS_SIGNAL_TYPE_BEIDOU_B1C (0x00000400) --  BeiDou B1C RF band \n
+      - QMI_LOC_MASK_GNSS_SIGNAL_TYPE_BEIDOU_B2_I (0x00000800) --  BeiDou B2_I RF band
+      - QMI_LOC_MASK_GNSS_SIGNAL_TYPE_BEIDOU_B2A_I (0x00001000) --  BeiDou B2A_I RF band \n
+      - QMI_LOC_MASK_GNSS_SIGNAL_TYPE_QZSS_L1CA (0x00002000) --  QZSS L1CA RF band \n
+      - QMI_LOC_MASK_GNSS_SIGNAL_TYPE_QZSS_L1S (0x00004000) --  QZSS L1S RF band \n
+      - QMI_LOC_MASK_GNSS_SIGNAL_TYPE_QZSS_L2C_L (0x00008000) --  QZSS L2C_L RF band \n
+      - QMI_LOC_MASK_GNSS_SIGNAL_TYPE_QZSS_L5_Q (0x00010000) --  QZSS L5_Q RF band \n
+      - QMI_LOC_MASK_GNSS_SIGNAL_TYPE_SBAS_L1_CA (0x00020000) --  SBAS L1_CA RF band
+      - QMI_LOC_MASK_GNSS_SIGNAL_TYPE_NAVIC_L5 (0x00040000) --  NavIC L5 RF band \n
+      - QMI_LOC_MASK_GNSS_SIGNAL_TYPE_BEIDOU_B2A_Q (0x00080000) --  BeiDou B2A_Q RF band
+      - QMI_LOC_MASK_GNSS_SIGNAL_TYPE_BEIDOU_B2B_I (0x00100000) --  BeiDou B2B_I RF band (Data)
+      - QMI_LOC_MASK_GNSS_SIGNAL_TYPE_BEIDOU_B2B_Q (0x00200000) --  BeiDou B2B_Q RF band (Pilot)  */
+
+  int32_t agcMetricDb;
+  /**<   AGC metric in 0.01 dB */
+
+  int32_t bpMetricDb;
+  /**<   BP metric in 0.01 dB */
+}qmiLocJammerIndicatorExtStructT_v02;  /* Type */
 /**
     @}
   */
@@ -1589,7 +1796,10 @@ typedef struct {
       - QMI_LOC_POS_TECH_MASK_AFLT (0x00000040) --  AFLT was used to generate the fix. \n
       - QMI_LOC_POS_TECH_MASK_HYBRID (0x00000080) --  GNSS and network-provided measurements were used to
         generate the fix. \n
-      - QMI_LOC_POS_TECH_MASK_DRE (0x00000100) --  Dead reckoning engine (DRE) was used to generate the fix.
+      - QMI_LOC_POS_TECH_MASK_DRE (0x00000100) --  Dead reckoning engine (DRE) was used to generate the fix. \n
+      - QMI_LOC_POS_TECH_MASK_INS (0x00000200) --  INS was used to generate the fix. \n
+      - QMI_LOC_POS_TECH_MASK_PDR (0x00000400) --  PDR was used to generate the fix. \n
+      - QMI_LOC_POS_TECH_MASK_PROPAGATED (0x00000800) --  Fix generated is a propagated fix.
  */
 
   /* Optional */
@@ -1823,6 +2033,8 @@ typedef struct {
       - QMI_LOC_MASK_GNSS_SIGNAL_TYPE_SBAS_L1_CA (0x00020000) --  SBAS L1_CA RF band
       - QMI_LOC_MASK_GNSS_SIGNAL_TYPE_NAVIC_L5 (0x00040000) --  NavIC L5 RF band \n
       - QMI_LOC_MASK_GNSS_SIGNAL_TYPE_BEIDOU_B2A_Q (0x00080000) --  BeiDou B2A_Q RF band
+      - QMI_LOC_MASK_GNSS_SIGNAL_TYPE_BEIDOU_B2B_I (0x00100000) --  BeiDou B2B_I RF band (Data)
+      - QMI_LOC_MASK_GNSS_SIGNAL_TYPE_BEIDOU_B2B_Q (0x00200000) --  BeiDou B2B_Q RF band (Pilot)
  */
 
   /* Optional */
@@ -1912,6 +2124,20 @@ typedef struct {
   /**<   Single-sided maximum time bias uncertainty.\n
        - Units -- Milliseconds
   */
+
+  /* Optional */
+  /*  Data Blob  */
+  uint8_t payload_valid;  /**< Must be set to true if payload is being passed */
+  uint32_t payload_len;  /**< Must be set to # of elements in payload */
+  uint8_t payload[4096];
+  /**<   Data blob payload  */
+
+  /* Optional */
+  /*  Jammer Indicator for GNSS Signals */
+  uint8_t jammerIndicatorListExt_valid;  /**< Must be set to true if jammerIndicatorListExt is being passed */
+  uint32_t jammerIndicatorListExt_len;  /**< Must be set to # of elements in jammerIndicatorListExt */
+  qmiLocJammerIndicatorExtStructT_v02 jammerIndicatorListExt[QMI_LOC_MAX_GNSS_SIGNAL_TYPE_EXT_V02];
+  /**<   Indicates the jammer indicator for GNSS signals */
 }qmiLocEventPositionReportIndMsgT_v02;  /* Message */
 /**
     @}
@@ -2121,7 +2347,9 @@ typedef struct {
       - QMI_LOC_MASK_GNSS_SIGNAL_TYPE_QZSS_L5_Q (0x00010000) --  QZSS L5_Q RF band \n
       - QMI_LOC_MASK_GNSS_SIGNAL_TYPE_SBAS_L1_CA (0x00020000) --  SBAS L1_CA RF band
       - QMI_LOC_MASK_GNSS_SIGNAL_TYPE_NAVIC_L5 (0x00040000) --  NavIC L5 RF band \n
-      - QMI_LOC_MASK_GNSS_SIGNAL_TYPE_BEIDOU_B2A_Q (0x00080000) --  BeiDou B2A_Q RF band  */
+      - QMI_LOC_MASK_GNSS_SIGNAL_TYPE_BEIDOU_B2A_Q (0x00080000) --  BeiDou B2A_Q RF band
+      - QMI_LOC_MASK_GNSS_SIGNAL_TYPE_BEIDOU_B2B_I (0x00100000) --  BeiDou B2B_I RF band (Data)
+      - QMI_LOC_MASK_GNSS_SIGNAL_TYPE_BEIDOU_B2B_Q (0x00200000) --  BeiDou B2B_Q RF band (Pilot)  */
 
   /* Optional */
   /*  RF Loss from Antenna to Baseband */
@@ -3068,6 +3296,19 @@ typedef enum {
     @}
   */
 
+/** @addtogroup loc_qmi_enums
+    @{
+  */
+typedef enum {
+  QMILOCINJECTEDORBITSPECIALFILETYPEENUMT_MIN_ENUM_VAL_V02 = -2147483647, /**< To force a 32 bit signed enum.  Do not change or use*/
+  eQMI_LOC_INJECTED_ORBIT_FILE_XTRA_V02 = 1, /**<  xtra assistance file \n */
+  eQMI_LOC_INJECTED_ORBIT_FILE_NAVIC_V02 = 2, /**<  Navic xtra assistance file  */
+  QMILOCINJECTEDORBITSPECIALFILETYPEENUMT_MAX_ENUM_VAL_V02 = 2147483647 /**< To force a 32 bit signed enum.  Do not change or use*/
+}qmiLocInjectedOrbitSpecialFileTypeEnumT_v02;
+/**
+    @}
+  */
+
 /** @addtogroup loc_qmi_aggregates
     @{
   */
@@ -3096,6 +3337,22 @@ typedef struct {
        secondary, and so on. \n
        A maximum number of three servers can be specified. */
 }qmiLocPredictedOrbitsServerListStructT_v02;  /* Type */
+/**
+    @}
+  */
+
+/** @addtogroup loc_qmi_aggregates
+    @{
+  */
+typedef struct {
+
+  qmiLocInjectedOrbitSpecialFileTypeEnumT_v02 fileType;
+  /**<   Xtra assistance file type. */
+
+  uint32_t downloadInterval;
+  /**<   Download interval of the xtra assistance file. \n
+         - Units -- Minutes  */
+}qmiLocPredictedOrbitsSpecialFileTypeStructT_v02;  /* Type */
 /**
     @}
   */
@@ -3142,6 +3399,12 @@ typedef struct {
   uint32_t updateRate;
   /**<   Update rate for the data type indicated. \n
        - Units -- Seconds  */
+
+  /* Optional */
+  /*  Special File Type Info */
+  uint8_t fileInfo_valid;  /**< Must be set to true if fileInfo is being passed */
+  qmiLocPredictedOrbitsSpecialFileTypeStructT_v02 fileInfo;
+  /**<   File type and download interval information */
 }qmiLocEventInjectPredictedOrbitsReqIndMsgT_v02;  /* Message */
 /**
     @}
@@ -3311,6 +3574,23 @@ typedef struct {
        - 0x00 (FALSE) -- GPS engine is not in E911 mode \n
        - 0x01 (TRUE) -- GPS engine is in E911 mode
    */
+
+  /* Optional */
+  /*  Civic Address Mode */
+  uint8_t civicAddressNeeded_valid;  /**< Must be set to true if civicAddressNeeded is being passed */
+  uint8_t civicAddressNeeded;
+  /**<   Specifies whether the Civic address is needed or not.
+       Values: \n
+       - 0x00 (FALSE) -- Civic Address is not needed \n
+       - 0x01 (TRUE) -- Civic Address is needed
+
+    NOTE: If the civic address is available with the AP, the AP Shall inject
+    the same using the new QMI API QMI_LOC_INJECT_LOCATION_CIVIC_ADDRESS.
+
+    If the civic address is not available, the AP shall NOT use the new QMI API
+    QMI_LOC_INJECT_LOCATION_CIVIC_ADDRESS. The existing DBH injection API should
+    be used to inject hybrid location is available.
+  */
 }qmiLocEventWifiReqIndMsgT_v02;  /* Message */
 /**
     @}
@@ -4155,7 +4435,9 @@ typedef struct {
       - QMI_LOC_MASK_GNSS_SIGNAL_TYPE_QZSS_L5_Q (0x00010000) --  QZSS L5_Q RF band \n
       - QMI_LOC_MASK_GNSS_SIGNAL_TYPE_SBAS_L1_CA (0x00020000) --  SBAS L1_CA RF band
       - QMI_LOC_MASK_GNSS_SIGNAL_TYPE_NAVIC_L5 (0x00040000) --  NavIC L5 RF band \n
-      - QMI_LOC_MASK_GNSS_SIGNAL_TYPE_BEIDOU_B2A_Q (0x00080000) --  BeiDou B2A_Q RF band  */
+      - QMI_LOC_MASK_GNSS_SIGNAL_TYPE_BEIDOU_B2A_Q (0x00080000) --  BeiDou B2A_Q RF band
+      - QMI_LOC_MASK_GNSS_SIGNAL_TYPE_BEIDOU_B2B_I (0x00100000) --  BeiDou B2B_I RF band (Data)
+      - QMI_LOC_MASK_GNSS_SIGNAL_TYPE_BEIDOU_B2B_Q (0x00200000) --  BeiDou B2B_Q RF band (Pilot)  */
 }qmiLocEventGeofenceBatchedBreachIndMsgT_v02;  /* Message */
 /**
     @}
@@ -4371,7 +4653,9 @@ typedef struct {
       - QMI_LOC_MASK_GNSS_SIGNAL_TYPE_QZSS_L5_Q (0x00010000) --  QZSS L5_Q RF band \n
       - QMI_LOC_MASK_GNSS_SIGNAL_TYPE_SBAS_L1_CA (0x00020000) --  SBAS L1_CA RF band
       - QMI_LOC_MASK_GNSS_SIGNAL_TYPE_NAVIC_L5 (0x00040000) --  NavIC L5 RF band \n
-      - QMI_LOC_MASK_GNSS_SIGNAL_TYPE_BEIDOU_B2A_Q (0x00080000) --  BeiDou B2A_Q RF band  */
+      - QMI_LOC_MASK_GNSS_SIGNAL_TYPE_BEIDOU_B2A_Q (0x00080000) --  BeiDou B2A_Q RF band
+      - QMI_LOC_MASK_GNSS_SIGNAL_TYPE_BEIDOU_B2B_I (0x00100000) --  BeiDou B2B_I RF band (Data)
+      - QMI_LOC_MASK_GNSS_SIGNAL_TYPE_BEIDOU_B2B_Q (0x00200000) --  BeiDou B2B_Q RF band (Pilot)  */
 }qmiLocEventGeofenceBatchedDwellIndMsgT_v02;  /* Message */
 /**
     @}
@@ -5381,7 +5665,10 @@ typedef enum {
   eQMI_LOC_POSITION_SRC_TERRESTRIAL_V02 = 4, /**<  Position source is Terrestrial \n */
   eQMI_LOC_POSITION_SRC_GNSS_TERRESTRIAL_HYBRID_V02 = 5, /**<  Position source is GNSS Terrestrial Hybrid \n  */
   eQMI_LOC_POSITION_SRC_OTHER_V02 = 6, /**<  Other sources \n  */
-  eQMI_LOC_POSITION_SRC_DRE_V02 = 7, /**<  Position source is the dead reckoning engine  */
+  eQMI_LOC_POSITION_SRC_DRE_V02 = 7, /**<  Position source is the dead reckoning engine \n  */
+  eQMI_LOC_POSITION_SRC_FLP_V02 = 8, /**<  Position source is Fused Location Provider \n */
+  eQMI_LOC_POSITION_SRC_NLP_V02 = 9, /**<  Position source is Network Location Provider \n  */
+  eQMI_LOC_POSITION_SRC_FLP_ALE_V02 = 10, /**<  Position source is derived from Source MPSS  */
   QMILOCPOSITIONSRCENUMT_MAX_ENUM_VAL_V02 = 2147483647 /**< To force a 32 bit signed enum.  Do not change or use*/
 }qmiLocPositionSrcEnumT_v02;
 /**
@@ -5546,7 +5833,10 @@ typedef struct {
       - eQMI_LOC_POSITION_SRC_TERRESTRIAL (4) --  Position source is Terrestrial \n
       - eQMI_LOC_POSITION_SRC_GNSS_TERRESTRIAL_HYBRID (5) --  Position source is GNSS Terrestrial Hybrid \n
       - eQMI_LOC_POSITION_SRC_OTHER (6) --  Other sources \n
-      - eQMI_LOC_POSITION_SRC_DRE (7) --  Position source is the dead reckoning engine  \n
+      - eQMI_LOC_POSITION_SRC_DRE (7) --  Position source is the dead reckoning engine \n
+      - eQMI_LOC_POSITION_SRC_FLP (8) --  Position source is Fused Location Provider \n
+      - eQMI_LOC_POSITION_SRC_NLP (9) --  Position source is Network Location Provider \n
+      - eQMI_LOC_POSITION_SRC_FLP_ALE (10) --  Position source is derived from Source MPSS  \n
  If altitude is specified and the altitude source is not specified, the engine
  assumes that the altitude was obtained using the specified position source. \n
  If both altitude and altitude source are specified, the engine assumes
@@ -5710,6 +6000,16 @@ typedef uint64_t qmiLocLockClientMaskT_v02;
 #define QMI_LOC_LOCK_CLIENT_MASK_AFW_V02 ((qmiLocLockClientMaskT_v02)0x00000001ull) /**<  Lock AFW client \n */
 #define QMI_LOC_LOCK_CLIENT_MASK_NFW_V02 ((qmiLocLockClientMaskT_v02)0x00000002ull) /**<  Lock NFW client \n */
 #define QMI_LOC_LOCK_CLIENT_MASK_PRIVILEGED_V02 ((qmiLocLockClientMaskT_v02)0x00000004ull) /**<  Lock privileged client  */
+typedef uint64_t qmiLocClientsMaskT_v02;
+#define QMI_LOC_MASK_UTH_CLIENT_IMS_V02 ((qmiLocClientsMaskT_v02)0x00000001ull) /**<  Lock/Unlock IMS Client \n  */
+#define QMI_LOC_MASK_UTH_CLIENT_SIM_V02 ((qmiLocClientsMaskT_v02)0x00000002ull) /**<  Lock/Unlock SIM Client \n  */
+#define QMI_LOC_MASK_UTH_CLIENT_MDT_V02 ((qmiLocClientsMaskT_v02)0x00000004ull) /**<  Lock/Unlock MDT Client \n  */
+#define QMI_LOC_MASK_UTH_CLIENT_TLOC_V02 ((qmiLocClientsMaskT_v02)0x00000008ull) /**<  Lock/Unlock TLOC Client \n  */
+#define QMI_LOC_MASK_UTH_CLIENT_RLOC_V02 ((qmiLocClientsMaskT_v02)0x00000010ull) /**<  Lock/Unlock RLOC Client \n  */
+#define QMI_LOC_MASK_UTH_CLIENT_V2X_V02 ((qmiLocClientsMaskT_v02)0x00000020ull) /**<  Lock/Unlock V2X Client \n  */
+#define QMI_LOC_MASK_OEM_CLIENT_R1_V02 ((qmiLocClientsMaskT_v02)0x00000040ull) /**<  Lock/Unlock reserved UTH OEM R1 client \n    */
+#define QMI_LOC_MASK_OEM_CLIENT_R2_V02 ((qmiLocClientsMaskT_v02)0x00000080ull) /**<  Lock/Unlock reserved UTH OEM R2 client \n    */
+#define QMI_LOC_MASK_OEM_CLIENT_R3_V02 ((qmiLocClientsMaskT_v02)0x00000100ull) /**<  Lock/Unlock reserved UTH OEM R3 client \n    */
 /** @addtogroup loc_qmi_messages
     @{
   */
@@ -5740,16 +6040,37 @@ typedef struct {
  */
 
   /* Optional */
-  /*  Lock Client */
+  /*  Lock Client (Deprecated) */
   uint8_t lockClient_valid;  /**< Must be set to true if lockClient is being passed */
   qmiLocLockClientMaskT_v02 lockClient;
-  /**<   If specified by the control point, the client(s) are
+  /**<   (Deprecated)
+ If specified by the control point, the client(s) are
  blocked to request position.
  Note: lockClient overwrites lockType
  Values: \n
       - QMI_LOC_LOCK_CLIENT_MASK_AFW (0x00000001) --  Lock AFW client \n
       - QMI_LOC_LOCK_CLIENT_MASK_NFW (0x00000002) --  Lock NFW client \n
       - QMI_LOC_LOCK_CLIENT_MASK_PRIVILEGED (0x00000004) --  Lock privileged client
+ */
+
+  /* Optional */
+  /*  Clients Config   */
+  uint8_t clientsConfig_valid;  /**< Must be set to true if clientsConfig is being passed */
+  qmiLocClientsMaskT_v02 clientsConfig;
+  /**<   Bitmask indicating the Clients location request Lock Configuration
+ Bit field value description:
+ 1 - Client Locked
+ 0 - Client Unlocked \n
+ Valid bitmasks: \n
+      - QMI_LOC_MASK_UTH_CLIENT_IMS (0x00000001) --  Lock/Unlock IMS Client \n
+      - QMI_LOC_MASK_UTH_CLIENT_SIM (0x00000002) --  Lock/Unlock SIM Client \n
+      - QMI_LOC_MASK_UTH_CLIENT_MDT (0x00000004) --  Lock/Unlock MDT Client \n
+      - QMI_LOC_MASK_UTH_CLIENT_TLOC (0x00000008) --  Lock/Unlock TLOC Client \n
+      - QMI_LOC_MASK_UTH_CLIENT_RLOC (0x00000010) --  Lock/Unlock RLOC Client \n
+      - QMI_LOC_MASK_UTH_CLIENT_V2X (0x00000020) --  Lock/Unlock V2X Client \n
+      - QMI_LOC_MASK_OEM_CLIENT_R1 (0x00000040) --  Lock/Unlock reserved UTH OEM R1 client \n
+      - QMI_LOC_MASK_OEM_CLIENT_R2 (0x00000080) --  Lock/Unlock reserved UTH OEM R2 client \n
+      - QMI_LOC_MASK_OEM_CLIENT_R3 (0x00000100) --  Lock/Unlock reserved UTH OEM R3 client \n
  */
 }qmiLocSetEngineLockReqMsgT_v02;  /* Message */
 /**
@@ -5781,6 +6102,19 @@ typedef struct {
       - eQMI_LOC_GNSS_DISABLED (11) --  Request failed because the location service is disabled
  */
 }qmiLocSetEngineLockIndMsgT_v02;  /* Message */
+/**
+    @}
+  */
+
+/** @addtogroup loc_qmi_enums
+    @{
+  */
+typedef enum {
+  QMILOCENGINELOCKSTATEENUMT_MIN_ENUM_VAL_V02 = -2147483647, /**< To force a 32 bit signed enum.  Do not change or use*/
+  eQMI_LOC_ENGINE_LOCK_STATE_ENABLED_V02 = 1, /**<  Location engine is enabled.  */
+  eQMI_LOC_ENGINE_LOCK_STATE_DISABLED_V02 = 2, /**<  location engine is disabled for mobile-initiated sessions.  */
+  QMILOCENGINELOCKSTATEENUMT_MAX_ENUM_VAL_V02 = 2147483647 /**< To force a 32 bit signed enum.  Do not change or use*/
+}qmiLocEngineLockStateEnumT_v02;
 /**
     @}
   */
@@ -5857,15 +6191,44 @@ typedef struct {
  */
 
   /* Optional */
-  /*  Lock Client */
+  /*  Lock Client (Deprecated) */
   uint8_t lockClient_valid;  /**< Must be set to true if lockClient is being passed */
   qmiLocLockClientMaskT_v02 lockClient;
-  /**<   The client(s) who have been locked to request position.
+  /**<   (Deprecated)
+ The client(s) who have been locked to request position.
  Values: \n
       - QMI_LOC_LOCK_CLIENT_MASK_AFW (0x00000001) --  Lock AFW client \n
       - QMI_LOC_LOCK_CLIENT_MASK_NFW (0x00000002) --  Lock NFW client \n
       - QMI_LOC_LOCK_CLIENT_MASK_PRIVILEGED (0x00000004) --  Lock privileged client
  */
+
+  /* Optional */
+  /*  Clients Config   */
+  uint8_t clientsConfig_valid;  /**< Must be set to true if clientsConfig is being passed */
+  qmiLocClientsMaskT_v02 clientsConfig;
+  /**<   Bitmask indicating the Clients location request Lock Configuration
+ Bit field value description:
+ 1 - Client Locked
+ 0 - Client Unlocked \n
+ Valid bitmasks: \n
+      - QMI_LOC_MASK_UTH_CLIENT_IMS (0x00000001) --  Lock/Unlock IMS Client \n
+      - QMI_LOC_MASK_UTH_CLIENT_SIM (0x00000002) --  Lock/Unlock SIM Client \n
+      - QMI_LOC_MASK_UTH_CLIENT_MDT (0x00000004) --  Lock/Unlock MDT Client \n
+      - QMI_LOC_MASK_UTH_CLIENT_TLOC (0x00000008) --  Lock/Unlock TLOC Client \n
+      - QMI_LOC_MASK_UTH_CLIENT_RLOC (0x00000010) --  Lock/Unlock RLOC Client \n
+      - QMI_LOC_MASK_UTH_CLIENT_V2X (0x00000020) --  Lock/Unlock V2X Client \n
+      - QMI_LOC_MASK_OEM_CLIENT_R1 (0x00000040) --  Lock/Unlock reserved UTH OEM R1 client \n
+      - QMI_LOC_MASK_OEM_CLIENT_R2 (0x00000080) --  Lock/Unlock reserved UTH OEM R2 client \n
+      - QMI_LOC_MASK_OEM_CLIENT_R3 (0x00000100) --  Lock/Unlock reserved UTH OEM R3 client \n
+ */
+
+  /* Optional */
+  /*  Engine State */
+  uint8_t engineLockState_valid;  /**< Must be set to true if engineLockState is being passed */
+  qmiLocEngineLockStateEnumT_v02 engineLockState;
+  /**<   Location engine lock state. Values:
+      - eQMI_LOC_ENGINE_LOCK_STATE_ENABLED (1) --  Location engine is enabled.
+      - eQMI_LOC_ENGINE_LOCK_STATE_DISABLED (2) --  location engine is disabled for mobile-initiated sessions.  */
 }qmiLocGetEngineLockIndMsgT_v02;  /* Message */
 /**
     @}
@@ -6057,7 +6420,7 @@ typedef struct {
       - QMI_LOC_NMEA_MASK_GNDTM (0x40000000) --  Enable GNDTM type \n
       - QMI_LOC_NMEA_MASK_GSA_TAGBLOCK_ENABLE (0x80000000) --  Enable TAG block for GSA sentence \n
  The following NMEA sentences are deprecated, if any of these bits are
- set, an error is sent: \n
+ set, they are ignored: \n
  - QMI_LOC_NMEA_MASK_PQGSA \n
  - QMI_LOC_NMEA_MASK_PQGSV
 
@@ -6175,7 +6538,7 @@ typedef struct {
       - QMI_LOC_NMEA_MASK_GNDTM (0x40000000) --  Enable GNDTM type \n
       - QMI_LOC_NMEA_MASK_GSA_TAGBLOCK_ENABLE (0x80000000) --  Enable TAG block for GSA sentence \n
  The following NMEA sentences are deprecated, if any of these bits are
- set, an error is sent: \n
+ set, they are ignored: \n
  - QMI_LOC_NMEA_MASK_PQGSA \n
  - QMI_LOC_NMEA_MASK_PQGSV
  */
@@ -7312,6 +7675,9 @@ typedef struct {
       - QMI_LOC_EVENT_MASK_QUERY_XTRA_INFO (0x200000000000) --  Event indication to trigger XTRA config query from the control point. \n
       - QMI_LOC_EVENT_MASK_SAP_INS_PARAMETERS_REPORT (0x400000000000) --  QMI_LOC_EVENT_SAP_INS_PARAMETERS indication. \n
       - QMI_LOC_EVENT_MASK_LATENCY_INFORMATION_REPORT (0x800000000000) --  QMI_LOC_LATENCY_INFORMATION indication.
+      - QMI_LOC_EVENT_MASK_PLATFORM_POWER_STATE_CHANGED (0x0001000000000000) --  QMI_LOC_EVENT_PLATFORM_POWER_STATE_CHANGED indication.
+      - QMI_LOC_EVENT_MASK_ENGINE_DEBUG_DATA_REPORT (0x0002000000000000) --  QMI_LOC_ENGINE_DEBUG_DATA indication.
+      - QMI_LOC_EVENT_MASK_FEATURE_STATUS (0x0004000000000000) --  QMI_LOC_EVENT_REPORT indication when featureStatusReport is valid
  */
 }qmiLocGetRegisteredEventsIndMsgT_v02;  /* Message */
 /**
@@ -8412,12 +8778,24 @@ typedef uint64_t qmiLocLppeUpAuxTechMaskT_v02;
 #define QMI_LOC_LPPE_MASK_UP_DBH_V02 ((qmiLocLppeUpAuxTechMaskT_v02)0x00000001ull) /**<  Enable Device-Based Hybrid (3D High Accuracy Position) mode on the LPPe user plane. \n */
 #define QMI_LOC_LPPE_MASK_UP_AP_WIFI_MEASUREMENT_V02 ((qmiLocLppeUpAuxTechMaskT_v02)0x00000002ull) /**<  Enable WLAN AP Measurement mode on the LPPe user plane.\n  */
 #define QMI_LOC_LPPE_MASK_UP_AP_SRN_BTLE_MEASUREMENT_V02 ((qmiLocLppeUpAuxTechMaskT_v02)0x00000004ull) /**<  Enable SRN BTLE Measurement mode on the LPPe user plane.\n  */
-#define QMI_LOC_LPPE_MASK_UP_UBP_V02 ((qmiLocLppeUpAuxTechMaskT_v02)0x00000008ull) /**<  Enable the Uncompromised Barometer Pressure Measurement mode on the LPPe user plane.  */
+#define QMI_LOC_LPPE_MASK_UP_UBP_V02 ((qmiLocLppeUpAuxTechMaskT_v02)0x00000008ull) /**<  Enable the Uncompromised Barometer Pressure Measurement mode on the LPPe user plane. \n  */
+#define QMI_LOC_LPPE_MASK_UP_RESERVED_1_BIT_V02 ((qmiLocLppeUpAuxTechMaskT_v02)0x00000010ull) /**<  Reserved for future use. \n    */
+#define QMI_LOC_LPPE_MASK_UP_RESERVED_2_BIT_V02 ((qmiLocLppeUpAuxTechMaskT_v02)0x00000020ull) /**<  Reserved for future use. \n    */
+#define QMI_LOC_LPPE_MASK_UP_RESERVED_3_BIT_V02 ((qmiLocLppeUpAuxTechMaskT_v02)0x00000040ull) /**<  Reserved for future use. \n    */
+#define QMI_LOC_LPPE_MASK_UP_RESERVED_4_BIT_V02 ((qmiLocLppeUpAuxTechMaskT_v02)0x00000080ull) /**<  Reserved for future use \n    */
+#define QMI_LOC_LPPE_MASK_UP_NON_E911_V02 ((qmiLocLppeUpAuxTechMaskT_v02)0x00000100ull) /**<  Enable the LPPe Capabilities for Non E911 NILR user plane sessions. \n  */
+#define QMI_LOC_LPPE_MASK_UP_CIV_ADDRESS_V02 ((qmiLocLppeUpAuxTechMaskT_v02)0x00000200ull) /**<  Enable shipping the Civic Address to the server.  */
 typedef uint64_t qmiLocLppeCpAuxTechMaskT_v02;
 #define QMI_LOC_LPPE_MASK_CP_DBH_V02 ((qmiLocLppeCpAuxTechMaskT_v02)0x00000001ull) /**<  Enable Device-Based Hybrid (3D High Accuracy Position) mode on the LPPe control plane.\n  */
 #define QMI_LOC_LPPE_MASK_CP_AP_WIFI_MEASUREMENT_V02 ((qmiLocLppeCpAuxTechMaskT_v02)0x00000002ull) /**<  Enable WLAN AP Measurement mode on the LPPe control plane. \n */
 #define QMI_LOC_LPPE_MASK_CP_AP_SRN_BTLE_MEASUREMENT_V02 ((qmiLocLppeCpAuxTechMaskT_v02)0x00000004ull) /**<  Enable SRN BTLE Measurement mode on the LPPe user plane. \n */
-#define QMI_LOC_LPPE_MASK_CP_UBP_V02 ((qmiLocLppeCpAuxTechMaskT_v02)0x00000008ull) /**<  Enable the Uncompromised Barometer Pressure Measurement mode on the LPPe user plane.  */
+#define QMI_LOC_LPPE_MASK_CP_UBP_V02 ((qmiLocLppeCpAuxTechMaskT_v02)0x00000008ull) /**<  Enable the Uncompromised Barometer Pressure Measurement mode on the LPPe control plane. \n  */
+#define QMI_LOC_LPPE_MASK_CP_RESERVED_1_BIT_V02 ((qmiLocLppeCpAuxTechMaskT_v02)0x00000010ull) /**<  Reserved for future use \n    */
+#define QMI_LOC_LPPE_MASK_CP_RESERVED_2_BIT_V02 ((qmiLocLppeCpAuxTechMaskT_v02)0x00000020ull) /**<  Reserved for future use \n    */
+#define QMI_LOC_LPPE_MASK_CP_RESERVED_3_BIT_V02 ((qmiLocLppeCpAuxTechMaskT_v02)0x00000040ull) /**<  Reserved for future use \n    */
+#define QMI_LOC_LPPE_MASK_CP_RESERVED_4_BIT_V02 ((qmiLocLppeCpAuxTechMaskT_v02)0x00000080ull) /**<  Reserved for future use \n    */
+#define QMI_LOC_LPPE_MASK_CP_NON_E911_V02 ((qmiLocLppeCpAuxTechMaskT_v02)0x00000100ull) /**<  Enable the LPPe Capabilities for Non E911 NILR control plane sessions. \n  */
+#define QMI_LOC_LPPE_MASK_CP_CIV_ADDRESS_V02 ((qmiLocLppeCpAuxTechMaskT_v02)0x00000200ull) /**<  Enable shipping the Civic Address to the server.  */
 /** @addtogroup loc_qmi_messages
     @{
   */
@@ -8552,7 +8930,13 @@ typedef struct {
       - QMI_LOC_LPPE_MASK_UP_DBH (0x00000001) --  Enable Device-Based Hybrid (3D High Accuracy Position) mode on the LPPe user plane. \n
       - QMI_LOC_LPPE_MASK_UP_AP_WIFI_MEASUREMENT (0x00000002) --  Enable WLAN AP Measurement mode on the LPPe user plane.\n
       - QMI_LOC_LPPE_MASK_UP_AP_SRN_BTLE_MEASUREMENT (0x00000004) --  Enable SRN BTLE Measurement mode on the LPPe user plane.\n
-      - QMI_LOC_LPPE_MASK_UP_UBP (0x00000008) --  Enable the Uncompromised Barometer Pressure Measurement mode on the LPPe user plane.
+      - QMI_LOC_LPPE_MASK_UP_UBP (0x00000008) --  Enable the Uncompromised Barometer Pressure Measurement mode on the LPPe user plane. \n
+      - QMI_LOC_LPPE_MASK_UP_RESERVED_1_BIT (0x00000010) --  Reserved for future use. \n
+      - QMI_LOC_LPPE_MASK_UP_RESERVED_2_BIT (0x00000020) --  Reserved for future use. \n
+      - QMI_LOC_LPPE_MASK_UP_RESERVED_3_BIT (0x00000040) --  Reserved for future use. \n
+      - QMI_LOC_LPPE_MASK_UP_RESERVED_4_BIT (0x00000080) --  Reserved for future use \n
+      - QMI_LOC_LPPE_MASK_UP_NON_E911 (0x00000100) --  Enable the LPPe Capabilities for Non E911 NILR user plane sessions. \n
+      - QMI_LOC_LPPE_MASK_UP_CIV_ADDRESS (0x00000200) --  Enable shipping the Civic Address to the server.
  */
 
   /* Optional */
@@ -8564,7 +8948,13 @@ typedef struct {
       - QMI_LOC_LPPE_MASK_CP_DBH (0x00000001) --  Enable Device-Based Hybrid (3D High Accuracy Position) mode on the LPPe control plane.\n
       - QMI_LOC_LPPE_MASK_CP_AP_WIFI_MEASUREMENT (0x00000002) --  Enable WLAN AP Measurement mode on the LPPe control plane. \n
       - QMI_LOC_LPPE_MASK_CP_AP_SRN_BTLE_MEASUREMENT (0x00000004) --  Enable SRN BTLE Measurement mode on the LPPe user plane. \n
-      - QMI_LOC_LPPE_MASK_CP_UBP (0x00000008) --  Enable the Uncompromised Barometer Pressure Measurement mode on the LPPe user plane.
+      - QMI_LOC_LPPE_MASK_CP_UBP (0x00000008) --  Enable the Uncompromised Barometer Pressure Measurement mode on the LPPe control plane. \n
+      - QMI_LOC_LPPE_MASK_CP_RESERVED_1_BIT (0x00000010) --  Reserved for future use \n
+      - QMI_LOC_LPPE_MASK_CP_RESERVED_2_BIT (0x00000020) --  Reserved for future use \n
+      - QMI_LOC_LPPE_MASK_CP_RESERVED_3_BIT (0x00000040) --  Reserved for future use \n
+      - QMI_LOC_LPPE_MASK_CP_RESERVED_4_BIT (0x00000080) --  Reserved for future use \n
+      - QMI_LOC_LPPE_MASK_CP_NON_E911 (0x00000100) --  Enable the LPPe Capabilities for Non E911 NILR control plane sessions. \n
+      - QMI_LOC_LPPE_MASK_CP_CIV_ADDRESS (0x00000200) --  Enable shipping the Civic Address to the server.
  */
 
   /* Optional */
@@ -8807,7 +9197,13 @@ typedef struct {
       - QMI_LOC_LPPE_MASK_UP_DBH (0x00000001) --  Enable Device-Based Hybrid (3D High Accuracy Position) mode on the LPPe user plane. \n
       - QMI_LOC_LPPE_MASK_UP_AP_WIFI_MEASUREMENT (0x00000002) --  Enable WLAN AP Measurement mode on the LPPe user plane.\n
       - QMI_LOC_LPPE_MASK_UP_AP_SRN_BTLE_MEASUREMENT (0x00000004) --  Enable SRN BTLE Measurement mode on the LPPe user plane.\n
-      - QMI_LOC_LPPE_MASK_UP_UBP (0x00000008) --  Enable the Uncompromised Barometer Pressure Measurement mode on the LPPe user plane.
+      - QMI_LOC_LPPE_MASK_UP_UBP (0x00000008) --  Enable the Uncompromised Barometer Pressure Measurement mode on the LPPe user plane. \n
+      - QMI_LOC_LPPE_MASK_UP_RESERVED_1_BIT (0x00000010) --  Reserved for future use. \n
+      - QMI_LOC_LPPE_MASK_UP_RESERVED_2_BIT (0x00000020) --  Reserved for future use. \n
+      - QMI_LOC_LPPE_MASK_UP_RESERVED_3_BIT (0x00000040) --  Reserved for future use. \n
+      - QMI_LOC_LPPE_MASK_UP_RESERVED_4_BIT (0x00000080) --  Reserved for future use \n
+      - QMI_LOC_LPPE_MASK_UP_NON_E911 (0x00000100) --  Enable the LPPe Capabilities for Non E911 NILR user plane sessions. \n
+      - QMI_LOC_LPPE_MASK_UP_CIV_ADDRESS (0x00000200) --  Enable shipping the Civic Address to the server.
  */
 
   /* Optional */
@@ -8819,7 +9215,13 @@ typedef struct {
       - QMI_LOC_LPPE_MASK_CP_DBH (0x00000001) --  Enable Device-Based Hybrid (3D High Accuracy Position) mode on the LPPe control plane.\n
       - QMI_LOC_LPPE_MASK_CP_AP_WIFI_MEASUREMENT (0x00000002) --  Enable WLAN AP Measurement mode on the LPPe control plane. \n
       - QMI_LOC_LPPE_MASK_CP_AP_SRN_BTLE_MEASUREMENT (0x00000004) --  Enable SRN BTLE Measurement mode on the LPPe user plane. \n
-      - QMI_LOC_LPPE_MASK_CP_UBP (0x00000008) --  Enable the Uncompromised Barometer Pressure Measurement mode on the LPPe user plane.
+      - QMI_LOC_LPPE_MASK_CP_UBP (0x00000008) --  Enable the Uncompromised Barometer Pressure Measurement mode on the LPPe control plane. \n
+      - QMI_LOC_LPPE_MASK_CP_RESERVED_1_BIT (0x00000010) --  Reserved for future use \n
+      - QMI_LOC_LPPE_MASK_CP_RESERVED_2_BIT (0x00000020) --  Reserved for future use \n
+      - QMI_LOC_LPPE_MASK_CP_RESERVED_3_BIT (0x00000040) --  Reserved for future use \n
+      - QMI_LOC_LPPE_MASK_CP_RESERVED_4_BIT (0x00000080) --  Reserved for future use \n
+      - QMI_LOC_LPPE_MASK_CP_NON_E911 (0x00000100) --  Enable the LPPe Capabilities for Non E911 NILR control plane sessions. \n
+      - QMI_LOC_LPPE_MASK_CP_CIV_ADDRESS (0x00000200) --  Enable shipping the Civic Address to the server.
  */
 
   /* Optional */
@@ -11270,7 +11672,10 @@ typedef struct {
       - QMI_LOC_POS_TECH_MASK_AFLT (0x00000040) --  AFLT was used to generate the fix. \n
       - QMI_LOC_POS_TECH_MASK_HYBRID (0x00000080) --  GNSS and network-provided measurements were used to
         generate the fix. \n
-      - QMI_LOC_POS_TECH_MASK_DRE (0x00000100) --  Dead reckoning engine (DRE) was used to generate the fix.
+      - QMI_LOC_POS_TECH_MASK_DRE (0x00000100) --  Dead reckoning engine (DRE) was used to generate the fix. \n
+      - QMI_LOC_POS_TECH_MASK_INS (0x00000200) --  INS was used to generate the fix. \n
+      - QMI_LOC_POS_TECH_MASK_PDR (0x00000400) --  PDR was used to generate the fix. \n
+      - QMI_LOC_POS_TECH_MASK_PROPAGATED (0x00000800) --  Fix generated is a propagated fix.
  */
 
   /* Optional */
@@ -11398,7 +11803,17 @@ typedef struct {
       - QMI_LOC_MASK_GNSS_SIGNAL_TYPE_QZSS_L5_Q (0x00010000) --  QZSS L5_Q RF band \n
       - QMI_LOC_MASK_GNSS_SIGNAL_TYPE_SBAS_L1_CA (0x00020000) --  SBAS L1_CA RF band
       - QMI_LOC_MASK_GNSS_SIGNAL_TYPE_NAVIC_L5 (0x00040000) --  NavIC L5 RF band \n
-      - QMI_LOC_MASK_GNSS_SIGNAL_TYPE_BEIDOU_B2A_Q (0x00080000) --  BeiDou B2A_Q RF band  */
+      - QMI_LOC_MASK_GNSS_SIGNAL_TYPE_BEIDOU_B2A_Q (0x00080000) --  BeiDou B2A_Q RF band
+      - QMI_LOC_MASK_GNSS_SIGNAL_TYPE_BEIDOU_B2B_I (0x00100000) --  BeiDou B2B_I RF band (Data)
+      - QMI_LOC_MASK_GNSS_SIGNAL_TYPE_BEIDOU_B2B_Q (0x00200000) --  BeiDou B2B_Q RF band (Pilot)  */
+
+  /* Optional */
+  /*  Conformity Index */
+  uint8_t conformityIndex_valid;  /**< Must be set to true if conformityIndex is being passed */
+  float conformityIndex;
+  /**<   Indicates how well the various input data considered for navigation solution conforms to expectations. \n
+       - Range -- 0 (least conforming) to 1 (most conforming)
+  */
 }qmiLocGetBestAvailablePositionIndMsgT_v02;  /* Message */
 /**
     @}
@@ -12492,7 +12907,10 @@ typedef struct {
       - QMI_LOC_POS_TECH_MASK_AFLT (0x00000040) --  AFLT was used to generate the fix. \n
       - QMI_LOC_POS_TECH_MASK_HYBRID (0x00000080) --  GNSS and network-provided measurements were used to
         generate the fix. \n
-      - QMI_LOC_POS_TECH_MASK_DRE (0x00000100) --  Dead reckoning engine (DRE) was used to generate the fix.
+      - QMI_LOC_POS_TECH_MASK_DRE (0x00000100) --  Dead reckoning engine (DRE) was used to generate the fix. \n
+      - QMI_LOC_POS_TECH_MASK_INS (0x00000200) --  INS was used to generate the fix. \n
+      - QMI_LOC_POS_TECH_MASK_PDR (0x00000400) --  PDR was used to generate the fix. \n
+      - QMI_LOC_POS_TECH_MASK_PROPAGATED (0x00000800) --  Fix generated is a propagated fix.
  */
 
   uint64_t timestampUtc;
@@ -12776,6 +13194,8 @@ typedef struct {
        Values: \n
        - 0x01 (TRUE) -- GPS engine is in E911 mode \n
        - 0x00 (FALSE) -- GPS engine is not in E911 mode
+
+       Note: e911Mode shall be set as TRUE for Non-E911 Wifi Ap injections.
     */
 }qmiLocEventInjectWifiApDataReqIndMsgT_v02;  /* Message */
 /**
@@ -14549,7 +14969,7 @@ typedef struct {
   */
 
   /* Optional */
-  /*  GPS to BDS Intersystem Time Bias */
+  /*  GPS to BDS B1I Intersystem Time Bias */
   uint8_t gpsBdsInterSystemBias_valid;  /**< Must be set to true if gpsBdsInterSystemBias is being passed */
   qmiLocInterSystemBiasStructT_v02 gpsBdsInterSystemBias;
   /**<   \vspace{4pt} \n
@@ -14571,7 +14991,7 @@ typedef struct {
   */
 
   /* Optional */
-  /*  BDS to GLONASS Intersystem Time Bias */
+  /*  BDS B1I to GLONASS Intersystem Time Bias */
   uint8_t bdsGloInterSystemBias_valid;  /**< Must be set to true if bdsGloInterSystemBias is being passed */
   qmiLocInterSystemBiasStructT_v02 bdsGloInterSystemBias;
   /**<   \vspace{4pt} \n
@@ -14593,7 +15013,7 @@ typedef struct {
   */
 
   /* Optional */
-  /*  Galileo to BDS Intersystem Time Bias */
+  /*  Galileo to BDS B1I Intersystem Time Bias */
   uint8_t galBdsInterSystemBias_valid;  /**< Must be set to true if galBdsInterSystemBias is being passed */
   qmiLocInterSystemBiasStructT_v02 galBdsInterSystemBias;
   /**<   \vspace{4pt} \n
@@ -14660,7 +15080,9 @@ typedef struct {
       - QMI_LOC_MASK_GNSS_SIGNAL_TYPE_QZSS_L5_Q (0x00010000) --  QZSS L5_Q RF band \n
       - QMI_LOC_MASK_GNSS_SIGNAL_TYPE_SBAS_L1_CA (0x00020000) --  SBAS L1_CA RF band
       - QMI_LOC_MASK_GNSS_SIGNAL_TYPE_NAVIC_L5 (0x00040000) --  NavIC L5 RF band \n
-      - QMI_LOC_MASK_GNSS_SIGNAL_TYPE_BEIDOU_B2A_Q (0x00080000) --  BeiDou B2A_Q RF band  */
+      - QMI_LOC_MASK_GNSS_SIGNAL_TYPE_BEIDOU_B2A_Q (0x00080000) --  BeiDou B2A_Q RF band
+      - QMI_LOC_MASK_GNSS_SIGNAL_TYPE_BEIDOU_B2B_I (0x00100000) --  BeiDou B2B_I RF band (Data)
+      - QMI_LOC_MASK_GNSS_SIGNAL_TYPE_BEIDOU_B2B_Q (0x00200000) --  BeiDou B2B_Q RF band (Pilot)  */
 
   /* Optional */
   /*  Jammer Indicator */
@@ -14790,7 +15212,7 @@ typedef struct {
   */
 
   /* Optional */
-  /*  BDS to NavIC Intersystem Time Bias */
+  /*  BDS B1I to NavIC Intersystem Time Bias */
   uint8_t bdsNavicInterSystemBias_valid;  /**< Must be set to true if bdsNavicInterSystemBias is being passed */
   qmiLocInterSystemBiasStructT_v02 bdsNavicInterSystemBias;
   /**<   \vspace{4pt} \n
@@ -14876,6 +15298,77 @@ typedef struct {
   uint8_t maxSubSeqNum_valid;  /**< Must be set to true if maxSubSeqNum is being passed */
   uint8_t maxSubSeqNum;
   /**<   Maximum number of sub-sequence numbers for a specified sequence number. */
+
+  /* Optional */
+  /*  Data Blob  */
+  uint8_t payload_valid;  /**< Must be set to true if payload is being passed */
+  uint32_t payload_len;  /**< Must be set to # of elements in payload */
+  uint8_t payload[2048];
+  /**<   Data blob payload  */
+
+  /* Optional */
+  /*  GPS to BDS B1C Intersystem Time Bias */
+  uint8_t gpsBdsB1cInterSystemBias_valid;  /**< Must be set to true if gpsBdsB1cInterSystemBias is being passed */
+  qmiLocInterSystemBiasStructT_v02 gpsBdsB1cInterSystemBias;
+  /**<   GPS to BDS B1C Intersystem Time Bias */
+
+  /* Optional */
+  /*  BDS B1C to GLONASS Intersystem Time Bias */
+  uint8_t bdsB1cGloInterSystemBias_valid;  /**< Must be set to true if bdsB1cGloInterSystemBias is being passed */
+  qmiLocInterSystemBiasStructT_v02 bdsB1cGloInterSystemBias;
+  /**<    BDS B1C to GLONASS Intersystem Time Bias. */
+
+  /* Optional */
+  /*  Galileo to BDS B1C Intersystem Time Bias */
+  uint8_t galBdsB1cInterSystemBias_valid;  /**< Must be set to true if galBdsB1cInterSystemBias is being passed */
+  qmiLocInterSystemBiasStructT_v02 galBdsB1cInterSystemBias;
+  /**<   Galileo to BDS B1C Intersystem Time Bias. */
+
+  /* Optional */
+  /*  BDS B1C - B2A Intrasystem Time Bias */
+  uint8_t BdsB1cB2aTimeBias_valid;  /**< Must be set to true if BdsB1cB2aTimeBias is being passed */
+  qmiLocInterSystemBiasStructT_v02 BdsB1cB2aTimeBias;
+  /**<   BDS B1C to B2A time bias (B2A-B1I). */
+
+  /* Optional */
+  /*  BDS B1C to NavIC Intersystem Time Bias */
+  uint8_t bdsB1cNavicInterSystemBias_valid;  /**< Must be set to true if bdsB1cNavicInterSystemBias is being passed */
+  qmiLocInterSystemBiasStructT_v02 bdsB1cNavicInterSystemBias;
+  /**<   BDS B1C to NavIC time bias. */
+
+  /* Optional */
+  /*  BDS B1I - B2B_I Intrasystem Time Bias */
+  uint8_t BdsB1iB2biTimeBias_valid;  /**< Must be set to true if BdsB1iB2biTimeBias is being passed */
+  qmiLocInterSystemBiasStructT_v02 BdsB1iB2biTimeBias;
+  /**<   BDS B1I to B2B_I time bias (B1I-B2B_I). */
+
+  /* Optional */
+  /*  Jammed Signals Mask */
+  uint8_t jammedSignalsMask_valid;  /**< Must be set to true if jammedSignalsMask is being passed */
+  qmiLocGnssSignalTypeMaskT_v02 jammedSignalsMask;
+  /**<   Jammed GNSS signals. Values:
+      - QMI_LOC_MASK_GNSS_SIGNAL_TYPE_GPS_L1CA (0x00000001) --  GPS L1CA RF band \n
+      - QMI_LOC_MASK_GNSS_SIGNAL_TYPE_GPS_L1C (0x00000002) --  GPS L1C RF band \n
+      - QMI_LOC_MASK_GNSS_SIGNAL_TYPE_GPS_L2C_L (0x00000004) --  GPS L2C_L RF band \n
+      - QMI_LOC_MASK_GNSS_SIGNAL_TYPE_GPS_L5_Q (0x00000008) --  GPS L5_Q RF band \n
+      - QMI_LOC_MASK_GNSS_SIGNAL_TYPE_GLONASS_G1 (0x00000010) --  GLONASS G1 (L1OF) RF band \n
+      - QMI_LOC_MASK_GNSS_SIGNAL_TYPE_GLONASS_G2 (0x00000020) --  GLONASS G2 (L2OF) RF band \n
+      - QMI_LOC_MASK_GNSS_SIGNAL_TYPE_GALILEO_E1_C (0x00000040) --  Galileo E1_C RF band \n
+      - QMI_LOC_MASK_GNSS_SIGNAL_TYPE_GALILEO_E5A_Q (0x00000080) --  Galileo E5A_Q RF band \n
+      - QMI_LOC_MASK_GNSS_SIGNAL_TYPE_GALILEO_E5B_Q (0x00000100) --  Galileo E5B_Q RF band \n
+      - QMI_LOC_MASK_GNSS_SIGNAL_TYPE_BEIDOU_B1_I (0x00000200) --  BeiDou B1_I RF band \n
+      - QMI_LOC_MASK_GNSS_SIGNAL_TYPE_BEIDOU_B1C (0x00000400) --  BeiDou B1C RF band \n
+      - QMI_LOC_MASK_GNSS_SIGNAL_TYPE_BEIDOU_B2_I (0x00000800) --  BeiDou B2_I RF band
+      - QMI_LOC_MASK_GNSS_SIGNAL_TYPE_BEIDOU_B2A_I (0x00001000) --  BeiDou B2A_I RF band \n
+      - QMI_LOC_MASK_GNSS_SIGNAL_TYPE_QZSS_L1CA (0x00002000) --  QZSS L1CA RF band \n
+      - QMI_LOC_MASK_GNSS_SIGNAL_TYPE_QZSS_L1S (0x00004000) --  QZSS L1S RF band \n
+      - QMI_LOC_MASK_GNSS_SIGNAL_TYPE_QZSS_L2C_L (0x00008000) --  QZSS L2C_L RF band \n
+      - QMI_LOC_MASK_GNSS_SIGNAL_TYPE_QZSS_L5_Q (0x00010000) --  QZSS L5_Q RF band \n
+      - QMI_LOC_MASK_GNSS_SIGNAL_TYPE_SBAS_L1_CA (0x00020000) --  SBAS L1_CA RF band
+      - QMI_LOC_MASK_GNSS_SIGNAL_TYPE_NAVIC_L5 (0x00040000) --  NavIC L5 RF band \n
+      - QMI_LOC_MASK_GNSS_SIGNAL_TYPE_BEIDOU_B2A_Q (0x00080000) --  BeiDou B2A_Q RF band
+      - QMI_LOC_MASK_GNSS_SIGNAL_TYPE_BEIDOU_B2B_I (0x00100000) --  BeiDou B2B_I RF band (Data)
+      - QMI_LOC_MASK_GNSS_SIGNAL_TYPE_BEIDOU_B2B_Q (0x00200000) --  BeiDou B2B_Q RF band (Pilot)  */
 }qmiLocEventGnssSvMeasInfoIndMsgT_v02;  /* Message */
 /**
     @}
@@ -14901,6 +15394,24 @@ typedef uint64_t qmiLocSignalHealthMaskT_v02;
 #define QMI_LOC_SIGNAL_HEALTH_MASK_L1_UNHEALTHY_V02 ((qmiLocSignalHealthMaskT_v02)0x0040ull) /**<  L1 signal is unhealthy \n */
 #define QMI_LOC_SIGNAL_HEALTH_MASK_L2_UNHEALTHY_V02 ((qmiLocSignalHealthMaskT_v02)0x0080ull) /**<  L2 signal is unhealthy \n */
 #define QMI_LOC_SIGNAL_HEALTH_MASK_L5_UNHEALTHY_V02 ((qmiLocSignalHealthMaskT_v02)0x0100ull) /**<  L5 signal is unhealthy  */
+#define QMI_LOC_SIGNAL_HEALTH_MASK_L2B_HEALTHY_V02 ((qmiLocSignalHealthMaskT_v02)0x0200ull) /**<  L2B signal is healthy \n */
+#define QMI_LOC_SIGNAL_HEALTH_MASK_L2B_UNKNOWN_V02 ((qmiLocSignalHealthMaskT_v02)0x0400ull) /**<  L2B signal health is unknown \n */
+#define QMI_LOC_SIGNAL_HEALTH_MASK_L2B_UNHEALTHY_V02 ((qmiLocSignalHealthMaskT_v02)0x0800ull) /**<  L2B signal is unhealthy  */
+/** @addtogroup loc_qmi_enums
+    @{
+  */
+typedef enum {
+  QMILOCEPHEMERISSOURCEENUMT_MIN_ENUM_VAL_V02 = -2147483647, /**< To force a 32 bit signed enum.  Do not change or use*/
+  eQMI_LOC_EPHEMERIS_SOURCE_OTA_V02 = 1, /**<  Ephemeris decoded over-the-air \n */
+  eQMI_LOC_EPHEMERIS_SOURCE_XTRA_V02 = 2, /**<  Ephemeris from the XTRA file \n */
+  eQMI_LOC_EPHEMERIS_SOURCE_NETWORK_INJECTED_V02 = 3, /**<  Network-injected ephemeris \n */
+  eQMI_LOC_EPHEMERIS_SOURCE_EFS_V02 = 4, /**<  Source is EFS  */
+  QMILOCEPHEMERISSOURCEENUMT_MAX_ENUM_VAL_V02 = 2147483647 /**< To force a 32 bit signed enum.  Do not change or use*/
+}qmiLocEphemerisSourceEnumT_v02;
+/**
+    @}
+  */
+
 /** @addtogroup loc_qmi_messages
     @{
   */
@@ -15219,8 +15730,9 @@ typedef struct {
   qmiLocSignalHealthMaskT_v02 multibandHealth;
   /**<   Multiband health information. GNSS signals under L1/L2/L5 are:\n
  - L1 -- GPS L1, QZSS L1, BDS B1, GLO G1, GAL E1 \n
- - L2 -- BDS B1C, GPS L2C, QZSS L2C \n
+ - L2 -- BDS B1C, GPS L2C, QZSS L2C, GAL E5B \n
  - L5 -- GPS L5, QZSS L5, BDS B2A, GAL E5a, NAVIC L5 \n
+ - L2B -- BDS B2B_I
  Valid bitmasks \n
       - QMI_LOC_SIGNAL_HEALTH_MASK_L1_HEALTHY (0x0001) --  L1 signal is healthy \n
       - QMI_LOC_SIGNAL_HEALTH_MASK_L2_HEALTHY (0x0002) --  L2 signal is healthy \n
@@ -15231,6 +15743,69 @@ typedef struct {
       - QMI_LOC_SIGNAL_HEALTH_MASK_L1_UNHEALTHY (0x0040) --  L1 signal is unhealthy \n
       - QMI_LOC_SIGNAL_HEALTH_MASK_L2_UNHEALTHY (0x0080) --  L2 signal is unhealthy \n
       - QMI_LOC_SIGNAL_HEALTH_MASK_L5_UNHEALTHY (0x0100) --  L5 signal is unhealthy
+      - QMI_LOC_SIGNAL_HEALTH_MASK_L2B_HEALTHY (0x0200) --  L2B signal is healthy \n
+      - QMI_LOC_SIGNAL_HEALTH_MASK_L2B_UNKNOWN (0x0400) --  L2B signal health is unknown \n
+      - QMI_LOC_SIGNAL_HEALTH_MASK_L2B_UNHEALTHY (0x0800) --  L2B signal is unhealthy
+ */
+
+  /* Optional */
+  /*  Time of Group Delay - BDS B2B_I (Data) */
+  uint8_t bdsTgdB2bi_valid;  /**< Must be set to true if bdsTgdB2bi is being passed */
+  float bdsTgdB2bi;
+  /**<   Time of group delay -- BDS B2B_I (Data). \n
+       - Units -- Milliseconds
+  */
+
+  /* Optional */
+  /*  Intersignal Correction - BDS B2B_I (Data) */
+  uint8_t bdsIscB2bi_valid;  /**< Must be set to true if bdsIscB2bi is being passed */
+  float bdsIscB2bi;
+  /**<   Intersignal correction between BDS B2B_I (Data) and pilot channels. \n
+       - Units -- Milliseconds
+  */
+
+  /* Optional */
+  /*  Clock Data Reference Time of Week */
+  uint8_t toc_valid;  /**< Must be set to true if toc is being passed */
+  uint32_t toc;
+  /**<   Clock data reference time of week.  \n
+       - Units -- Seconds \n
+	   If source is ephemeris, \n
+         for GPS/QZSS/BDS/GAL/NAVIC - value is decoded over the air in full GPS seconds \n
+         for GLONASS - same as GLO TOE in full GPS seconds. \n
+       If source is XTRA, \n
+         for GPS/QZSS/BDS/GAL/GLO - same as XTRA Time of Applicability in full GPS seconds. */
+
+  /* Optional */
+  /*  Issue of Data, Clock */
+  uint8_t IODC_valid;  /**< Must be set to true if IODC is being passed */
+  uint16_t IODC;
+  /**<   Issue of data, clock (unitless).
+    */
+
+  /* Optional */
+  /*  Reference Time Ephemeris */
+  uint8_t toe_valid;  /**< Must be set to true if toe is being passed */
+  uint32_t toe;
+  /**<   Reference time of ephemeris. \n
+       - Units -- Seconds \n
+	   If source is ephemeris, \n
+         for GPS/QZSS/GAL/BDS - value is decoded over the air. \n
+         for GLO - value corresponds to ephemeris Tb. \n
+       If source is XTRA, \n
+         for GPS/QZSS/GAL/BDS - value is set to 0. \n
+         for GLO - value is set to the XTRA fit interval. */
+
+  /* Optional */
+  /*  Ephemeris Source */
+  uint8_t ephemerisSrc_valid;  /**< Must be set to true if ephemerisSrc is being passed */
+  qmiLocEphemerisSourceEnumT_v02 ephemerisSrc;
+  /**<   Source of ephemeris if polynomials are based on ephemeris. Valid Values: \n
+      - eQMI_LOC_EPHEMERIS_SOURCE_OTA (1) --  Ephemeris decoded over-the-air \n
+      - eQMI_LOC_EPHEMERIS_SOURCE_XTRA (2) --  Ephemeris from the XTRA file \n
+      - eQMI_LOC_EPHEMERIS_SOURCE_NETWORK_INJECTED (3) --  Network-injected ephemeris \n
+      - eQMI_LOC_EPHEMERIS_SOURCE_EFS (4) --  Source is EFS
+
  */
 }qmiLocEventGnssSvPolyIndMsgT_v02;  /* Message */
 /**
@@ -16587,7 +17162,10 @@ typedef struct {
       - eQMI_LOC_POSITION_SRC_TERRESTRIAL (4) --  Position source is Terrestrial \n
       - eQMI_LOC_POSITION_SRC_GNSS_TERRESTRIAL_HYBRID (5) --  Position source is GNSS Terrestrial Hybrid \n
       - eQMI_LOC_POSITION_SRC_OTHER (6) --  Other sources \n
-      - eQMI_LOC_POSITION_SRC_DRE (7) --  Position source is the dead reckoning engine
+      - eQMI_LOC_POSITION_SRC_DRE (7) --  Position source is the dead reckoning engine \n
+      - eQMI_LOC_POSITION_SRC_FLP (8) --  Position source is Fused Location Provider \n
+      - eQMI_LOC_POSITION_SRC_NLP (9) --  Position source is Network Location Provider \n
+      - eQMI_LOC_POSITION_SRC_FLP_ALE (10) --  Position source is derived from Source MPSS
  */
 
   /* Optional */
@@ -16641,7 +17219,9 @@ typedef struct {
       - QMI_LOC_MASK_GNSS_SIGNAL_TYPE_QZSS_L5_Q (0x00010000) --  QZSS L5_Q RF band \n
       - QMI_LOC_MASK_GNSS_SIGNAL_TYPE_SBAS_L1_CA (0x00020000) --  SBAS L1_CA RF band
       - QMI_LOC_MASK_GNSS_SIGNAL_TYPE_NAVIC_L5 (0x00040000) --  NavIC L5 RF band \n
-      - QMI_LOC_MASK_GNSS_SIGNAL_TYPE_BEIDOU_B2A_Q (0x00080000) --  BeiDou B2A_Q RF band  */
+      - QMI_LOC_MASK_GNSS_SIGNAL_TYPE_BEIDOU_B2A_Q (0x00080000) --  BeiDou B2A_Q RF band
+      - QMI_LOC_MASK_GNSS_SIGNAL_TYPE_BEIDOU_B2B_I (0x00100000) --  BeiDou B2B_I RF band (Data)
+      - QMI_LOC_MASK_GNSS_SIGNAL_TYPE_BEIDOU_B2B_Q (0x00200000) --  BeiDou B2B_Q RF band (Pilot)  */
 }qmiLocEventDbtPositionReportIndMsgT_v02;  /* Message */
 /**
     @}
@@ -17709,6 +18289,12 @@ typedef struct {
  Values: \n
       - eQMI_LOC_XTRA_DATA (0) --  Default is XTRA format.
  */
+
+  /* Optional */
+  /*  Special File Type Info */
+  uint8_t fileInfo_valid;  /**< Must be set to true if fileInfo is being passed */
+  qmiLocPredictedOrbitsSpecialFileTypeStructT_v02 fileInfo;
+  /**<   File type and download interval information */
 }qmiLocInjectXtraDataReqMsgT_v02;  /* Message */
 /**
     @}
@@ -17843,6 +18429,11 @@ typedef enum {
   eQMI_LOC_SUPPORTED_FEATURE_ROBUST_LOCATION_V02 = 12, /**<  Support Robust Location feature  */
   eQMI_LOC_SUPPORTED_FEATURE_EDGNSS_V02 = 13, /**<  Support enhanced DGNSS  */
   eQMI_LOC_SUPPORTED_FEATURE_MULTIBAND_CONFIG_V02 = 14, /**<  Support the multiband GNSS configuration feature  */
+  eQMI_LOC_SUPPORTED_FEATURE_QMI_AGNSS_CONFIG_DISABLED_V02 = 15, /**<  Support the AGNSS configuration for DSDA   */
+  eQMI_LOC_SUPPORTED_FEATURE_MULTIPLE_ATTRIBUTION_APPS_V02 = 16, /**<  Support the Multiple Attribution Apps(UTH clients Lock control) feature    */
+  eQMI_LOC_SUPPORTED_FEATURE_FLP_NLP_SOURCE_V02 = 17, /**<  Support the FLP, NLP Z-Source provider feature  */
+  eQMI_LOC_SUPPORTED_FEATURE_ENGINE_DEBUG_DATA_V02 = 18, /**<  Support the feature to report engine debug data  */
+  eQMI_LOC_SUPPORTED_FEATURE_DYNAMIC_FEATURE_STATUS_V02 = 19, /**<  Support the feature to dynamically report feature status on update */
   QMILOCSUPPORTEDFEATUREENUMT_MAX_ENUM_VAL_V02 = 2147483647 /**< To force a 32 bit signed enum.  Do not change or use*/
 }qmiLocSupportedFeatureEnumT_v02;
 /**
@@ -17858,6 +18449,8 @@ typedef uint64_t qmiLocFeaturesStatusMaskT_v02;
 #define QMI_LOC_FEATURE_STATUS_TIME_FREQUENCY_V02 ((qmiLocFeaturesStatusMaskT_v02)0x00000020ull) /**<  Time and Frequency status.\n  */
 #define QMI_LOC_FEATURE_STATUS_TIME_UNCERTAINTY_V02 ((qmiLocFeaturesStatusMaskT_v02)0x00000040ull) /**<  Time Uncertainty  status. \n */
 #define QMI_LOC_FEATURE_STATUS_CLOCK_ESTIMATE_V02 ((qmiLocFeaturesStatusMaskT_v02)0x00000080ull) /**<  Clock Estimate status. \n */
+#define QMI_LOC_FEATURE_STATUS_DGNSS_V02 ((qmiLocFeaturesStatusMaskT_v02)0x00000100ull) /**<  DGNSS feature status. \n */
+#define QMI_LOC_FEATURE_STATUS_QPPE_V02 ((qmiLocFeaturesStatusMaskT_v02)0x00000200ull) /**<  QPPE feature status.  */
 /** @addtogroup loc_qmi_messages
     @{
   */
@@ -17913,6 +18506,8 @@ typedef struct {
       - QMI_LOC_FEATURE_STATUS_TIME_FREQUENCY (0x00000020) --  Time and Frequency status.\n
       - QMI_LOC_FEATURE_STATUS_TIME_UNCERTAINTY (0x00000040) --  Time Uncertainty  status. \n
       - QMI_LOC_FEATURE_STATUS_CLOCK_ESTIMATE (0x00000080) --  Clock Estimate status. \n
+      - QMI_LOC_FEATURE_STATUS_DGNSS (0x00000100) --  DGNSS feature status. \n
+      - QMI_LOC_FEATURE_STATUS_QPPE (0x00000200) --  QPPE feature status.
  */
 }qmiLocGetSupportedFeatureIndMsgT_v02;  /* Message */
 /**
@@ -18476,14 +19071,16 @@ typedef uint32_t qmiLocXtraInfoMaskT_v02;
 #define QMI_LOC_XTRA_INFO_MASK_TIME_REQUEST_V02 ((qmiLocXtraInfoMaskT_v02)0x00000010) /**<  Requests the control point to send QMI_LOC_INJECT_UTC_TIME_REQ
        to the engine \n */
 #define QMI_LOC_XTRA_INFO_MASK_PREF_VALID_AGE_V02 ((qmiLocXtraInfoMaskT_v02)0x00000020) /**<  Preferred valid age \n */
-#define QMI_LOC_XTRA_INFO_MASK_NAVIC_EPH_ASSIST_V02 ((qmiLocXtraInfoMaskT_v02)0x00000040) /**<  Support for Navic ephemeris assistance data  */
+#define QMI_LOC_XTRA_INFO_MASK_NAVIC_EPH_ASSIST_V02 ((qmiLocXtraInfoMaskT_v02)0x00000040) /**<  Support for Navic ephemeris assistance data \n  */
+#define QMI_LOC_XTRA_INFO_MASK_XTRA_DISABLED_V02 ((qmiLocXtraInfoMaskT_v02)0x00000080) /**<  XTRA disabled if set   */
 /** @addtogroup loc_qmi_aggregates
     @{
   */
 typedef struct {
 
   qmiLocXtraInfoMaskT_v02 reportMask;
-  /**<   Bitmask indicating which of the fields in this TLV are reported. \n
+  /**<   Bitmask indicating the corresponding fields in this TLV that are reported and other status information
+. \n
  Values: \n
       - QMI_LOC_XTRA_INFO_MASK_ABS_AGE (0x00000001) --  Number of hours for which the current XTRA information is valid \n
       - QMI_LOC_XTRA_INFO_MASK_REL_AGE (0x00000002) --  Last XTRA data download time \n
@@ -18492,32 +19089,35 @@ typedef struct {
       - QMI_LOC_XTRA_INFO_MASK_TIME_REQUEST (0x00000010) --  Requests the control point to send QMI_LOC_INJECT_UTC_TIME_REQ
        to the engine \n
       - QMI_LOC_XTRA_INFO_MASK_PREF_VALID_AGE (0x00000020) --  Preferred valid age \n
-      - QMI_LOC_XTRA_INFO_MASK_NAVIC_EPH_ASSIST (0x00000040) --  Support for Navic ephemeris assistance data  */
+      - QMI_LOC_XTRA_INFO_MASK_NAVIC_EPH_ASSIST (0x00000040) --  Support for Navic ephemeris assistance data \n
+      - QMI_LOC_XTRA_INFO_MASK_XTRA_DISABLED (0x00000080) --  XTRA disabled if set   */
 
   uint16_t absAgeHrs;
-  /**<   Number of hours for which the current XTRA information is valid \n
+  /**<   Number of hours for which the current XTRA information is valid.
+       Valid if QMI_LOC_XTRA_INFO_MASK_ABS_AGE is set. \n
        - Units -- Hours */
 
   uint64_t relAgeInUTC;
-  /**<   Last XTRA data download time in UTC. \n
+  /**<   Last XTRA data download time in UTC.
+       Valid if QMI_LOC_XTRA_INFO_MASK_REL_AGE is set. \n
        - Units -- Milliseconds */
 
   qmiLocPredictedOrbitsServerListStructT_v02 xtraServerInfo;
   /**<   Contains information about the XTRA servers that can be used by the control
-       point to download XTRA data. */
+       point to download XTRA data. Valid if QMI_LOC_XTRA_INFO_MASK_XTRA_SERVER is set.  */
 
   qmiLocTimeServerListStructT_v02 ntpServerInfo;
   /**<   Contains information about the time servers recommended by the
-       location service for the UTC time. */
+       location service for the UTC time. Valid if QMI_LOC_XTRA_INFO_MASK_NTP_SERVER is set.  */
 
   uint8_t timeRequest;
   /**<    Requests the control point to send QMI_LOC_INJECT_UTC_TIME_REQ
-        to the engine. \n
+        to the engine. Valid if QMI_LOC_XTRA_INFO_MASK_TIME_REQUEST is set. \n
        - 0x00 (FALSE) -- The engine has the UTC time \n
        - 0x01 (TRUE) -- Requests the control point to inject the UTC time to the engine */
 
   uint16_t preferedValidAgeHrs;
-  /**<   Preferred valid age. \n
+  /**<   Preferred valid age. Valid if QMI_LOC_XTRA_INFO_MASK_PREF_VALID_AGE is set. \n
        - Units -- Hours */
 }qmiLocXtraInfoStructT_v02;  /* Type */
 /**
@@ -18597,6 +19197,51 @@ typedef struct {
   /*  MP XTRA Version */
   uint8_t mpVersion_valid;  /**< Must be set to true if mpVersion is being passed */
   qmiLocVersionStructT_v02 mpVersion;
+
+  /* Optional */
+  /*  Gnss Usable Constellation Config */
+  uint8_t usableConstellationConfig_valid;  /**< Must be set to true if usableConstellationConfig is being passed */
+  qmiLocGNSSConstellEnumT_v02 usableConstellationConfig;
+
+  /* Optional */
+  /*  Gnss Forced Enable Config */
+  uint8_t forcedEnableConfig_valid;  /**< Must be set to true if forcedEnableConfig is being passed */
+  qmiLocGNSSConstellEnumT_v02 forcedEnableConfig;
+
+  /* Optional */
+  /*  Gnss Multiband Enabled */
+  uint8_t multibandEnabled_valid;  /**< Must be set to true if multibandEnabled is being passed */
+  uint8_t multibandEnabled;
+
+  /* Optional */
+  /*  XTRA File Version */
+  uint8_t xtraFileVersion_valid;  /**< Must be set to true if xtraFileVersion is being passed */
+  qmiLocVersionStructT_v02 xtraFileVersion;
+
+  /* Optional */
+  /*  SIM MCC(Mobile Country Code) Value */
+  uint8_t mccPrimarySimSlot_valid;  /**< Must be set to true if mccPrimarySimSlot is being passed */
+  uint16_t mccPrimarySimSlot;
+
+  /* Optional */
+  /*  SIM MCC(Mobile Country Code) Value */
+  uint8_t mccSecondarySimSlot_valid;  /**< Must be set to true if mccSecondarySimSlot is being passed */
+  uint16_t mccSecondarySimSlot;
+
+  /* Optional */
+  /*  SIM MCC(Mobile Country Code) Value */
+  uint8_t mccTertiarySimSlot_valid;  /**< Must be set to true if mccTertiarySimSlot is being passed */
+  uint16_t mccTertiarySimSlot;
+
+  /* Optional */
+  /*  XTRA File Generation Time */
+  uint8_t xtraFileGenerationTime_valid;  /**< Must be set to true if xtraFileGenerationTime is being passed */
+  uint64_t xtraFileGenerationTime;
+
+  /* Optional */
+  /*  XTRA Remaining Valid Age in Minutes */
+  uint8_t xtraRemValidDuration_valid;  /**< Must be set to true if xtraRemValidDuration is being passed */
+  uint32_t xtraRemValidDuration;
 }qmiLocQueryXtraInfoIndMsgT_v02;  /* Message */
 /**
     @}
@@ -19505,11 +20150,11 @@ typedef struct {
   */
 
 typedef uint64_t qmiLocConstellationMaskT_v02;
-#define QMI_LOC_CONSTELLATION_GLO_V02 ((qmiLocConstellationMaskT_v02)0x00000001ull) /**<  Enable GLONASS. \n  */
-#define QMI_LOC_CONSTELLATION_BDS_V02 ((qmiLocConstellationMaskT_v02)0x00000002ull) /**<  Enable BDS.\n  */
-#define QMI_LOC_CONSTELLATION_QZSS_V02 ((qmiLocConstellationMaskT_v02)0x00000004ull) /**<  Enable QZSS. \n */
-#define QMI_LOC_CONSTELLATION_GAL_V02 ((qmiLocConstellationMaskT_v02)0x00000008ull) /**<  Enable Galileo. \n */
-#define QMI_LOC_CONSTELLATION_NAVIC_V02 ((qmiLocConstellationMaskT_v02)0x00000010ull) /**<  Enable NavIC.  */
+#define QMI_LOC_CONSTELLATION_GLO_V02 ((qmiLocConstellationMaskT_v02)0x00000001ull) /**<  GLONASS. \n  */
+#define QMI_LOC_CONSTELLATION_BDS_V02 ((qmiLocConstellationMaskT_v02)0x00000002ull) /**<  BDS.\n  */
+#define QMI_LOC_CONSTELLATION_QZSS_V02 ((qmiLocConstellationMaskT_v02)0x00000004ull) /**<  QZSS. \n */
+#define QMI_LOC_CONSTELLATION_GAL_V02 ((qmiLocConstellationMaskT_v02)0x00000008ull) /**<  Galileo. \n */
+#define QMI_LOC_CONSTELLATION_NAVIC_V02 ((qmiLocConstellationMaskT_v02)0x00000010ull) /**<  NavIC.  */
 /** @addtogroup loc_qmi_messages
     @{
   */
@@ -19534,11 +20179,11 @@ typedef struct {
  GPS is always enabled.
  Valid only when resetConstellations is FALSE.
  Valid bitmasks: \n
-      - QMI_LOC_CONSTELLATION_GLO (0x00000001) --  Enable GLONASS. \n
-      - QMI_LOC_CONSTELLATION_BDS (0x00000002) --  Enable BDS.\n
-      - QMI_LOC_CONSTELLATION_QZSS (0x00000004) --  Enable QZSS. \n
-      - QMI_LOC_CONSTELLATION_GAL (0x00000008) --  Enable Galileo. \n
-      - QMI_LOC_CONSTELLATION_NAVIC (0x00000010) --  Enable NavIC.  */
+      - QMI_LOC_CONSTELLATION_GLO (0x00000001) --  GLONASS. \n
+      - QMI_LOC_CONSTELLATION_BDS (0x00000002) --  BDS.\n
+      - QMI_LOC_CONSTELLATION_QZSS (0x00000004) --  QZSS. \n
+      - QMI_LOC_CONSTELLATION_GAL (0x00000008) --  Galileo. \n
+      - QMI_LOC_CONSTELLATION_NAVIC (0x00000010) --  NavIC.  */
 
   /* Optional */
   /*  GNSS Constellations to Disable */
@@ -19548,11 +20193,11 @@ typedef struct {
  GPS cannot be disabled.
  Valid only when resetConstellations is FALSE.
  Valid bitmasks: \n
-      - QMI_LOC_CONSTELLATION_GLO (0x00000001) --  Enable GLONASS. \n
-      - QMI_LOC_CONSTELLATION_BDS (0x00000002) --  Enable BDS.\n
-      - QMI_LOC_CONSTELLATION_QZSS (0x00000004) --  Enable QZSS. \n
-      - QMI_LOC_CONSTELLATION_GAL (0x00000008) --  Enable Galileo. \n
-      - QMI_LOC_CONSTELLATION_NAVIC (0x00000010) --  Enable NavIC.  */
+      - QMI_LOC_CONSTELLATION_GLO (0x00000001) --  GLONASS. \n
+      - QMI_LOC_CONSTELLATION_BDS (0x00000002) --  BDS.\n
+      - QMI_LOC_CONSTELLATION_QZSS (0x00000004) --  QZSS. \n
+      - QMI_LOC_CONSTELLATION_GAL (0x00000008) --  Galileo. \n
+      - QMI_LOC_CONSTELLATION_NAVIC (0x00000010) --  NavIC.  */
 }qmiLocSetConstellationConfigReqMsgT_v02;  /* Message */
 /**
     @}
@@ -19661,19 +20306,6 @@ typedef struct {
     @}
   */
 
-/** @addtogroup loc_qmi_enums
-    @{
-  */
-typedef enum {
-  QMILOCENGINELOCKSTATEENUMT_MIN_ENUM_VAL_V02 = -2147483647, /**< To force a 32 bit signed enum.  Do not change or use*/
-  eQMI_LOC_ENGINE_LOCK_STATE_ENABLED_V02 = 1, /**<  Location engine is enabled \n */
-  eQMI_LOC_ENGINE_LOCK_STATE_DISABLED_V02 = 2, /**<  location engine is disabled for mobile-initiated sessions  */
-  QMILOCENGINELOCKSTATEENUMT_MAX_ENUM_VAL_V02 = 2147483647 /**< To force a 32 bit signed enum.  Do not change or use*/
-}qmiLocEngineLockStateEnumT_v02;
-/**
-    @}
-  */
-
 /** @addtogroup loc_qmi_messages
     @{
   */
@@ -19683,11 +20315,9 @@ typedef struct {
   /* Mandatory */
   /*  Engine State */
   qmiLocEngineLockStateEnumT_v02 engineLockState;
-  /**<   Location engine lock state.
- Values: \n
-      - eQMI_LOC_ENGINE_LOCK_STATE_ENABLED (1) --  Location engine is enabled \n
-      - eQMI_LOC_ENGINE_LOCK_STATE_DISABLED (2) --  location engine is disabled for mobile-initiated sessions
- */
+  /**<   Location engine lock state. Values:
+      - eQMI_LOC_ENGINE_LOCK_STATE_ENABLED (1) --  Location engine is enabled.
+      - eQMI_LOC_ENGINE_LOCK_STATE_DISABLED (2) --  location engine is disabled for mobile-initiated sessions.  */
 
   /* Optional */
   /*  Subscription Type */
@@ -21148,6 +21778,8 @@ typedef struct {
       - QMI_LOC_FEATURE_STATUS_TIME_FREQUENCY (0x00000020) --  Time and Frequency status.\n
       - QMI_LOC_FEATURE_STATUS_TIME_UNCERTAINTY (0x00000040) --  Time Uncertainty  status. \n
       - QMI_LOC_FEATURE_STATUS_CLOCK_ESTIMATE (0x00000080) --  Clock Estimate status. \n
+      - QMI_LOC_FEATURE_STATUS_DGNSS (0x00000100) --  DGNSS feature status. \n
+      - QMI_LOC_FEATURE_STATUS_QPPE (0x00000200) --  QPPE feature status.
  */
 }qmiLocEventReportIndMsgT_v02;  /* Message */
 /**
@@ -21305,7 +21937,12 @@ typedef enum {
   eQMI_LOC_SIM_V02 = 3, /**<  SIM requests the location \n  */
   eQMI_LOC_MDT_V02 = 4, /**<  MDT requests the location \n  */
   eQMI_LOC_TLOC_V02 = 5, /**<  Trusted location requests the location \n */
-  eQMI_LOC_OTHER_V02 = 6, /**<  Other protocol stack requests the location  */
+  eQMI_LOC_OTHER_V02 = 6, /**<  Other protocol stack requests the location \n  */
+  eQMI_LOC_RLOC_V02 = 7, /**<  Robust Location Client requests the location  \n  */
+  eQMI_LOC_V2X_V02 = 8, /**<  V2X Client requests the location \n  */
+  eQMI_LOC_R1_V02 = 9, /**<  Reserved UTH OEM Client 1 requests the location  \n  */
+  eQMI_LOC_R2_V02 = 10, /**<  Reserved UTH OEM Client 2 requests the location  \n  */
+  eQMI_LOC_R3_V02 = 11, /**<  Reserved UTH OEM Client 3 requests the location    */
   QMILOCREQUESTPROTOCOLENUMT_MAX_ENUM_VAL_V02 = 2147483647 /**< To force a 32 bit signed enum.  Do not change or use*/
 }qmiLocRequestProtocolEnumT_v02;
 /**
@@ -21372,7 +22009,12 @@ typedef struct {
       - eQMI_LOC_SIM (3) --  SIM requests the location \n
       - eQMI_LOC_MDT (4) --  MDT requests the location \n
       - eQMI_LOC_TLOC (5) --  Trusted location requests the location \n
-      - eQMI_LOC_OTHER (6) --  Other protocol stack requests the location
+      - eQMI_LOC_OTHER (6) --  Other protocol stack requests the location \n
+      - eQMI_LOC_RLOC (7) --  Robust Location Client requests the location  \n
+      - eQMI_LOC_V2X (8) --  V2X Client requests the location \n
+      - eQMI_LOC_R1 (9) --  Reserved UTH OEM Client 1 requests the location  \n
+      - eQMI_LOC_R2 (10) --  Reserved UTH OEM Client 2 requests the location  \n
+      - eQMI_LOC_R3 (11) --  Reserved UTH OEM Client 3 requests the location
  */
 
   /* Mandatory */
@@ -22141,7 +22783,9 @@ typedef struct {
       - QMI_LOC_MASK_GNSS_SIGNAL_TYPE_QZSS_L5_Q (0x00010000) --  QZSS L5_Q RF band \n
       - QMI_LOC_MASK_GNSS_SIGNAL_TYPE_SBAS_L1_CA (0x00020000) --  SBAS L1_CA RF band
       - QMI_LOC_MASK_GNSS_SIGNAL_TYPE_NAVIC_L5 (0x00040000) --  NavIC L5 RF band \n
-      - QMI_LOC_MASK_GNSS_SIGNAL_TYPE_BEIDOU_B2A_Q (0x00080000) --  BeiDou B2A_Q RF band  */
+      - QMI_LOC_MASK_GNSS_SIGNAL_TYPE_BEIDOU_B2A_Q (0x00080000) --  BeiDou B2A_Q RF band
+      - QMI_LOC_MASK_GNSS_SIGNAL_TYPE_BEIDOU_B2B_I (0x00100000) --  BeiDou B2B_I RF band (Data)
+      - QMI_LOC_MASK_GNSS_SIGNAL_TYPE_BEIDOU_B2B_Q (0x00200000) --  BeiDou B2B_Q RF band (Pilot)  */
 
   /* Optional */
   /*  Measurement Variance 1 */
@@ -22180,12 +22824,52 @@ typedef struct {
   */
 /** Indication Message; Requests the control point to query XTRA information. */
 typedef struct {
-  /* This element is a placeholder to prevent the declaration of
-     an empty struct.  DO NOT USE THIS FIELD UNDER ANY CIRCUMSTANCE */
-  char __placeholder;
-}qmiLocEventQueryXtraInfoReqIndMsgT_v02;
 
-  /* Message */
+  /* Optional */
+  /*  Gnss Usable Constellation Config */
+  uint8_t usableConstellationConfig_valid;  /**< Must be set to true if usableConstellationConfig is being passed */
+  qmiLocGNSSConstellEnumT_v02 usableConstellationConfig;
+
+  /* Optional */
+  /*  Gnss Forced Enable Config */
+  uint8_t forcedEnableConfig_valid;  /**< Must be set to true if forcedEnableConfig is being passed */
+  qmiLocGNSSConstellEnumT_v02 forcedEnableConfig;
+
+  /* Optional */
+  /*  Gnss Multiband Enabled */
+  uint8_t multibandEnabled_valid;  /**< Must be set to true if multibandEnabled is being passed */
+  uint8_t multibandEnabled;
+
+  /* Optional */
+  /*  XTRA File Version */
+  uint8_t xtraFileVersion_valid;  /**< Must be set to true if xtraFileVersion is being passed */
+  qmiLocVersionStructT_v02 xtraFileVersion;
+
+  /* Optional */
+  /*  SIM MCC(Mobile Country Code) Value */
+  uint8_t mccPrimarySimSlot_valid;  /**< Must be set to true if mccPrimarySimSlot is being passed */
+  uint16_t mccPrimarySimSlot;
+
+  /* Optional */
+  /*  SIM MCC(Mobile Country Code) Value */
+  uint8_t mccSecondarySimSlot_valid;  /**< Must be set to true if mccSecondarySimSlot is being passed */
+  uint16_t mccSecondarySimSlot;
+
+  /* Optional */
+  /*  SIM MCC(Mobile Country Code) Value */
+  uint8_t mccTertiarySimSlot_valid;  /**< Must be set to true if mccTertiarySimSlot is being passed */
+  uint16_t mccTertiarySimSlot;
+
+  /* Optional */
+  /*  XTRA File Generation Time */
+  uint8_t xtraFileGenerationTime_valid;  /**< Must be set to true if xtraFileGenerationTime is being passed */
+  uint64_t xtraFileGenerationTime;
+
+  /* Optional */
+  /*  XTRA Remaining Valid Age in Minutes */
+  uint8_t xtraRemValidDuration_valid;  /**< Must be set to true if xtraRemValidDuration is being passed */
+  uint32_t xtraRemValidDuration;
+}qmiLocEventQueryXtraInfoReqIndMsgT_v02;  /* Message */
 /**
     @}
   */
@@ -22197,6 +22881,13 @@ typedef enum {
   QMILOCPARAMETERTYPEENUMT_MIN_ENUM_VAL_V02 = -2147483647, /**< To force a 32 bit signed enum.  Do not change or use*/
   eQMI_LOC_PARAMETER_TYPE_RESERVED_V02 = 0, /**<  Do not use.  */
   eQMI_LOC_PARAMETER_TYPE_MINIMUM_SV_ELEVATION_V02 = 1, /**<  Minimum SV elevation to use for computing position.  */
+  eQMI_LOC_PARAMETER_TYPE_CONSTELLATION_DISABLE_CONFIG_V02 = 2, /**<  GNSS constellation disable config to be written to non-volatile memory.
+       This parameter is only supported on certain legacy SPs where alternative
+       API(s) to disable constellation(s) are not available. \n
+
+       Note: Only constellations than can be disabled via NV shall be supported. \n
+       For ex. GPS and QZSS cannot be disabled via NV and will be ignored, if set. \n
+       NAVIC may be disabled only if supported and NV controllable.  */
   QMILOCPARAMETERTYPEENUMT_MAX_ENUM_VAL_V02 = 2147483647 /**< To force a 32 bit signed enum.  Do not change or use*/
 }qmiLocParameterTypeEnumT_v02;
 /**
@@ -22216,6 +22907,13 @@ typedef struct {
   /**<   Parameter type. Values: \n
       - eQMI_LOC_PARAMETER_TYPE_RESERVED (0) --  Do not use.
       - eQMI_LOC_PARAMETER_TYPE_MINIMUM_SV_ELEVATION (1) --  Minimum SV elevation to use for computing position.
+      - eQMI_LOC_PARAMETER_TYPE_CONSTELLATION_DISABLE_CONFIG (2) --  GNSS constellation disable config to be written to non-volatile memory.
+       This parameter is only supported on certain legacy SPs where alternative
+       API(s) to disable constellation(s) are not available. \n
+
+       Note: Only constellations than can be disabled via NV shall be supported. \n
+       For ex. GPS and QZSS cannot be disabled via NV and will be ignored, if set. \n
+       NAVIC may be disabled only if supported and NV controllable.
  */
 
   /* Optional */
@@ -22228,6 +22926,19 @@ typedef struct {
        - Units -- Degrees \n
        - Range -- 0 - 90
   */
+
+  /* Optional */
+  /*  GNSS Constellation Configuration */
+  uint8_t constellationConfig_valid;  /**< Must be set to true if constellationConfig is being passed */
+  qmiLocGNSSConstellEnumT_v02 constellationConfig;
+  /**<   Constellation Configuration. Valid values: \n
+      - eQMI_SYSTEM_GPS (0x01) --  Enable GPS \n
+      - eQMI_SYSTEM_GLO (0x02) --  Enable GLONASS \n
+      - eQMI_SYSTEM_BDS (0x04) --  Enable BDS \n
+      - eQMI_SYSTEM_GAL (0x08) --  Enable Galileo \n
+      - eQMI_SYSTEM_QZSS (0x10) --  Enable QZSS \n
+      - eQMI_SYSTEM_NAVIC (0x20) --  Enable NavIC
+ */
 }qmiLocSetParameterReqMsgT_v02;  /* Message */
 /**
     @}
@@ -22246,6 +22957,13 @@ typedef struct {
   /**<   Parameter type. Values:
       - eQMI_LOC_PARAMETER_TYPE_RESERVED (0) --  Do not use.
       - eQMI_LOC_PARAMETER_TYPE_MINIMUM_SV_ELEVATION (1) --  Minimum SV elevation to use for computing position.
+      - eQMI_LOC_PARAMETER_TYPE_CONSTELLATION_DISABLE_CONFIG (2) --  GNSS constellation disable config to be written to non-volatile memory.
+       This parameter is only supported on certain legacy SPs where alternative
+       API(s) to disable constellation(s) are not available. \n
+
+       Note: Only constellations than can be disabled via NV shall be supported. \n
+       For ex. GPS and QZSS cannot be disabled via NV and will be ignored, if set. \n
+       NAVIC may be disabled only if supported and NV controllable.
  */
 }qmiLocGetParameterReqMsgT_v02;  /* Message */
 /**
@@ -22283,6 +23001,13 @@ typedef struct {
   /**<   Parameter type. Values: \n
       - eQMI_LOC_PARAMETER_TYPE_RESERVED (0) --  Do not use.
       - eQMI_LOC_PARAMETER_TYPE_MINIMUM_SV_ELEVATION (1) --  Minimum SV elevation to use for computing position.
+      - eQMI_LOC_PARAMETER_TYPE_CONSTELLATION_DISABLE_CONFIG (2) --  GNSS constellation disable config to be written to non-volatile memory.
+       This parameter is only supported on certain legacy SPs where alternative
+       API(s) to disable constellation(s) are not available. \n
+
+       Note: Only constellations than can be disabled via NV shall be supported. \n
+       For ex. GPS and QZSS cannot be disabled via NV and will be ignored, if set. \n
+       NAVIC may be disabled only if supported and NV controllable.
  */
 
   /* Optional */
@@ -22295,6 +23020,19 @@ typedef struct {
        - Units -- Degrees \n
        - Range -- 0 - 90
   */
+
+  /* Optional */
+  /*  GNSS Constellation Configuration */
+  uint8_t constellationConfig_valid;  /**< Must be set to true if constellationConfig is being passed */
+  qmiLocGNSSConstellEnumT_v02 constellationConfig;
+  /**<   Constellation Configuration. Valid values: \n
+      - eQMI_SYSTEM_GPS (0x01) --  Enable GPS \n
+      - eQMI_SYSTEM_GLO (0x02) --  Enable GLONASS \n
+      - eQMI_SYSTEM_BDS (0x04) --  Enable BDS \n
+      - eQMI_SYSTEM_GAL (0x08) --  Enable Galileo \n
+      - eQMI_SYSTEM_QZSS (0x10) --  Enable QZSS \n
+      - eQMI_SYSTEM_NAVIC (0x20) --  Enable NavIC
+ */
 }qmiLocGetParameterIndMsgT_v02;  /* Message */
 /**
     @}
@@ -22585,6 +23323,15 @@ typedef struct {
   float clkTimeBiasUnc;
   /**<   One-sided maximum time bias uncertainty in float. \n
          - Units -- Milliseconds */
+
+  /* Optional */
+  /*  PDR Engagement Rate  */
+  uint8_t pdrEngagementRate_valid;  /**< Must be set to true if pdrEngagementRate is being passed */
+  uint8_t pdrEngagementRate;
+  /**<   PDR Engagement Rate as a percentage.
+       It is defined as the rate of total number of fix reports with
+       PED mode engaged over the total number of fix reports. \n
+        - Range -- 0 to 100  */
 }qmiLocGnssStatisticsReportIndMsgT_v02;  /* Message */
 /**
     @}
@@ -22899,6 +23646,1283 @@ typedef struct {
     @}
   */
 
+/** @addtogroup loc_qmi_messages
+    @{
+  */
+/** Request Message; Injects the Civic Address. */
+typedef struct {
+
+  /* Optional */
+  /*  Latitude */
+  uint8_t latitude_valid;  /**< Must be set to true if latitude is being passed */
+  double latitude;
+  /**<   Latitude (specified in WGS84 datum).\n
+        - Units -- Degrees \n
+        - Range -- -90.0 to 90.0 \n
+
+        Note: Positive values indicate northern latitude,
+        Negative values indicate southern latitude
+   */
+
+  /* Optional */
+  /*  Longitude */
+  uint8_t longitude_valid;  /**< Must be set to true if longitude is being passed */
+  double longitude;
+  /**<   Latitude (specified in WGS84 datum).\n
+        - Units -- Degrees \n
+        - Range -- -180.0 to 180.0 \n
+
+        Note: Positive values indicate eastern longitude,
+        Negative values indicate western longitude
+   */
+
+  /* Optional */
+  /*  Horizontal Position Uncertainty */
+  uint8_t horUncCircular_valid;  /**< Must be set to true if horUncCircular is being passed */
+  float horUncCircular;
+  /**<   Horizontal position uncertainty (circular).\n
+        - Units -- Meters
+   */
+
+  /* Optional */
+  /*  Horizontal Confidence */
+  uint8_t horConfidence_valid;  /**< Must be set to true if horConfidence is being passed */
+  uint8_t horConfidence;
+  /**<   Horizontal confidence, as defined by ETSI TS 101 109\n
+        - Units -- Percent (1 to 99)\n
+        - 0, 101 to 255 -- invalid value\n
+        - If 100 is received, reinterpret to 99 \n
+
+        Note: This field must be specified together with horizontal uncertainty.
+        If not specified when horUncCircular is set, the default value is 50.
+   */
+
+  /* Optional */
+  /*  Altitude w.r.t Ellipsoid */
+  uint8_t altitudeWrtEllipsoid_valid;  /**< Must be set to true if altitudeWrtEllipsoid is being passed */
+  float altitudeWrtEllipsoid;
+  /**<   Altitude with respect to the WGS84 ellipsoid.\n
+        - Units -- Meters
+        - Positive = height
+        - Negative = depth
+   */
+
+  /* Optional */
+  /*  Altitude w.r.t Mean sea Level */
+  uint8_t altitudeWrtMeanSeaLevel_valid;  /**< Must be set to true if altitudeWrtMeanSeaLevel is being passed */
+  float altitudeWrtMeanSeaLevel;
+  /**<   Altitude with respect to mean sea level. \n
+        - Units -- Meters
+   */
+
+  /* Optional */
+  /*  Vertical uncertainty */
+  uint8_t vertUnc_valid;  /**< Must be set to true if vertUnc is being passed */
+  float vertUnc;
+  /**<   Vertical uncertainty; mandatory when either altitudeWrtEllipsoid
+        or altitudeWrtMeanSeaLevel is specified. \n
+        - Units -- Meters
+   */
+
+  /* Optional */
+  /*  Vertical Confidence */
+  uint8_t vertConfidence_valid;  /**< Must be set to true if vertConfidence is being passed */
+  uint8_t vertConfidence;
+  /**<   Vertical confidence, as defined by ETSI TS 101 109. \n
+        - Units -- Percent (0-99)\n
+        - 0 -- invalid value \n
+        - 100 to 256 -- not used \n
+        - If 100 is received, reinterpret to 99 \n
+
+        Note: This field must be specified together with the vertical uncertainty.
+        If not specified, the default value is 50.
+    */
+
+  /* Optional */
+  /*  Altitude Source */
+  uint8_t source_valid;  /**< Must be set to true if source is being passed */
+  qmiLocAltSrcEnumT_v02 source;
+  /**<   Specifies the source of the altitude.
+ Values: \n
+      - eQMI_LOC_ALT_SRC_UNKNOWN (0) --  Source is unknown \n
+      - eQMI_LOC_ALT_SRC_GPS (1) --  GPS is the source \n
+      - eQMI_LOC_ALT_SRC_CELL_ID (2) --  Cell ID provided the source \n
+      - eQMI_LOC_ALT_SRC_ENHANCED_CELL_ID (3) --  Source is enhanced cell ID \n
+      - eQMI_LOC_ALT_SRC_WIFI (4) --  Wi-Fi is the source \n
+      - eQMI_LOC_ALT_SRC_TERRESTRIAL (5) --  Terrestrial source \n
+      - eQMI_LOC_ALT_SRC_TERRESTRIAL_HYBRID (6) --  Hybrid terrestrial source \n
+      - eQMI_LOC_ALT_SRC_ALTITUDE_DATABASE (7) --  Altitude database is the source \n
+      - eQMI_LOC_ALT_SRC_BAROMETRIC_ALTIMETER (8) --  Barometric altimeter is the source \n
+      - eQMI_LOC_ALT_SRC_OTHER (9) --  Other sources
+ */
+
+  /* Optional */
+  /*  UTC timestamp */
+  uint8_t timestampUtc_valid;  /**< Must be set to true if timestampUtc is being passed */
+  uint64_t timestampUtc;
+  /**<   UTC timestamp. \n
+        - Units -- Milliseconds (since Jan. 1, 1970)
+   */
+
+  /* Optional */
+  /*  Position age */
+  uint8_t timestampAge_valid;  /**< Must be set to true if timestampAge is being passed */
+  int32_t timestampAge;
+  /**<   Position age, which is an estimate of how long ago this fix was made. \n
+        - Units -- Milliseconds
+   */
+
+  /* Optional */
+  /*  Position Source */
+  uint8_t positionSrc_valid;  /**< Must be set to true if positionSrc is being passed */
+  qmiLocPositionSrcEnumT_v02 positionSrc;
+  /**<   Source from which this position was obtained.
+ Values: \n
+      - eQMI_LOC_POSITION_SRC_GNSS (0) --  Position source is GNSS \n
+      - eQMI_LOC_POSITION_SRC_CELLID (1) --  Position source is Cell ID \n
+      - eQMI_LOC_POSITION_SRC_ENH_CELLID (2) --  Position source is Enhanced Cell ID \n
+      - eQMI_LOC_POSITION_SRC_WIFI (3) --  Position source is Wi-Fi \n
+      - eQMI_LOC_POSITION_SRC_TERRESTRIAL (4) --  Position source is Terrestrial \n
+      - eQMI_LOC_POSITION_SRC_GNSS_TERRESTRIAL_HYBRID (5) --  Position source is GNSS Terrestrial Hybrid \n
+      - eQMI_LOC_POSITION_SRC_OTHER (6) --  Other sources \n
+      - eQMI_LOC_POSITION_SRC_DRE (7) --  Position source is the dead reckoning engine \n
+      - eQMI_LOC_POSITION_SRC_FLP (8) --  Position source is Fused Location Provider \n
+      - eQMI_LOC_POSITION_SRC_NLP (9) --  Position source is Network Location Provider \n
+      - eQMI_LOC_POSITION_SRC_FLP_ALE (10) --  Position source is derived from Source MPSS
+
+ If altitude is specified and the altitude source is not specified, the engine
+ assumes that the altitude was obtained using the specified position source. \n
+ If both altitude and altitude source are specified, the engine assumes
+ that only latitude and longitude were obtained using the specified position source.
+
+ */
+
+  /* Optional */
+  /*  Country */
+  uint8_t country_valid;  /**< Must be set to true if country is being passed */
+  char country[QMI_LOC_MAX_COUNTRY_STR_LENGTH_V02 + 1];
+  /**<   The country is identified by the two-letter ISO 3166 code. E.g. US. \n
+       - Type -- NULL-terminated string
+   */
+
+  /* Optional */
+  /*  Subdivision A1 */
+  uint8_t subdivA1_valid;  /**< Must be set to true if subdivA1 is being passed */
+  char subdivA1[QMI_LOC_MAX_SUBDIV_A1_STR_LENGTH_V02 + 1];
+  /**<   national subdivisions (state, region, province, prefecture). E.g. New York. \n
+       - Type -- NULL-terminated string
+   */
+
+  /* Optional */
+  /*  Subdivision A2 */
+  uint8_t subdivA2_valid;  /**< Must be set to true if subdivA2 is being passed */
+  char subdivA2[QMI_LOC_MAX_SUBDIV_A2_STR_LENGTH_V02 + 1];
+  /**<   county, parish, gun (JP), district (IN), E.g.  King County. \n
+       - Type -- NULL-terminated string
+   */
+
+  /* Optional */
+  /*  City */
+  uint8_t city_valid;  /**< Must be set to true if city is being passed */
+  char city[QMI_LOC_MAX_CITY_STR_LENGTH_V02 + 1];
+  /**<   city, township, shi (JP). E.g. New York. \n
+       - Type -- NULL-terminated string
+   */
+
+  /* Optional */
+  /*  City Division */
+  uint8_t cityDiv_valid;  /**< Must be set to true if cityDiv is being passed */
+  char cityDiv[QMI_LOC_MAX_CITYDIV_STR_LENGTH_V02 + 1];
+  /**<   city division, borough, city district, ward, chou (JP). E.g. Manhattan \n
+       - Type -- NULL-terminated string
+   */
+
+  /* Optional */
+  /*  Neighborhood */
+  uint8_t neighborhood_valid;  /**< Must be set to true if neighborhood is being passed */
+  char neighborhood[QMI_LOC_MAX_NEIGHBORHOOD_STR_LENGTH_V02 + 1];
+  /**<   neighborhood, block. E.g. Morningside Heights \n
+       - Type -- NULL-terminated string
+   */
+
+  /* Optional */
+  /*  Street */
+  uint8_t street_valid;  /**< Must be set to true if street is being passed */
+  char street[QMI_LOC_MAX_STREET_STR_LENGTH_V02 + 1];
+  /**<   street. E.g. Broadway \n
+       - Type -- NULL-terminated string
+   */
+
+  /* Optional */
+  /*  Leading Street Direction */
+  uint8_t leadingStreetDirection_valid;  /**< Must be set to true if leadingStreetDirection is being passed */
+  char leadingStreetDirection[QMI_LOC_MAX_LEADING_STREET_DIR_STR_LENGTH_V02 + 1];
+  /**<   Leading street direction. E.g. N, W \n
+       - Type -- NULL-terminated string
+   */
+
+  /* Optional */
+  /*  Trailing Street Suffix */
+  uint8_t trailingStreetSuffix_valid;  /**< Must be set to true if trailingStreetSuffix is being passed */
+  char trailingStreetSuffix[QMI_LOC_MAX_TRAILING_STREET_SUFFIX_STR_LENGTH_V02 + 1];
+  /**<   Trailing street suffix. E.g. SW \n
+       - Type -- NULL-terminated string
+   */
+
+  /* Optional */
+  /*  Street Suffix */
+  uint8_t streetSuffix_valid;  /**< Must be set to true if streetSuffix is being passed */
+  char streetSuffix[QMI_LOC_MAX_STREET_SUFFIX_STR_LENGTH_V02 + 1];
+  /**<   Street suffix. E.g. Avenue, Platz, Street \n
+       - Type -- NULL-terminated string
+   */
+
+  /* Optional */
+  /*  House Number */
+  uint8_t houseNumber_valid;  /**< Must be set to true if houseNumber is being passed */
+  char houseNumber[QMI_LOC_MAX_HOUSE_NUMBER_STR_LENGTH_V02 + 1];
+  /**<   House number, numeric part only. E.g. 123 \n
+       - Type -- NULL-terminated string
+   */
+
+  /* Optional */
+  /*  House Number Suffix */
+  uint8_t houserNumberSuffix_valid;  /**< Must be set to true if houserNumberSuffix is being passed */
+  char houserNumberSuffix[QMI_LOC_MAX_HOUSE_NUMBER_SUFFIX_STR_LENGTH_V02 + 1];
+  /**<   House number suffix. E.2. A, 1/2 \n
+       - Type -- NULL-terminated string
+   */
+
+  /* Optional */
+  /*  Landmark */
+  uint8_t landmark_valid;  /**< Must be set to true if landmark is being passed */
+  char landmark[QMI_LOC_MAX_LANDMARK_STR_LENGTH_V02 + 1];
+  /**<   Landmark or vanity address. E.g. Low Library \n
+       - Type -- NULL-terminated string
+   */
+
+  /* Optional */
+  /*  Additional Location Information */
+  uint8_t additionalLocInfo_valid;  /**< Must be set to true if additionalLocInfo is being passed */
+  char additionalLocInfo[QMI_LOC_MAX_ADDITIONAL_LOC_INFO_STR_LENGTH_V02 + 1];
+  /**<   Additional location information E.g. Room 543 \n
+       - Type -- NULL-terminated string
+   */
+
+  /* Optional */
+  /*  Floor */
+  uint8_t floor_valid;  /**< Must be set to true if floor is being passed */
+  char floor[QMI_LOC_MAX_FLOOR_STR_LENGTH_V02 + 1];
+  /**<   Floor E.g. 5 \n
+       - Type -- NULL-terminated string
+   */
+
+  /* Optional */
+  /*  Name */
+  uint8_t name_valid;  /**< Must be set to true if name is being passed */
+  char name[QMI_LOC_MAX_NAME_STR_LENGTH_V02 + 1];
+  /**<   Name (residence, business or office occupant) E.g. Joe Barbershop \n
+       - Type -- NULL-terminated string
+   */
+
+  /* Optional */
+  /*  Postal Code */
+  uint8_t postalCode_valid;  /**< Must be set to true if postalCode is being passed */
+  char postalCode[QMI_LOC_MAX_POSTAL_CODE_STR_LENGTH_V02 + 1];
+  /**<   Postal code E.g. 10027-0401 \n
+       - Type -- NULL-terminated string
+   */
+
+  /* Optional */
+  /*  Positioning Method */
+  uint8_t positioningMethod_valid;  /**< Must be set to true if positioningMethod is being passed */
+  char positioningMethod[QMI_LOC_MAX_POSITIONING_METHOD_STR_LENGTH_V02 + 1];
+  /**<   Positioning Method. E.g. A-GPS derived. \n
+       - Type -- NULL-terminated string
+   */
+
+  /* Optional */
+  /*  Building */
+  uint8_t building_valid;  /**< Must be set to true if building is being passed */
+  char building[QMI_LOC_MAX_BUILDING_STR_LENGTH_V02 + 1];
+  /**<   Building (structure) e.g. Hope Theater. \n
+       - Type -- NULL-terminated string
+   */
+
+  /* Optional */
+  /*  Unit */
+  uint8_t unit_valid;  /**< Must be set to true if unit is being passed */
+  char unit[QMI_LOC_MAX_UNIT_STR_LENGTH_V02 + 1];
+  /**<   Apartment/suite E.g. 12a \n
+       - Type -- NULL-terminated string
+   */
+
+  /* Optional */
+  /*  Room */
+  uint8_t room_valid;  /**< Must be set to true if room is being passed */
+  char room[QMI_LOC_MAX_ROOM_STR_LENGTH_V02 + 1];
+  /**<   Room E.g. 450F \n
+       - Type -- NULL-terminated string
+   */
+
+  /* Optional */
+  /*  Place Type */
+  uint8_t placeType_valid;  /**< Must be set to true if placeType is being passed */
+  char placeType[QMI_LOC_MAX_PLACE_TYPE_STR_LENGTH_V02 + 1];
+  /**<   Place-type E.g. office \n
+       - Type -- NULL-terminated string
+   */
+
+  /* Optional */
+  /*  Postal Community Name */
+  uint8_t postalCommunityName_valid;  /**< Must be set to true if postalCommunityName is being passed */
+  char postalCommunityName[QMI_LOC_MAX_POSTAL_COMM_TYPE_STR_LENGTH_V02 + 1];
+  /**<   Postal community name E.g. Leonia \n
+       - Type -- NULL-terminated string
+   */
+
+  /* Optional */
+  /*  Post Office Box */
+  uint8_t poBox_valid;  /**< Must be set to true if poBox is being passed */
+  char poBox[QMI_LOC_MAX_POST_OFFICE_BOX_STR_LENGTH_V02 + 1];
+  /**<   Post Office Box (p. O Box). E.g. U40 \n
+       - Type -- NULL-terminated string
+   */
+
+  /* Optional */
+  /*  Additional Code */
+  uint8_t additionalCode_valid;  /**< Must be set to true if additionalCode is being passed */
+  char additionalCode[QMI_LOC_MAX_ADDITIONAL_CODE_STR_LENGTH_V02 + 1];
+  /**<   Additional Code e.g. 132030000003 \n
+       - Type -- NULL-terminated string
+   */
+
+  /* Optional */
+  /*  Seat */
+  uint8_t seat_valid;  /**< Must be set to true if seat is being passed */
+  char seat[QMI_LOC_MAX_SEAT_STR_LENGTH_V02 + 1];
+  /**<   Seat (desk, cubicle, workstation) E.g. WS 181 \n
+       - Type -- NULL-terminated string
+   */
+
+  /* Optional */
+  /*  Primary Road */
+  uint8_t primaryRoad_valid;  /**< Must be set to true if primaryRoad is being passed */
+  char primaryRoad[QMI_LOC_MAX_PRIMARY_ROAD_STR_LENGTH_V02 + 1];
+  /**<   Primary road or street E.g. Broadway. \n
+       - Type -- NULL-terminated string
+   */
+
+  /* Optional */
+  /*  Road Section */
+  uint8_t roadSection_valid;  /**< Must be set to true if roadSection is being passed */
+  char roadSection[QMI_LOC_MAX_ROAD_SECTION_STR_LENGTH_V02 + 1];
+  /**<   Road section E.g. 14 \n
+       - Type -- NULL-terminated string
+   */
+
+  /* Optional */
+  /*  Road Branch */
+  uint8_t roadBranch_valid;  /**< Must be set to true if roadBranch is being passed */
+  char roadBranch[QMI_LOC_MAX_ROAD_BRANCH_STR_LENGTH_V02 + 1];
+  /**<   Road branch E.g. Lane 7 \n
+       - Type -- NULL-terminated string
+   */
+
+  /* Optional */
+  /*  Road Sub Branch */
+  uint8_t roadSubBranch_valid;  /**< Must be set to true if roadSubBranch is being passed */
+  char roadSubBranch[QMI_LOC_MAX_ROAD_SUB_BRANCH_STR_LENGTH_V02 + 1];
+  /**<   Road sub-branch E.g. Alley 8 \n
+       - Type -- NULL-terminated string
+   */
+
+  /* Optional */
+  /*  Road Pre Modifier */
+  uint8_t roadPreModifier_valid;  /**< Must be set to true if roadPreModifier is being passed */
+  char roadPreModifier[QMI_LOC_MAX_ROAD_PRE_MODIFIER_STR_LENGTH_V02 + 1];
+  /**<   Road Pre modifier E.g. Old \n
+       - Type -- NULL-terminated string
+   */
+
+  /* Optional */
+  /*  Road Post Modifier */
+  uint8_t roadPostModifier_valid;  /**< Must be set to true if roadPostModifier is being passed */
+  char roadPostModifier[QMI_LOC_MAX_ROAD_POST_MODIFIER_STR_LENGTH_V02 + 1];
+  /**<   Road Post Modifier E.g. Extended \n
+       - Type -- NULL-terminated string
+   */
+}qmiLocInjectLocationCivicAddressReqMsgT_v02;  /* Message */
+/**
+    @}
+  */
+
+/** @addtogroup loc_qmi_messages
+    @{
+  */
+/** Indication Message; Sends the GNSS engine power state issued to the control point. */
+typedef struct {
+
+  /* Optional */
+  /*  Old Power State  */
+  uint8_t powerStateOld_valid;  /**< Must be set to true if powerStateOld is being passed */
+  qmiLocPlatformPowerStateEnumT_v02 powerStateOld;
+  /**<   Old Power State. */
+
+  /* Optional */
+  /*  New Power State */
+  uint8_t powerStateNew_valid;  /**< Must be set to true if powerStateNew is being passed */
+  qmiLocPlatformPowerStateEnumT_v02 powerStateNew;
+  /**<   New Power State. Clients should deregister for all events and indication \n
+       when GNSS is in SUSPENDED state and register again when RESUME event is  \n
+       received */
+}qmiLocPlatformPowerStateChangedIndMsgT_v02;  /* Message */
+/**
+    @}
+  */
+
+/** @addtogroup loc_qmi_enums
+    @{
+  */
+typedef enum {
+  QMILOCINJECTRAWDATAENUMT_MIN_ENUM_VAL_V02 = -2147483647, /**< To force a 32 bit signed enum.  Do not change or use*/
+  eQMI_LOC_MAP_AIDING_DATA_V02 = 1, /**<  Map Aiding Data  */
+  QMILOCINJECTRAWDATAENUMT_MAX_ENUM_VAL_V02 = 2147483647 /**< To force a 32 bit signed enum.  Do not change or use*/
+}qmiLocInjectRawDataEnumT_v02;
+/**
+    @}
+  */
+
+/** @addtogroup loc_qmi_messages
+    @{
+  */
+/** Request Message; Used to inject raw data into location engine. */
+typedef struct {
+
+  /* Mandatory */
+  /*  Type of Injection */
+  qmiLocInjectRawDataEnumT_v02 injectionType;
+  /**<   Values: \n
+      - eQMI_LOC_MAP_AIDING_DATA (1) --  Map Aiding Data
+ */
+
+  /* Mandatory */
+  /*  Total Size */
+  uint32_t totalSize;
+  /**<   Total size of the raw data to inject. \n
+        - Units -- Bytes */
+
+  /* Mandatory */
+  /*  Total Parts */
+  uint16_t totalParts;
+  /**<   Total number of parts to divide the raw data into. */
+
+  /* Mandatory */
+  /*  Part Number */
+  uint16_t partNum;
+  /**<   Number of the current raw data part; starts at 1. */
+
+  /* Mandatory */
+  /*  Raw Data */
+  uint32_t partData_len;  /**< Must be set to # of elements in partData */
+  uint8_t partData[QMI_LOC_MAX_RAW_DATA_PART_LEN_V02];
+  /**<   XTRA data. \n
+         - Type -- Array of bytes \n
+         - Maximum length of the array -- 4000
+    */
+}qmiLocInjectRawDataReqMsgT_v02;  /* Message */
+/**
+    @}
+  */
+
+/** @addtogroup loc_qmi_messages
+    @{
+  */
+/** Indication Message; Used to inject raw data into location engine. */
+typedef struct {
+
+  /* Mandatory */
+  /*  Data Injection Status */
+  qmiLocStatusEnumT_v02 status;
+  /**<   Status of the data injection request.
+ Values: \n
+      - eQMI_LOC_SUCCESS (0) --  Request was completed successfully \n
+      - eQMI_LOC_GENERAL_FAILURE (1) --  Request failed because of a general failure \n
+      - eQMI_LOC_UNSUPPORTED (2) --  Request failed because it is not supported \n
+      - eQMI_LOC_INVALID_PARAMETER (3) --  Request failed because it contained invalid parameters \n
+      - eQMI_LOC_ENGINE_BUSY (4) --  Request failed because the engine is busy \n
+      - eQMI_LOC_PHONE_OFFLINE (5) --  Request failed because the phone is offline \n
+      - eQMI_LOC_TIMEOUT (6) --  Request failed because it has timed out \n
+      - eQMI_LOC_CONFIG_NOT_SUPPORTED (7) --  Request failed because an undefined configuration was requested \n
+      - eQMI_LOC_INSUFFICIENT_MEMORY (8) --  Request failed because the engine could not allocate sufficient memory for the request \n
+      - eQMI_LOC_MAX_GEOFENCE_PROGRAMMED (9) --  Request failed because the maximum number of Geofences are already programmed \n
+      - eQMI_LOC_XTRA_VERSION_CHECK_FAILURE (10) --  Location service failed because of an XTRA version-based file format check failure \n
+      - eQMI_LOC_GNSS_DISABLED (11) --  Request failed because the location service is disabled
+ */
+
+  /* Optional */
+  /*  Part Number */
+  uint8_t partNum_valid;  /**< Must be set to true if partNum is being passed */
+  uint16_t partNum;
+  /**<   Number of the raw data part for which this indication
+      is sent; starts at 1. */
+}qmiLocInjectRawDataIndMsgT_v02;  /* Message */
+/**
+    @}
+  */
+
+/** @addtogroup loc_qmi_aggregates
+    @{
+  */
+typedef struct {
+
+  uint16_t gnssSvId;
+  /**<   GNSS SV ID. Range:
+       - GPS --     1 to 32
+       - GLONASS -- 1 to 32
+       - QZSS --    193 to 197
+       - BDS --     201 to 263
+       - Galileo -- 301 to 336
+       - NavIC --   401 to 414 */
+
+  uint8_t type;
+  /**<   Navigation data type. Values:
+       - eQMI_LOC_NAV_DATA_TYPE_UNKNOWN (0)
+       - eQMI_LOC_NAV_DATA_TYPE_EPH (1)
+       - eQMI_LOC_NAV_DATA_TYPE_ALM (2) */
+
+  uint8_t src;
+  /**<   Navigation data source. Values:
+       - eQMI_LOC_NAV_DATA_SRC_UNKNOWN (0)
+       - eQMI_LOC_NAV_DATA_SRC_DEMODULATED (1)
+       - eQMI_LOC_NAV_DATA_SRC_SUPL_PROVIDED (2)
+       - eQMI_LOC_NAV_DATA_SRC_OTHER_SERVER_PROVIDED (3)
+       - eQMI_LOC_NAV_DATA_SRC_LOCAL (4) */
+
+  int32_t age;
+  /**<   Age of navigation data.
+       - Units: seconds */
+}qmiLocNavDataStructT_v02;  /* Type */
+/**
+    @}
+  */
+
+/** @addtogroup loc_qmi_aggregates
+    @{
+  */
+typedef struct {
+
+  uint32_t hours;
+  /**<   Hours of timestamp */
+
+  uint32_t mins;
+  /**<   Minutes of timestamp */
+
+  float secs;
+  /**<   Seconds of timestamp */
+}qmiLocTimeStructT_v02;  /* Type */
+/**
+    @}
+  */
+
+/** @addtogroup loc_qmi_enums
+    @{
+  */
+typedef enum {
+  QMILOCENGINERESETREASONENUMT_MIN_ENUM_VAL_V02 = -2147483647, /**< To force a 32 bit signed enum.  Do not change or use*/
+  eQMI_LOC_RESET_REASON_NONE_V02 = 0, /**<  Normal Operating Mode.  */
+  eQMI_LOC_RESET_REASON_RESET_POSITION_ENGINE_V02 = 1, /**<  Reset caused by Position Engine.  */
+  eQMI_LOC_RESET_REASON_RESET_BACKGROUND_SCAN_V02 = 2, /**<  Reset caused by GNSS Background Scan.  */
+  eQMI_LOC_RESET_REASON_RESET_CLOCK_INCONSISTENCY_V02 = 3, /**<  Reset caused by Injected Clock Inconsistency.  */
+  eQMI_LOC_RESET_REASON_RESET_GPS_SUBFRAME_ALIGNMENT_V02 = 4, /**<  Reset caused by GPS Subframe mis alignment.  */
+  eQMI_LOC_RESET_REASON_RESET_DECODED_TIME_INCONSISTENCY_V02 = 5, /**<  Reset caused by Decoded Time Inconsistency.  */
+  eQMI_LOC_RESET_REASON_RESET_MEASUREMENT_INCONSISTENCY_V02 = 6, /**<  Reset caused by Code consistency error.  */
+  eQMI_LOC_RESET_REASON_RESET_INTMS_INCONSISTENCY_V02 = 7, /**<  Soft reset caused by INTMS error.  */
+  eQMI_LOC_RESET_REASON_RESET_RF_FAILURE_V02 = 8, /**<  Soft reset caused by RF failure.  */
+  eQMI_LOC_RESET_REASON_RESET_SOFT_RESET_V02 = 9, /**<  Soft reset. No measurement or position outage.  */
+  eQMI_LOC_RESET_REASON_RESET_HARD_RESET_V02 = 10, /**<  Hard reset. Measurement and position outage.  */
+  eQMI_LOC_RESET_REASON_RESET_UTCOFFSET_INCONSISTENCY_V02 = 11, /**<  UTC Offsets failure.  */
+  eQMI_LOC_RESET_REASON_RESET_GARAGEMODE_GPS_FASTSCAN_V02 = 12, /**<  Engine transitioned from garage mode. Forced GPS fast scan.  */
+  eQMI_LOC_RESET_REASON_RESET_TICK_MISSING_V02 = 13, /**<  No once-a-sec-tick for a 5 second window.  */
+  eQMI_LOC_RESET_REASON_RESET_ENGINE_STATE_MISMATCH_V02 = 14, /**<  Receiver state unexpected.  */
+  eQMI_LOC_RESET_REASON_RESET_GARAGEMODE_GNSS_FASTSCAN_V02 = 15, /**<  Engine transitioned from garage mode. Forced GNSS fast scan.  */
+  eQMI_LOC_RESET_REASON_RESET_BDS_SUBFRAME_ALIGNMENT_V02 = 16, /**<  Reset caused by BDS subframe misalignement.  */
+  eQMI_LOC_RESET_REASON_RESET_WEEK_MISMATCH_V02 = 17, /**<  GPS week is off when compared to other time sources.  */
+  eQMI_LOC_RESET_REASON_RESET_ACQUISITION_ASST_REJECT_V02 = 18, /**<  Acquisition Assistance is rejected.  */
+  eQMI_LOC_RESET_REASON_RESET_STRATEGY_STUCK_IN_FLUSH_V02 = 19, /**<  Search strategy stuck.  */
+  eQMI_LOC_RESET_REASON_RESET_SEVERE_BLANKING_OUTAGE_V02 = 20, /**<  Outage due to severe blanking.  */
+  eQMI_LOC_RESET_REASON_RESET_XO_OFFSET_ERROR_V02 = 21, /**<  Hard reset triggered by jump in XO offset.  */
+  eQMI_LOC_RESET_REASON_RESET_GAL_SIGNAL_OUTAGE_V02 = 22, /**<  Reset due to GAL SV signal outage.  */
+  eQMI_LOC_RESET_REASON_RESET_TICK_IN_DPO_V02 = 23, /**<  Reset due to tick received while in DPO.  */
+  QMILOCENGINERESETREASONENUMT_MAX_ENUM_VAL_V02 = 2147483647 /**< To force a 32 bit signed enum.  Do not change or use*/
+}qmiLocEngineResetReasonEnumT_v02;
+/**
+    @}
+  */
+
+/** @addtogroup loc_qmi_enums
+    @{
+  */
+typedef enum {
+  QMILOCXOCALIBRATIONSTATEENUMT_MIN_ENUM_VAL_V02 = -2147483647, /**< To force a 32 bit signed enum.  Do not change or use*/
+  eQMI_LOC_FACTORY_CALIBRATION_FAILED_V02 = 0, /**<  Factory XO calibration failed  */
+  eQMI_LOC_FACTORY_CALIBRATION_NOT_PERFORMED_V02 = 1, /**<  Factory XO calibration not performed.  */
+  eQMI_LOC_FACTORY_CALIBRATION_INTERMEDIATE_V02 = 2, /**<  Intermediate step of factory calibration  */
+  eQMI_LOC_FACTORY_CALIBRATION_DEFAULT_V02 = 3, /**<  Default calibration state.  */
+  eQMI_LOC_CALIBRATION_STATE_DEFAULT_WIDE_BINS_V02 = 4, /**<  Calibration state indicates wider bins can be used for acquisition.  */
+  eQMI_LOC_CALIBRATION_STATE_COARSE_V02 = 5, /**<  Coarse calibration has been completed.  */
+  eQMI_LOC_CALIBRATION_STATE_IFC_V02 = 6, /**<  Intermediate Field Calibration (IFC) state.  */
+  eQMI_LOC_CALIBRATION_STATE_FINE_V02 = 7, /**<  Fine XO calibration completed.  */
+  eQMI_LOC_CALIBRATION_STATE_FT1_V02 = 8, /**<  Calibration state 1 (FT1).  */
+  eQMI_LOC_CALIBRATION_STATE_OLD_RGS_V02 = 9, /**<  Calibration from old recent-good-system.  */
+  eQMI_LOC_CALIBRATION_STATE_INTERPOLATED_V02 = 10, /**<  Calibration state interpolated.  */
+  eQMI_LOC_CALIBRATION_STATE_FT2_V02 = 11, /**<  Calibration state 2 (FT2).  */
+  eQMI_LOC_CALIBRATION_STATE_EXACT_V02 = 12, /**<  Calibration state exact.  */
+  eQMI_LOC_CALIBRATION_STATE_RGS_V02 = 13, /**<  Calibration from recent-good-system.  */
+  eQMI_LOC_CALIBRATION_STATE_RGS_RECENT_V02 = 14, /**<  Calibration from RGS, but less than 30 secs old.  */
+  eQMI_LOC_CALIBRATION_STATE_LAST_V02 = 15, /**<  Calibration state last - Reserved.  */
+  QMILOCXOCALIBRATIONSTATEENUMT_MAX_ENUM_VAL_V02 = 2147483647 /**< To force a 32 bit signed enum.  Do not change or use*/
+}qmiLocXoCalibrationStateEnumT_v02;
+/**
+    @}
+  */
+
+/** @addtogroup loc_qmi_messages
+    @{
+  */
+/** Indication Message; Used by the service to report engine debug information */
+typedef struct {
+
+  /* Optional */
+  /*  System Week */
+  uint8_t week_valid;  /**< Must be set to true if week is being passed */
+  uint16_t week;
+  /**<   Full GPS week */
+
+  /* Optional */
+  /*  System Time of Week */
+  uint8_t timeOfWeek_valid;  /**< Must be set to true if timeOfWeek is being passed */
+  uint32_t timeOfWeek;
+  /**<   GPS time of week.
+       - Units: milliseconds  */
+
+  /* Optional */
+  /*  Source of Time */
+  uint8_t sourceOfTime_valid;  /**< Must be set to true if sourceOfTime is being passed */
+  qmiLocTimeSourceEnumT_v02 sourceOfTime;
+  /**<   Source of the time information. Values:
+      - eQMI_LOC_TIME_SRC_INVALID (0) --  Invalid time \n
+      - eQMI_LOC_TIME_SRC_NETWORK_TIME_TRANSFER (1) --  Time is set by the 1X system \n
+      - eQMI_LOC_TIME_SRC_NETWORK_TIME_TAGGING (2) --  Time is set by WCDMA/GSM time tagging (that is,
+       associating network time with GPS time) \n
+      - eQMI_LOC_TIME_SRC_EXTERNAL_INPUT (3) --  Time is set by an external injection \n
+      - eQMI_LOC_TIME_SRC_TOW_DECODE (4) --  Time is set after decoding over-the-air GPS navigation data
+       from one GPS satellite \n
+      - eQMI_LOC_TIME_SRC_TOW_CONFIRMED (5) --  Time is set after decoding over-the-air GPS navigation data
+       from multiple satellites \n
+      - eQMI_LOC_TIME_SRC_TOW_AND_WEEK_CONFIRMED (6) --  Both time of the week and the GPS week number are known \n
+      - eQMI_LOC_TIME_SRC_NAV_SOLUTION (7) --  Time is set by the position engine after the fix is obtained \n
+      - eQMI_LOC_TIME_SRC_SOLVE_FOR_TIME (8) --  Time is set by the position engine after performing SFT;
+       this is done when the clock time uncertainty is large \n
+      - eQMI_LOC_TIME_SRC_GLO_TOW_DECODE (9) --  Time is set after decoding GLO satellites \n
+      - eQMI_LOC_TIME_SRC_TIME_TRANSFORM (10) --  Time is set after transforming the GPS to GLO time \n
+      - eQMI_LOC_TIME_SRC_WCDMA_SLEEP_TIME_TAGGING (11) --  Time is set by the sleep time tag provided by the WCDMA network \n
+      - eQMI_LOC_TIME_SRC_GSM_SLEEP_TIME_TAGGING (12) --  Time is set by the sleep time tag provided by the GSM network \n
+      - eQMI_LOC_TIME_SRC_UNKNOWN (13) --  Source of the time is unknown \n
+      - eQMI_LOC_TIME_SRC_SYSTEM_TIMETICK (14) --  Time is derived from the system clock (better known as the slow clock);
+       GNSS time is maintained irrespective of the GNSS receiver state \n
+      - eQMI_LOC_TIME_SRC_QZSS_TOW_DECODE (15) --  Time is set after decoding QZSS satellites \n
+      - eQMI_LOC_TIME_SRC_BDS_TOW_DECODE (16) --  Time is set after decoding BDS satellites \n
+      - eQMI_LOC_TIME_SRC_GAL_TOW_DECODE (17) --  Time is set after decoding Galileo satellites \n
+      - eQMI_LOC_TIME_SRC_NAVIC_TOW_DECODE (18) --  Time is set after decoding NavIC satellites  */
+
+  /* Optional */
+  /*  Uncertainty for System Clock Time */
+  uint8_t clkTimeUnc_valid;  /**< Must be set to true if clkTimeUnc is being passed */
+  float clkTimeUnc;
+  /**<   Single-sided maximum time bias uncertainty.
+       - Units: milliseconds */
+
+  /* Optional */
+  /*  GNSS Receiver Clock Frequency Bias */
+  uint8_t clkFreqBias_valid;  /**< Must be set to true if clkFreqBias is being passed */
+  int32_t clkFreqBias;
+  /**<   Receiver clock frequency bias. \n
+       - Units -- ppb */
+
+  /* Optional */
+  /*  GNSS Receiver Clock Frequency Uncertainty */
+  uint8_t clkFreqUnc_valid;  /**< Must be set to true if clkFreqUnc is being passed */
+  int32_t clkFreqUnc;
+  /**<   Receiver clock frequency uncertainty. \n
+       - Units -- ppb */
+
+  /* Optional */
+  /*  XO State */
+  uint8_t xoState_valid;  /**< Must be set to true if xoState is being passed */
+  qmiLocXoCalibrationStateEnumT_v02 xoState;
+  /**<   XO calibration state. Values:
+      - eQMI_LOC_FACTORY_CALIBRATION_FAILED (0) --  Factory XO calibration failed
+      - eQMI_LOC_FACTORY_CALIBRATION_NOT_PERFORMED (1) --  Factory XO calibration not performed.
+      - eQMI_LOC_FACTORY_CALIBRATION_INTERMEDIATE (2) --  Intermediate step of factory calibration
+      - eQMI_LOC_FACTORY_CALIBRATION_DEFAULT (3) --  Default calibration state.
+      - eQMI_LOC_CALIBRATION_STATE_DEFAULT_WIDE_BINS (4) --  Calibration state indicates wider bins can be used for acquisition.
+      - eQMI_LOC_CALIBRATION_STATE_COARSE (5) --  Coarse calibration has been completed.
+      - eQMI_LOC_CALIBRATION_STATE_IFC (6) --  Intermediate Field Calibration (IFC) state.
+      - eQMI_LOC_CALIBRATION_STATE_FINE (7) --  Fine XO calibration completed.
+      - eQMI_LOC_CALIBRATION_STATE_FT1 (8) --  Calibration state 1 (FT1).
+      - eQMI_LOC_CALIBRATION_STATE_OLD_RGS (9) --  Calibration from old recent-good-system.
+      - eQMI_LOC_CALIBRATION_STATE_INTERPOLATED (10) --  Calibration state interpolated.
+      - eQMI_LOC_CALIBRATION_STATE_FT2 (11) --  Calibration state 2 (FT2).
+      - eQMI_LOC_CALIBRATION_STATE_EXACT (12) --  Calibration state exact.
+      - eQMI_LOC_CALIBRATION_STATE_RGS (13) --  Calibration from recent-good-system.
+      - eQMI_LOC_CALIBRATION_STATE_RGS_RECENT (14) --  Calibration from RGS, but less than 30 secs old.
+      - eQMI_LOC_CALIBRATION_STATE_LAST (15) --  Calibration state last - Reserved.  */
+
+  /* Optional */
+  /*  Receiver Error Recovery */
+  uint8_t rcvrErrRecovery_valid;  /**< Must be set to true if rcvrErrRecovery is being passed */
+  qmiLocEngineResetReasonEnumT_v02 rcvrErrRecovery;
+  /**<   Error recovery reason. Values:
+      - eQMI_LOC_RESET_REASON_NONE (0) --  Normal Operating Mode.
+      - eQMI_LOC_RESET_REASON_RESET_POSITION_ENGINE (1) --  Reset caused by Position Engine.
+      - eQMI_LOC_RESET_REASON_RESET_BACKGROUND_SCAN (2) --  Reset caused by GNSS Background Scan.
+      - eQMI_LOC_RESET_REASON_RESET_CLOCK_INCONSISTENCY (3) --  Reset caused by Injected Clock Inconsistency.
+      - eQMI_LOC_RESET_REASON_RESET_GPS_SUBFRAME_ALIGNMENT (4) --  Reset caused by GPS Subframe mis alignment.
+      - eQMI_LOC_RESET_REASON_RESET_DECODED_TIME_INCONSISTENCY (5) --  Reset caused by Decoded Time Inconsistency.
+      - eQMI_LOC_RESET_REASON_RESET_MEASUREMENT_INCONSISTENCY (6) --  Reset caused by Code consistency error.
+      - eQMI_LOC_RESET_REASON_RESET_INTMS_INCONSISTENCY (7) --  Soft reset caused by INTMS error.
+      - eQMI_LOC_RESET_REASON_RESET_RF_FAILURE (8) --  Soft reset caused by RF failure.
+      - eQMI_LOC_RESET_REASON_RESET_SOFT_RESET (9) --  Soft reset. No measurement or position outage.
+      - eQMI_LOC_RESET_REASON_RESET_HARD_RESET (10) --  Hard reset. Measurement and position outage.
+      - eQMI_LOC_RESET_REASON_RESET_UTCOFFSET_INCONSISTENCY (11) --  UTC Offsets failure.
+      - eQMI_LOC_RESET_REASON_RESET_GARAGEMODE_GPS_FASTSCAN (12) --  Engine transitioned from garage mode. Forced GPS fast scan.
+      - eQMI_LOC_RESET_REASON_RESET_TICK_MISSING (13) --  No once-a-sec-tick for a 5 second window.
+      - eQMI_LOC_RESET_REASON_RESET_ENGINE_STATE_MISMATCH (14) --  Receiver state unexpected.
+      - eQMI_LOC_RESET_REASON_RESET_GARAGEMODE_GNSS_FASTSCAN (15) --  Engine transitioned from garage mode. Forced GNSS fast scan.
+      - eQMI_LOC_RESET_REASON_RESET_BDS_SUBFRAME_ALIGNMENT (16) --  Reset caused by BDS subframe misalignement.
+      - eQMI_LOC_RESET_REASON_RESET_WEEK_MISMATCH (17) --  GPS week is off when compared to other time sources.
+      - eQMI_LOC_RESET_REASON_RESET_ACQUISITION_ASST_REJECT (18) --  Acquisition Assistance is rejected.
+      - eQMI_LOC_RESET_REASON_RESET_STRATEGY_STUCK_IN_FLUSH (19) --  Search strategy stuck.
+      - eQMI_LOC_RESET_REASON_RESET_SEVERE_BLANKING_OUTAGE (20) --  Outage due to severe blanking.
+      - eQMI_LOC_RESET_REASON_RESET_XO_OFFSET_ERROR (21) --  Hard reset triggered by jump in XO offset.
+      - eQMI_LOC_RESET_REASON_RESET_GAL_SIGNAL_OUTAGE (22) --  Reset due to GAL SV signal outage.
+      - eQMI_LOC_RESET_REASON_RESET_TICK_IN_DPO (23) --  Reset due to tick received while in DPO.  */
+
+  /* Optional */
+  /*  Leap Second Information */
+  uint8_t leapSecondInfo_valid;  /**< Must be set to true if leapSecondInfo is being passed */
+  qmiLocLeapSecondInfoStructT_v02 leapSecondInfo;
+  /**<   Leap second information. */
+
+  /* Optional */
+  /*  Jammed Signals Mask */
+  uint8_t jammedSignalsMask_valid;  /**< Must be set to true if jammedSignalsMask is being passed */
+  qmiLocGnssSignalTypeMaskT_v02 jammedSignalsMask;
+  /**<   Jammed GNSS signals. Values:
+      - QMI_LOC_MASK_GNSS_SIGNAL_TYPE_GPS_L1CA (0x00000001) --  GPS L1CA RF band \n
+      - QMI_LOC_MASK_GNSS_SIGNAL_TYPE_GPS_L1C (0x00000002) --  GPS L1C RF band \n
+      - QMI_LOC_MASK_GNSS_SIGNAL_TYPE_GPS_L2C_L (0x00000004) --  GPS L2C_L RF band \n
+      - QMI_LOC_MASK_GNSS_SIGNAL_TYPE_GPS_L5_Q (0x00000008) --  GPS L5_Q RF band \n
+      - QMI_LOC_MASK_GNSS_SIGNAL_TYPE_GLONASS_G1 (0x00000010) --  GLONASS G1 (L1OF) RF band \n
+      - QMI_LOC_MASK_GNSS_SIGNAL_TYPE_GLONASS_G2 (0x00000020) --  GLONASS G2 (L2OF) RF band \n
+      - QMI_LOC_MASK_GNSS_SIGNAL_TYPE_GALILEO_E1_C (0x00000040) --  Galileo E1_C RF band \n
+      - QMI_LOC_MASK_GNSS_SIGNAL_TYPE_GALILEO_E5A_Q (0x00000080) --  Galileo E5A_Q RF band \n
+      - QMI_LOC_MASK_GNSS_SIGNAL_TYPE_GALILEO_E5B_Q (0x00000100) --  Galileo E5B_Q RF band \n
+      - QMI_LOC_MASK_GNSS_SIGNAL_TYPE_BEIDOU_B1_I (0x00000200) --  BeiDou B1_I RF band \n
+      - QMI_LOC_MASK_GNSS_SIGNAL_TYPE_BEIDOU_B1C (0x00000400) --  BeiDou B1C RF band \n
+      - QMI_LOC_MASK_GNSS_SIGNAL_TYPE_BEIDOU_B2_I (0x00000800) --  BeiDou B2_I RF band
+      - QMI_LOC_MASK_GNSS_SIGNAL_TYPE_BEIDOU_B2A_I (0x00001000) --  BeiDou B2A_I RF band \n
+      - QMI_LOC_MASK_GNSS_SIGNAL_TYPE_QZSS_L1CA (0x00002000) --  QZSS L1CA RF band \n
+      - QMI_LOC_MASK_GNSS_SIGNAL_TYPE_QZSS_L1S (0x00004000) --  QZSS L1S RF band \n
+      - QMI_LOC_MASK_GNSS_SIGNAL_TYPE_QZSS_L2C_L (0x00008000) --  QZSS L2C_L RF band \n
+      - QMI_LOC_MASK_GNSS_SIGNAL_TYPE_QZSS_L5_Q (0x00010000) --  QZSS L5_Q RF band \n
+      - QMI_LOC_MASK_GNSS_SIGNAL_TYPE_SBAS_L1_CA (0x00020000) --  SBAS L1_CA RF band
+      - QMI_LOC_MASK_GNSS_SIGNAL_TYPE_NAVIC_L5 (0x00040000) --  NavIC L5 RF band \n
+      - QMI_LOC_MASK_GNSS_SIGNAL_TYPE_BEIDOU_B2A_Q (0x00080000) --  BeiDou B2A_Q RF band
+      - QMI_LOC_MASK_GNSS_SIGNAL_TYPE_BEIDOU_B2B_I (0x00100000) --  BeiDou B2B_I RF band (Data)
+      - QMI_LOC_MASK_GNSS_SIGNAL_TYPE_BEIDOU_B2B_Q (0x00200000) --  BeiDou B2B_Q RF band (Pilot)  */
+
+  /* Optional */
+  /*  Jammer Indicator for GNSS Signals */
+  uint8_t jammerIndicatorList_valid;  /**< Must be set to true if jammerIndicatorList is being passed */
+  uint32_t jammerIndicatorList_len;  /**< Must be set to # of elements in jammerIndicatorList */
+  qmiLocJammerIndicatorExtStructT_v02 jammerIndicatorList[QMI_LOC_MAX_GNSS_SIGNAL_TYPE_EXT_V02];
+  /**<   Indicates the jammer indicator for GNSS signals */
+
+  /* Optional */
+  /*  UTC Time of EPI */
+  uint8_t epiTime_valid;  /**< Must be set to true if epiTime is being passed */
+  qmiLocTimeStructT_v02 epiTime;
+  /**<   UTC time of week when external position was injected. */
+
+  /* Optional */
+  /*  EPI Latitude */
+  uint8_t epiLat_valid;  /**< Must be set to true if epiLat is being passed */
+  float epiLat;
+  /**<   EPI Latitude.
+      - Units: radians */
+
+  /* Optional */
+  /*  EPI Longitude */
+  uint8_t epiLon_valid;  /**< Must be set to true if epiLon is being passed */
+  float epiLon;
+  /**<   EPI Longitude.
+       - Units: radians */
+
+  /* Optional */
+  /*  EPI Altitude */
+  uint8_t epiAlt_valid;  /**< Must be set to true if epiAlt is being passed */
+  float epiAlt;
+  /**<   EPI Altitude.
+       - Units: meters */
+
+  /* Optional */
+  /*  EPI Horizontal Estimated Position Error */
+  uint8_t epiHepe_valid;  /**< Must be set to true if epiHepe is being passed */
+  float epiHepe;
+  /**<   EPI Horizontal Estimated Position Error.
+       - Units: meters */
+
+  /* Optional */
+  /*  EPI Altitude Uncertainty */
+  uint8_t epiAltUnc_valid;  /**< Must be set to true if epiAltUnc is being passed */
+  float epiAltUnc;
+  /**<   EPI Altitude Uncertainty.
+       - Units: meters */
+
+  /* Optional */
+  /*  EPI Source */
+  uint8_t epiSrc_valid;  /**< Must be set to true if epiSrc is being passed */
+  uint8_t epiSrc;
+  /**<   EPI Source. Values:
+       - eQMI_LOC_EPI_SRC_COARSE_POSITION (1)
+       - eQMI_LOC_EPI_SRC_REFERENCE_LOCATION (2)
+       - eQMI_LOC_EPI_SRC_TLE_POSITION (3) */
+
+  /* Optional */
+  /*  UTC Time of Best Position */
+  uint8_t bestPosTime_valid;  /**< Must be set to true if bestPosTime is being passed */
+  qmiLocTimeStructT_v02 bestPosTime;
+  /**<   UTC time of week when best available position was generated. */
+
+  /* Optional */
+  /*  Best Position Latitude */
+  uint8_t bestPosLat_valid;  /**< Must be set to true if bestPosLat is being passed */
+  float bestPosLat;
+  /**<   Best Position Latitude.
+       - Units: radians */
+
+  /* Optional */
+  /*  Best Position Longitude */
+  uint8_t bestPosLon_valid;  /**< Must be set to true if bestPosLon is being passed */
+  float bestPosLon;
+  /**<   Best Position Longitude.
+      - Units: radians */
+
+  /* Optional */
+  /*  Best Position Altitude */
+  uint8_t bestPosAlt_valid;  /**< Must be set to true if bestPosAlt is being passed */
+  float bestPosAlt;
+  /**<   Best Position Altitude.
+       - Units: meters */
+
+  /* Optional */
+  /*  Best Position Horizontal Estimated Position Error */
+  uint8_t bestPosHepe_valid;  /**< Must be set to true if bestPosHepe is being passed */
+  float bestPosHepe;
+  /**<   Best Position Horizontal Estimated Position Error.
+       - Units: meters */
+
+  /* Optional */
+  /*  Best Position Altitude Uncertainty. */
+  uint8_t bestPosAltUnc_valid;  /**< Must be set to true if bestPosAltUnc is being passed */
+  float bestPosAltUnc;
+  /**<   Best Position Altitude Uncertainty.
+       - Units: meters */
+
+  /* Optional */
+  /*  UTC Time of XTRA Debug Information */
+  uint8_t xtraInfoTime_valid;  /**< Must be set to true if xtraInfoTime is being passed */
+  qmiLocTimeStructT_v02 xtraInfoTime;
+  /**<   UTC time of week when XTRA debug information was generated. */
+
+  /* Optional */
+  /*  Age of GPS XTRA */
+  uint8_t gpsXtraAge_valid;  /**< Must be set to true if gpsXtraAge is being passed */
+  uint32_t gpsXtraAge;
+  /**<   Age of GPS XTRA data.
+       - Units: seconds */
+
+  /* Optional */
+  /*  Age of GLONASS XTRA */
+  uint8_t gloXtraAge_valid;  /**< Must be set to true if gloXtraAge is being passed */
+  uint32_t gloXtraAge;
+  /**<   Age of GLONASS XTRA data.
+       - Units: seconds */
+
+  /* Optional */
+  /*  Age of BDS XTRA */
+  uint8_t bdsXtraAge_valid;  /**< Must be set to true if bdsXtraAge is being passed */
+  uint32_t bdsXtraAge;
+  /**<   Age of BDS XTRA data.
+       - Units: seconds */
+
+  /* Optional */
+  /*  Age of GAL XTRA */
+  uint8_t galXtraAge_valid;  /**< Must be set to true if galXtraAge is being passed */
+  uint32_t galXtraAge;
+  /**<   Age of GAL XTRA data.
+       - Units: seconds */
+
+  /* Optional */
+  /*  Age of QZSS XTRA */
+  uint8_t qzssXtraAge_valid;  /**< Must be set to true if qzssXtraAge is being passed */
+  uint32_t qzssXtraAge;
+  /**<   Age of QZSS XTRA data.
+       - Units: seconds */
+
+  /* Optional */
+  /*  Age of NAVIC XTRA */
+  uint8_t navicXtraAge_valid;  /**< Must be set to true if navicXtraAge is being passed */
+  uint32_t navicXtraAge;
+  /**<   Age of NAVIC XTRA data.
+       - Units: seconds */
+
+  /* Optional */
+  /*  GPS XTRA SV Mask */
+  uint8_t gpsXtraMask_valid;  /**< Must be set to true if gpsXtraMask is being passed */
+  uint32_t gpsXtraMask;
+  /**<   Specifies the GPS SV mask.
+       - SV ID mapping: SV 1 maps to bit 0. */
+
+  /* Optional */
+  /*  GLONASS XTRA SV Mask */
+  uint8_t gloXtraMask_valid;  /**< Must be set to true if gloXtraMask is being passed */
+  uint32_t gloXtraMask;
+  /**<   Specifies the GLONASS SV mask.
+       - SV ID mapping: SV 65 maps to bit 0. */
+
+  /* Optional */
+  /*  BDS XTRA SV Mask */
+  uint8_t bdsXtraMask_valid;  /**< Must be set to true if bdsXtraMask is being passed */
+  uint64_t bdsXtraMask;
+  /**<   Specifies the BDS SV mask.
+       - SV ID mapping: SV 201 maps to bit 0. */
+
+  /* Optional */
+  /*  GAL XTRA SV Mask */
+  uint8_t galXtraMask_valid;  /**< Must be set to true if galXtraMask is being passed */
+  uint64_t galXtraMask;
+  /**<   Specifies the Galileo SV mask.
+       - SV ID mapping: SV 301 maps to bit 0. */
+
+  /* Optional */
+  /*  QZSS XTRA SV Mask */
+  uint8_t qzssXtraMask_valid;  /**< Must be set to true if qzssXtraMask is being passed */
+  uint8_t qzssXtraMask;
+  /**<   Specifies the QZSS SV mask.
+       - SV ID mapping: SV 193 maps to bit 0 */
+
+  /* Optional */
+  /*  NAVIC XTRA SV Mask */
+  uint8_t navicXtraMask_valid;  /**< Must be set to true if navicXtraMask is being passed */
+  uint32_t navicXtraMask;
+  /**<   Specifies the NAVIC SV mask.
+       - SV ID mapping: SV 401 maps to bits 0. */
+
+  /* Optional */
+  /*  UTC Time of Ephemeris Debug Information */
+  uint8_t ephInfoTime_valid;  /**< Must be set to true if ephInfoTime is being passed */
+  qmiLocTimeStructT_v02 ephInfoTime;
+  /**<   UTC time of week when ephemeris debug information was generated. */
+
+  /* Optional */
+  /*  GPS Ephemeris SV Mask */
+  uint8_t gpsEphMask_valid;  /**< Must be set to true if gpsEphMask is being passed */
+  uint32_t gpsEphMask;
+  /**<   Specifies the GPS SV mask.
+       - SV ID mapping: SV 1 maps to bit 0. */
+
+  /* Optional */
+  /*  GLONASS Ephemeris SV Mask */
+  uint8_t gloEphMask_valid;  /**< Must be set to true if gloEphMask is being passed */
+  uint32_t gloEphMask;
+  /**<   Specifies the GLONASS SV mask.
+       - SV ID mapping: SV 65 maps to bit 0. */
+
+  /* Optional */
+  /*  BDS Ephemeris SV Mask */
+  uint8_t bdsEphMask_valid;  /**< Must be set to true if bdsEphMask is being passed */
+  uint64_t bdsEphMask;
+  /**<   Specifies the BDS SV mask.
+       - SV ID mapping: SV 201 maps to bit 0. */
+
+  /* Optional */
+  /*  GAL Ephemeris SV Mask */
+  uint8_t galEphMask_valid;  /**< Must be set to true if galEphMask is being passed */
+  uint64_t galEphMask;
+  /**<   Specifies the Galileo SV mask.
+       - SV ID mapping: SV 301 maps to bit 0. */
+
+  /* Optional */
+  /*  QZSS Ephemeris SV Mask */
+  uint8_t qzssEphMask_valid;  /**< Must be set to true if qzssEphMask is being passed */
+  uint8_t qzssEphMask;
+  /**<   Specifies the QZSS SV mask.
+       - SV ID mapping: SV 193 maps to bit 0 */
+
+  /* Optional */
+  /*  NAVIC Ephemeris SV Mask */
+  uint8_t navicEphMask_valid;  /**< Must be set to true if navicEphMask is being passed */
+  uint32_t navicEphMask;
+  /**<   Specifies the NAVIC SV mask.
+       - SV ID mapping: SV 401 maps to bits 0. */
+
+  /* Optional */
+  /*  UTC Time of SV Health Debug Information */
+  uint8_t healthInfoTime_valid;  /**< Must be set to true if healthInfoTime is being passed */
+  qmiLocTimeStructT_v02 healthInfoTime;
+  /**<   UTC time of week when SV health information was generated. */
+
+  /* Optional */
+  /*  GPS Health Unknown SV Mask */
+  uint8_t gpsHealthUnknownMask_valid;  /**< Must be set to true if gpsHealthUnknownMask is being passed */
+  uint32_t gpsHealthUnknownMask;
+  /**<   Specifies the GPS SV mask.
+       - SV ID mapping: SV 1 maps to bit 0. */
+
+  /* Optional */
+  /*  GLONASS Health Unknown SV Mask */
+  uint8_t gloHealthUnknownMask_valid;  /**< Must be set to true if gloHealthUnknownMask is being passed */
+  uint32_t gloHealthUnknownMask;
+  /**<   Specifies the GLONASS SV mask.
+       - SV ID mapping: SV 65 maps to bit 0. */
+
+  /* Optional */
+  /*  BDS Health Unknown SV Mask */
+  uint8_t bdsHealthUnknownMask_valid;  /**< Must be set to true if bdsHealthUnknownMask is being passed */
+  uint64_t bdsHealthUnknownMask;
+  /**<   Specifies the BDS SV mask.
+       - SV ID mapping: SV 201 maps to bit 0. */
+
+  /* Optional */
+  /*  GAL Health Unknown SV Mask */
+  uint8_t galHealthUnknownMask_valid;  /**< Must be set to true if galHealthUnknownMask is being passed */
+  uint64_t galHealthUnknownMask;
+  /**<   Specifies the Galileo SV mask.
+       - SV ID mapping: SV 301 maps to bit 0. */
+
+  /* Optional */
+  /*  QZSS Health Unknown SV Mask */
+  uint8_t qzssHealthUnknownMask_valid;  /**< Must be set to true if qzssHealthUnknownMask is being passed */
+  uint8_t qzssHealthUnknownMask;
+  /**<   Specifies the QZSS SV mask.
+       - SV ID mapping: SV 193 maps to bit 0 */
+
+  /* Optional */
+  /*  NAVIC Health Unknown SV Mask */
+  uint8_t navicHealthUnknownMask_valid;  /**< Must be set to true if navicHealthUnknownMask is being passed */
+  uint32_t navicHealthUnknownMask;
+  /**<   Specifies the NAVIC SV mask.
+       - SV ID mapping: SV 401 maps to bits 0. */
+
+  /* Optional */
+  /*  GPS Healthy SV Mask */
+  uint8_t gpsHealthGoodMask_valid;  /**< Must be set to true if gpsHealthGoodMask is being passed */
+  uint32_t gpsHealthGoodMask;
+  /**<   Specifies the GPS SV mask.
+       - SV ID mapping: SV 1 maps to bit 0. */
+
+  /* Optional */
+  /*  GLONASS Healthy SV Mask */
+  uint8_t gloHealthGoodMask_valid;  /**< Must be set to true if gloHealthGoodMask is being passed */
+  uint32_t gloHealthGoodMask;
+  /**<   Specifies the GLONASS SV mask.
+       - SV ID mapping: SV 65 maps to bit 0. */
+
+  /* Optional */
+  /*  BDS Healthy SV Mask */
+  uint8_t bdsHealthGoodMask_valid;  /**< Must be set to true if bdsHealthGoodMask is being passed */
+  uint64_t bdsHealthGoodMask;
+  /**<   Specifies the BDS SV mask.
+       - SV ID mapping: SV 201 maps to bit 0. */
+
+  /* Optional */
+  /*  GAL Healthy SV Mask */
+  uint8_t galHealthGoodMask_valid;  /**< Must be set to true if galHealthGoodMask is being passed */
+  uint64_t galHealthGoodMask;
+  /**<   Specifies the Galileo SV mask.
+       - SV ID mapping: SV 301 maps to bit 0. */
+
+  /* Optional */
+  /*  QZSS Healthy SV Mask */
+  uint8_t qzssHealthGoodMask_valid;  /**< Must be set to true if qzssHealthGoodMask is being passed */
+  uint8_t qzssHealthGoodMask;
+  /**<   Specifies the QZSS SV mask.
+       - SV ID mapping: SV 193 maps to bit 0 */
+
+  /* Optional */
+  /*  NAVIC Healthy SV Mask */
+  uint8_t navicHealthGoodMask_valid;  /**< Must be set to true if navicHealthGoodMask is being passed */
+  uint32_t navicHealthGoodMask;
+  /**<   Specifies the NAVIC SV mask.
+       - SV ID mapping: SV 401 maps to bits 0. */
+
+  /* Optional */
+  /*  GPS Unhealthy SV Mask */
+  uint8_t gpsHealthBadMask_valid;  /**< Must be set to true if gpsHealthBadMask is being passed */
+  uint32_t gpsHealthBadMask;
+  /**<   Specifies the GPS SV mask.
+       - SV ID mapping: SV 1 maps to bit 0. */
+
+  /* Optional */
+  /*  GLONASS Unhealthy SV Mask */
+  uint8_t gloHealthBadMask_valid;  /**< Must be set to true if gloHealthBadMask is being passed */
+  uint32_t gloHealthBadMask;
+  /**<   Specifies the GLONASS SV mask.
+       - SV ID mapping: SV 65 maps to bit 0. */
+
+  /* Optional */
+  /*  BDS Unhealthy SV Mask */
+  uint8_t bdsHealthBadMask_valid;  /**< Must be set to true if bdsHealthBadMask is being passed */
+  uint64_t bdsHealthBadMask;
+  /**<   Specifies the BDS SV mask.
+       - SV ID mapping: SV 201 maps to bit 0. */
+
+  /* Optional */
+  /*  GAL Unhealthy SV Mask */
+  uint8_t galHealthBadMask_valid;  /**< Must be set to true if galHealthBadMask is being passed */
+  uint64_t galHealthBadMask;
+  /**<   Specifies the Galileo SV mask.
+       - SV ID mapping: SV 301 maps to bit 0. */
+
+  /* Optional */
+  /*  QZSS Unhealthy SV Mask */
+  uint8_t qzssHealthBadMask_valid;  /**< Must be set to true if qzssHealthBadMask is being passed */
+  uint8_t qzssHealthBadMask;
+  /**<   Specifies the QZSS SV mask.
+       - SV ID mapping: SV 193 maps to bit 0 */
+
+  /* Optional */
+  /*  NAVIC Unhealthy SV Mask */
+  uint8_t navicHealthBadMask_valid;  /**< Must be set to true if navicHealthBadMask is being passed */
+  uint32_t navicHealthBadMask;
+  /**<   Specifies the NAVIC SV mask.
+       - SV ID mapping: SV 401 maps to bits 0. */
+
+  /* Optional */
+  /*  UTC Time of Fix Information */
+  uint8_t fixInfoTime_valid;  /**< Must be set to true if fixInfoTime is being passed */
+  qmiLocTimeStructT_v02 fixInfoTime;
+  /**<   UTC time of week when fix information was generated. */
+
+  /* Optional */
+  /*  Fix Information */
+  uint8_t fixInfoMask_valid;  /**< Must be set to true if fixInfoMask is being passed */
+  uint32_t fixInfoMask;
+  /**<   Fix Information Mask. Valid Values:
+       - QMI_LOC_FIX_INFO_HEADING_FILTER_ENGAGED (0x01)
+       - QMI_LOC_FIX_INFO_INS_FILTER_ENGAGED     (0x02)
+       - QMI_LOC_FIX_INFO_PDR_ENGAGED            (0x04)
+       - QMI_LOC_FIX_INFO_PDR_MAG_CALIBRATED     (0x08)
+  */
+
+  /* Optional */
+  /*  UTC Time of Navigation Data */
+  uint8_t navDataTime_valid;  /**< Must be set to true if navDataTime is being passed */
+  qmiLocTimeStructT_v02 navDataTime;
+  /**<   UTC time of week when navigation data was generated. */
+
+  /* Optional */
+  /*  Satellite Navigation Data */
+  uint8_t navData_valid;  /**< Must be set to true if navData is being passed */
+  uint32_t navData_len;  /**< Must be set to # of elements in navData */
+  qmiLocNavDataStructT_v02 navData[QMI_LOC_EXPANDED_SV_INFO_LIST_MAX_SIZE_V02];
+  /**<   Satellite navigation data. */
+
+  /* Optional */
+  /*  UTC Time of Fix Status */
+  uint8_t fixStatusTime_valid;  /**< Must be set to true if fixStatusTime is being passed */
+  qmiLocTimeStructT_v02 fixStatusTime;
+  /**<   UTC time when fix status was generated. */
+
+  /* Optional */
+  /*  Fix Status */
+  uint8_t fixStatusMask_valid;  /**< Must be set to true if fixStatusMask is being passed */
+  uint32_t fixStatusMask;
+  /**<   Fix Status Mask. Valid Values:
+       - QMI_LOC_FIX_STATUS_SUCCESS           (0x01)
+       - QMI_LOC_FIX_STATUS_TOO_FEW_SVS       (0x02)
+       - QMI_LOC_FIX_STATUS_HEPE_CHECK_FAILED (0x04)
+       - QMI_LOC_FIX_STATUS_LOW_RELIABILITY   (0x08)
+  */
+
+  /* Optional */
+  /*  Fix Session HEPE Limit */
+  uint8_t fixHepeLimit_valid;  /**< Must be set to true if fixHepeLimit is being passed */
+  uint32_t fixHepeLimit;
+  /**<   Session HEPE Limit.
+       - Units: meters */
+}qmiLocEngineDebugDataIndMsgT_v02;  /* Message */
+/**
+    @}
+  */
+
+/** @addtogroup loc_qmi_messages
+    @{
+  */
+/** Request Message; Used by the control point to activate/deactivate triband. */
+typedef struct {
+
+  /* Optional */
+  /*  Triband Activation */
+  uint8_t activate_valid;  /**< Must be set to true if activate is being passed */
+  uint8_t activate;
+  /**<   Triband activation. Values:
+       - TRUE -- Activate Triband
+       - FALSE -- Deactivate Triband */
+}qmiLocSetTribandStateReqMsgT_v02;  /* Message */
+/**
+    @}
+  */
+
+/** @addtogroup loc_qmi_messages
+    @{
+  */
+/** Indication Message; Used by the control point to query triband activation state.
+     */
+typedef struct {
+
+  /* Mandatory */
+  /*  Status of Request */
+  qmiLocStatusEnumT_v02 status;
+  /**<   Status of the triband state query request. Values:
+      - eQMI_LOC_SUCCESS (0) --  Request was completed successfully \n
+      - eQMI_LOC_GENERAL_FAILURE (1) --  Request failed because of a general failure \n
+      - eQMI_LOC_UNSUPPORTED (2) --  Request failed because it is not supported \n
+      - eQMI_LOC_INVALID_PARAMETER (3) --  Request failed because it contained invalid parameters \n
+      - eQMI_LOC_ENGINE_BUSY (4) --  Request failed because the engine is busy \n
+      - eQMI_LOC_PHONE_OFFLINE (5) --  Request failed because the phone is offline \n
+      - eQMI_LOC_TIMEOUT (6) --  Request failed because it has timed out \n
+      - eQMI_LOC_CONFIG_NOT_SUPPORTED (7) --  Request failed because an undefined configuration was requested \n
+      - eQMI_LOC_INSUFFICIENT_MEMORY (8) --  Request failed because the engine could not allocate sufficient memory for the request \n
+      - eQMI_LOC_MAX_GEOFENCE_PROGRAMMED (9) --  Request failed because the maximum number of Geofences are already programmed \n
+      - eQMI_LOC_XTRA_VERSION_CHECK_FAILURE (10) --  Location service failed because of an XTRA version-based file format check failure \n
+      - eQMI_LOC_GNSS_DISABLED (11) --  Request failed because the location service is disabled   */
+
+  /* Optional */
+  /*  Triband Activation State */
+  uint8_t activate_valid;  /**< Must be set to true if activate is being passed */
+  uint8_t activate;
+  /**<   Specifies the triband activation state. Values:
+       - TRUE -- Triband activated
+       - FALSE -- Triband deactivated */
+}qmiLocGetTribandStateIndMsgT_v02;  /* Message */
+/**
+    @}
+  */
+
 /* Conditional compilation tags for message removal */
 //#define REMOVE_QMI_LOC_ADD_CIRCULAR_GEOFENCE_V02
 //#define REMOVE_QMI_LOC_ADD_GEOFENCE_CONTEXT_V02
@@ -22913,6 +24937,7 @@ typedef struct {
 //#define REMOVE_QMI_LOC_EDIT_GEOFENCE_V02
 //#define REMOVE_QMI_LOC_ENABLE_POSITION_ASSISTED_CLOCK_EST_V02
 //#define REMOVE_QMI_LOC_ENABLE_POSITION_INJECTION_TEST_MODE_V02
+//#define REMOVE_QMI_LOC_ENGINE_DEBUG_DATA_V02
 //#define REMOVE_QMI_LOC_EVENT_BATCHING_STATUS_V02
 //#define REMOVE_QMI_LOC_EVENT_BATCH_FULL_NOTIFICATION_V02
 //#define REMOVE_QMI_LOC_EVENT_BDS_EPHEMERIS_REPORT_V02
@@ -22952,6 +24977,7 @@ typedef struct {
 //#define REMOVE_QMI_LOC_EVENT_NI_NOTIFY_VERIFY_REQ_V02
 //#define REMOVE_QMI_LOC_EVENT_NMEA_V02
 //#define REMOVE_QMI_LOC_EVENT_PEDOMETER_CONTROL_V02
+//#define REMOVE_QMI_LOC_EVENT_PLATFORM_POWER_STATE_CHANGED_V02
 //#define REMOVE_QMI_LOC_EVENT_POSITION_REPORT_V02
 //#define REMOVE_QMI_LOC_EVENT_QUERY_XTRA_INFO_REQ_V02
 //#define REMOVE_QMI_LOC_EVENT_QZSS_EPHEMERIS_REPORT_V02
@@ -23008,6 +25034,7 @@ typedef struct {
 //#define REMOVE_QMI_LOC_GET_SUPPORTED_FEATURE_V02
 //#define REMOVE_QMI_LOC_GET_SUPPORTED_FIELDS_V02
 //#define REMOVE_QMI_LOC_GET_SUPPORTED_MSGS_V02
+//#define REMOVE_QMI_LOC_GET_TRIBAND_STATE_V02
 //#define REMOVE_QMI_LOC_GET_XTRA_T_SESSION_CONTROL_V02
 //#define REMOVE_QMI_LOC_GNSS_STATISTICS_REPORT_V02
 //#define REMOVE_QMI_LOC_GTP_AP_STATUS_V02
@@ -23020,11 +25047,13 @@ typedef struct {
 //#define REMOVE_QMI_LOC_INJECT_FDCL_DATA_V02
 //#define REMOVE_QMI_LOC_INJECT_GSM_CELL_INFO_V02
 //#define REMOVE_QMI_LOC_INJECT_GTP_CLIENT_DOWNLOADED_DATA_V02
+//#define REMOVE_QMI_LOC_INJECT_LOCATION_CIVIC_ADDRESS_V02
 //#define REMOVE_QMI_LOC_INJECT_MOTION_DATA_V02
 //#define REMOVE_QMI_LOC_INJECT_NETWORK_INITIATED_MESSAGE_V02
 //#define REMOVE_QMI_LOC_INJECT_PLATFORM_POWER_STATE_V02
 //#define REMOVE_QMI_LOC_INJECT_POSITION_V02
 //#define REMOVE_QMI_LOC_INJECT_PREDICTED_ORBITS_DATA_V02
+//#define REMOVE_QMI_LOC_INJECT_RAW_DATA_V02
 //#define REMOVE_QMI_LOC_INJECT_SENSOR_DATA_V02
 //#define REMOVE_QMI_LOC_INJECT_SRN_AP_DATA_V02
 //#define REMOVE_QMI_LOC_INJECT_SUBSCRIBER_ID_V02
@@ -23084,6 +25113,7 @@ typedef struct {
 //#define REMOVE_QMI_LOC_SET_SERVER_V02
 //#define REMOVE_QMI_LOC_SET_SPI_STATUS_V02
 //#define REMOVE_QMI_LOC_SET_STATISTICS_CONFIG_V02
+//#define REMOVE_QMI_LOC_SET_TRIBAND_STATE_V02
 //#define REMOVE_QMI_LOC_SET_XTRA_T_SESSION_CONTROL_V02
 //#define REMOVE_QMI_LOC_SET_XTRA_VERSION_CHECK_V02
 //#define REMOVE_QMI_LOC_START_V02
@@ -23572,6 +25602,20 @@ typedef struct {
 #define QMI_LOC_GET_MULTIBAND_CONFIG_RESP_V02 0x00E1
 #define QMI_LOC_GET_MULTIBAND_CONFIG_IND_V02 0x00E1
 #define QMI_LOC_LATENCY_INFORMATION_IND_V02 0x00E2
+#define QMI_LOC_INJECT_LOCATION_CIVIC_ADDRESS_REQ_V02 0x00E3
+#define QMI_LOC_INJECT_LOCATION_CIVIC_ADDRESS_RESP_V02 0x00E3
+#define QMI_LOC_INJECT_LOCATION_CIVIC_ADDRESS_IND_V02 0x00E3
+#define QMI_LOC_EVENT_PLATFORM_POWER_STATE_CHANGED_IND_V02 0x00E4
+#define QMI_LOC_INJECT_RAW_DATA_REQ_V02 0x00E5
+#define QMI_LOC_INJECT_RAW_DATA_RESP_V02 0x00E5
+#define QMI_LOC_INJECT_RAW_DATA_IND_V02 0x00E5
+#define QMI_LOC_ENGINE_DEBUG_DATA_IND_V02 0x00E6
+#define QMI_LOC_SET_TRIBAND_STATE_REQ_V02 0x00E7
+#define QMI_LOC_SET_TRIBAND_STATE_RESP_V02 0x00E7
+#define QMI_LOC_SET_TRIBAND_STATE_IND_V02 0x00E7
+#define QMI_LOC_GET_TRIBAND_STATE_REQ_V02 0x00E8
+#define QMI_LOC_GET_TRIBAND_STATE_RESP_V02 0x00E8
+#define QMI_LOC_GET_TRIBAND_STATE_IND_V02 0x00E8
 /**
     @}
   */

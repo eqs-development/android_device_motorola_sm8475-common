@@ -1,4 +1,4 @@
-/* Copyright (c) 2018-2020 The Linux Foundation. All rights reserved.
+/* Copyright (c) 2018-2021 The Linux Foundation. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are
@@ -30,7 +30,6 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <fcntl.h>
-#include <sys/stat.h>
 #include <grp.h>
 #include <unistd.h>
 #include <sys/prctl.h>
@@ -42,22 +41,6 @@
 #include "LocationApiService.h"
 
 #define HAL_DAEMON_VERSION "1.1.0"
-
-// this function will block until the directory specified in
-// dirName has been created
-static inline void waitForDir(const char* dirName) {
-    // wait for parent direcoty to be created...
-    struct stat buf_stat;
-    while (1) {
-        LOC_LOGd("waiting for %s...", dirName);
-        int rc = stat(dirName, &buf_stat);
-        if (!rc) {
-            break;
-        }
-        usleep(100000); //100ms
-    }
-    LOC_LOGd("done");
-}
 
 int main(int argc, char *argv[])
 {
@@ -77,6 +60,8 @@ int main(int argc, char *argv[])
         {"POSITION_MODE", &configParamRead.positionMode, NULL, 'n'},
     };
 
+    // read default configuration paramters
+    UTIL_READ_CONF_DEFAULT(LOC_PATH_GPS_CONF);
     // read configuration file
     UTIL_READ_CONF(LOC_PATH_GPS_CONF, configTable);
     if (configParamRead.positionMode != GNSS_SUPL_MODE_MSB) {
@@ -86,9 +71,10 @@ int main(int argc, char *argv[])
     LOC_LOGi("location hal daemon - ver %s", HAL_DAEMON_VERSION);
     loc_boot_kpi_marker("L - Location Probe Start");
 
-    waitForDir(SOCKET_DIR_LOCATION);
-    waitForDir(SOCKET_LOC_CLIENT_DIR);
-    waitForDir(SOCKET_DIR_EHUB);
+    //Wait for SYSVINIT initd or systemd tmpfilesd  to create socket folders
+    locUtilWaitForDir(SOCKET_DIR_LOCATION);
+    locUtilWaitForDir(SOCKET_LOC_CLIENT_DIR);
+    locUtilWaitForDir(SOCKET_DIR_EHUB);
 
     LOC_LOGd("starting loc_hal_daemon");
 

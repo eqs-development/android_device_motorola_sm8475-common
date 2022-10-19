@@ -36,6 +36,7 @@
 
 #ifdef NO_UNORDERED_SET_OR_MAP
     #include <map>
+    #define unordered_map map
 #else
     #include <unordered_map>
 #endif
@@ -82,6 +83,7 @@ public:
             mSubscriptionMask = 0;
             mLocationApi = LocationAPI::createInstance(mCallbacks);
         }
+        updateSubscription(0);
     }
 
     static shared_ptr<LocIpcSender> createSender(const string socket);
