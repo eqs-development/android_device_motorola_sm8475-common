@@ -36,6 +36,7 @@ LOCAL_SHARED_LIBRARIES := \
     libdl \
     liblocation_api
 
+LOCAL_CFLAGS += -Wno-format
 LOCAL_CFLAGS += $(GNSS_CFLAGS)
 
 include $(BUILD_SHARED_LIBRARY)
