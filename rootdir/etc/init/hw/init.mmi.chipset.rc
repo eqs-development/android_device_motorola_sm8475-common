@@ -8,17 +8,22 @@ on post-fs
 on early-init
     exec u:r:vendor_modprobe:s0 -- /vendor/bin/modprobe -a -d /vendor/lib/modules exfat
 
-on property:ro.boot.default_usb_mode=device && property:vendor.usb.controller=*
+on fs
+    insmod /vendor/lib/modules/bm_adsp_ulog.ko
+    insmod /vendor/lib/modules/mmi_charger.ko
+
+on init && property:ro.boot.default_usb_mode=device
+    setprop vendor.usb.controller ${ro.boot.usbcontroller}
     setprop sys.usb.controller ${vendor.usb.controller}
-    write /sys/class/udc/${vendor.usb.controller}/device/../mode peripheral
+    wait /sys/bus/platform/devices/${ro.boot.usb.dwc3_msm:-a600000.ssusb}/mode
+    write /sys/bus/platform/devices/${ro.boot.usb.dwc3_msm:-a600000.ssusb}/mode peripheral
 
 on early-boot
-    # Permission for Health Storage HAL
-    chown system system /sys/devices/platform/soc/1d84000.ufshc/manual_gc
-    chown system system /sys/devices/platform/soc/1d84000.ufshc/ufshid/trigger
     #sync power supply with healthd
     wait /sys/class/power_supply/battery
     wait /sys/class/power_supply/usb
+    write /sys/devices/platform/soc/soc:mmi,charger/state_sync 1
+    wait /sys/class/udc/${ro.boot.usbcontroller} 20
 
 on early-boot && property:ro.boot.bm_ulog_enabled=1
     write /sys/module/bm_adsp_ulog/parameters/debug_enabled 1

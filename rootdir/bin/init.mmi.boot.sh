@@ -149,3 +149,8 @@ then
 else
 	setprop ro.vendor.bootreason ${bootreason_kvp##* }
 fi
+
+# set ro.vendor.boot_seq, which is used to indicate the boot seq number.
+bootseq_kvp=$(cat /proc/bootinfo | grep "BOOT_SEQ")
+setprop ro.vendor.boot_seq ${bootseq_kvp##* }
+notice "boot_seq is ${bootseq_kvp##* }"

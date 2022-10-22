@@ -201,6 +201,9 @@ setup_permissions()
 						[ -f $touch_path/address ] && chown root:vendor_tcmd $touch_path/address
 						[ -f $touch_path/write ] && chown root:vendor_tcmd $touch_path/write
 						;;
+			   pixart)	key_path="/sys/bus/i2c/devices/1-0033"
+						key_files="selftest selftest_bin"
+						;;
 			synaptics)	key_path=$touch_path
 						key_files=$(prepend f54 `ls $touch_path/f54/ 2>/dev/null`)
 						key_files=$key_files"reporting query stats";;
@@ -598,6 +601,28 @@ process_touch_instance()
 	setup_permissions
 }
 
+
+set_ro_hw_properties_exponent_panel()
+{
+	local panelname_path=/sys/class/drm/card0-DSI-1/panelName
+	local bl_exponent_path=/sys/class/drm/card0-DSI-1/panelBLExponent
+	local bl_exponent_prop=ro.vendor.hw.curve
+	local panelname
+	local wait_cnt=0
+	while [ "$wait_cnt" -lt 15 ]; do
+		if [ -e $panelname_path ]; then
+			panelname=$(cat $panelname_path)
+			panelBLExponent=$(cat $bl_exponent_path)
+			setprop $bl_exponent_prop "$panelBLExponent"
+			notice "setprop $bl_exponent_prop as $panelBLExponent, panelname: [$panelname]"
+			break;
+		fi
+		notice "waiting for panelname, wait_cnt is $wait_cnt"
+		sleep 1;
+		wait_cnt=$((wait_cnt+1))
+	done
+}
+
 # Main starts here
 query_panel_info
 load_driver_modules
@@ -617,7 +642,16 @@ for touch_instance in $(ls $touch_class_path); do
 	process_touch_instance &
 done
 
+if [ -f /sys/bus/i2c/devices/1-0033/vendor ]; then
+	touch_vendor=$(cat /sys/bus/i2c/devices/1-0033/vendor)
+	setup_permissions
+fi
+
 # check if need to reload modules
+
+# set exponent backlight property
+set_ro_hw_properties_exponent_panel
+
 wait
 debug "all background processes completed"
 
