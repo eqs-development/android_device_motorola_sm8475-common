@@ -101,6 +101,7 @@ PRODUCT_PACKAGES += \
     libqcompostprocbundle \
     libqcomvisualizer \
     libqcomvoiceprocessing \
+    libsndcardparser \
     libtinycompress\
     vendor.qti.hardware.AGMIPC@1.0-service \
     vendor.qti.hardware.pal@1.0-impl
@@ -149,7 +150,7 @@ PRODUCT_PACKAGES += \
     vendor.display.config@2.0 \
     vendor.display.config@2.0.vendor \
     vendor.qti.hardware.display.config \
-    vendor.qti.hardware.display.config-V2-ndk \
+    vendor.qti.hardware.display.config-V2-ndk.vendor \
     vendor.qti.hardware.display.allocator-service \
     vendor.qti.hardware.display.composer-service \
     vendor.qti.hardware.display.mapper@2.0.vendor \
@@ -229,6 +230,7 @@ $(foreach f,$(wildcard $(LOCAL_PATH)/rootdir/bin/*.sh),\
 PRODUCT_PACKAGES += \
     ipacm \
     IPACM_cfg.xml \
+    IPACM_Filter_cfg.xml \
     libipanat \
     liboffloadhal
 
@@ -239,7 +241,13 @@ PRODUCT_COPY_FILES += \
 # Keymaster
 PRODUCT_PACKAGES += \
     android.hardware.keymaster@4.1.vendor \
-    libkeymaster_messages
+    libkeymaster_messages.vendor
+
+# Keymint
+PRODUCT_PACKAGES += \
+    android.hardware.security.keymint-V1-ndk.vendor \
+    android.hardware.security.secureclock-V1-ndk.vendor \
+    android.hardware.security.sharedsecret-V1-ndk.vendor \
 
 # LiveDisplay
 PRODUCT_PACKAGES += \
@@ -263,8 +271,10 @@ PRODUCT_COPY_FILES += \
 
 PRODUCT_PACKAGES += \
     libavservices_minijail \
+    libavservices_minijail_vendor \
     libavservices_minijail.vendor \
-    libcodec2_hidl@1.0.vendor
+    libcodec2_hidl@1.2.vendor \
+    android.hardware.media.c2@1.2.vendor
 
 # MotoActions
 PRODUCT_PACKAGES += \
@@ -276,7 +286,7 @@ PRODUCT_PACKAGES += \
 
 # OMX
 PRODUCT_PACKAGES += \
-    libcodec2_hidl@1.0.vendor \
+    libcodec2_hidl@1.2.vendor \
     libcodec2_vndk.vendor \
     libOmxCore \
     libstagefrighthw
@@ -374,6 +384,10 @@ PRODUCT_PACKAGES += \
 # QTI service tracker
 PRODUCT_PACKAGES += \
     vendor.qti.hardware.servicetracker@1.2.vendor
+
+# QXR
+PRODUCT_PACKAGES += \
+    android.hardware.common-V2-ndk.vendor
 
 # RenderScript
 PRODUCT_PACKAGES += \
