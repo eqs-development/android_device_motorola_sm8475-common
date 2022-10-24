@@ -1277,6 +1277,11 @@ vendor/etc/init/vendor.qti.hardware.soter@1.0-service.rc
 vendor/lib64/hw/vendor.qti.hardware.soter@1.0-impl.so
 vendor/lib64/vendor.qti.hardware.soter@1.0.so
 
+# spdaemon
+vendor/bin/sec_nvm
+vendor/bin/spdaemon
+vendor/etc/init/init.spdaemon.rc
+
 # SPU
 vendor/bin/hw/vendor.qti.spu@1.1-service
 vendor/bin/hw/vendor.qti.spu@2.0-service
