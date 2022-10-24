@@ -3,7 +3,7 @@ audio.deep_buffer.media=true
 audio.offload.disable=false
 audio.offload.gapless.enabled=false
 audio.offload.min.duration.secs=60
-audio.offload.video=false
+audio.offload.video=true
 media.aac_51_output_enabled=true
 
 # Charger
@@ -24,12 +24,6 @@ persist.data.df.iwlan_mux=9
 persist.data.df.mux_count=8
 persist.data.df.ul_mode=5
 
-# DPM
-persist.vendor.dpm.feature=11
-
-# HWUI
-debug.hwui.skia_atrace_enabled=false
-
 # IMS
 persist.dbg.volte_avail_ovr=1
 persist.dbg.vt_avail_ovr=1
@@ -38,13 +32,20 @@ ro.qcom.ims.use_moto_vt_ext=true
 
 # Media
 media.settings.xml=/vendor/etc/media_profiles_vendor.xml
+media.stagefright.enable-aac=true
+media.stagefright.enable-fma2dp=true
+media.stagefright.enable-http=true
+media.stagefright.enable-player=true
+media.stagefright.enable-qcp=true
+media.stagefright.enable-scan=true
+media.stagefright.thumbnail.prefer_hw_codecs=true
 ro.media.recorder-max-base-layer-fps=60
 
 # Netmgrd
 persist.vendor.data.mode=concurrent
-ro.vendor.use_data_netmgrd=true
 
 # Radio
+persist.vendor.radio.atfwd.start=true
 ro.telephony.default_network=33,33
 
 # RTT
