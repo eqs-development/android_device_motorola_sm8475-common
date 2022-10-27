@@ -719,6 +719,14 @@ vendor/lib64/libAlacSwDec.so
 vendor/lib64/libApeSwDec.so
 vendor/lib64/libFlacSwDec.so
 
+# Panel
+vendor/bin/hw/com.motorola.hardware.display.panel@1.1-service
+vendor/etc/init/com.motorola.hardware.display.panel@1.1-service.rc
+vendor/lib64/com.motorola.hardware.display.panel@1.0.so
+vendor/lib64/com.motorola.hardware.display.panel@1.1.so
+vendor/lib64/hw/com.motorola.hardware.display.panel@1.1-impl.so
+-vendor/lib64/hw/displaypanel.default.so
+
 # Perf
 vendor/bin/hw/vendor.qti.hardware.perf-hal-service
 vendor/bin/poweropt-service
