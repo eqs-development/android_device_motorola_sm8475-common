@@ -9,3 +9,15 @@ allow hal_sensors_default vendor_sysfs_dt2w:file rw_file_perms;
 
 allow hal_sensors_default vendor_sysfs_touchpanel:dir r_dir_perms;
 allow hal_sensors_default vendor_sysfs_touchpanel:file rw_file_perms;
+
+allow hal_sensors_default vendor_sysfs_graphics:dir r_dir_perms;
+allow hal_sensors_default vendor_sysfs_graphics:file r_file_perms;
+
+allow hal_sensors_default vndbinder_device:chr_file r_file_perms;
+
+binder_call(hal_sensors_default, hal_graphics_composer_default)
+binder_call(hal_sensors_default, vndservicemanager)
+
+allow hal_sensors_default vndbinder_device:chr_file { rw_file_perms watch_reads };
+allow hal_sensors_default vendor_qdisplay_service:service_manager find;
+allow hal_sensors_default vendor_hal_display_config_hwservice:hwservice_manager find;

@@ -1,5 +1,7 @@
 # Camera
 type vendor_persist_camera_file, file_type, vendor_persist_type;
+type vendor_imager_data_file, file_type, data_file_type;
+type vendor_imager_metadata_file, file_type, data_file_type;
 
 # charge_only_mode
 type chargeonly_data_file, file_type, data_file_type;
@@ -8,6 +10,9 @@ type persist_chargeonly_file, file_type, data_file_type;
 # Cutback
 type cutback_data_file, file_type, data_file_type;
 type cutback_socket, file_type;
+
+# Devicetree
+type sysfs_dt_chosen, sysfs_type, fs_type;
 
 # Fingerprint
 type vendor_persist_egis_file, file_type, vendor_persist_type;
@@ -27,6 +32,9 @@ type fsg_file, file_type, contextmount_type, vendor_file_type;
 # Power
 type proc_sched_lib_mask_cpuinfo, proc_type, fs_type;
 type vendor_sysfs_dt2w, fs_type, sysfs_type;
+
+# Powershare
+type vendor_sysfs_wlc, fs_type, sysfs_type;
 
 # SKU version
 type vendor_sysfs_sku_version, fs_type, sysfs_type;

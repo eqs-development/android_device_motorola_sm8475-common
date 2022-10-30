@@ -21,6 +21,11 @@ hal_client_domain(hal_camera_default, vendor_hal_qspmhal)
 
 hal_client_domain(hal_camera_default, hal_cameradesktop)
 
-
 # Camera props
 get_prop(hal_camera_default, moto_camera_config_prop)
+
+allow hal_camera vendor_imager_data_file:dir rw_dir_perms;
+allow hal_camera vendor_imager_data_file:file rw_file_perms;
+
+allow hal_camera_default vendor_imager_metadata_file:dir rw_dir_perms;
+allow hal_camera_default vendor_imager_metadata_file:file rw_file_perms;
