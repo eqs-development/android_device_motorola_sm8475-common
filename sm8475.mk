@@ -295,6 +295,7 @@ PRODUCT_PACKAGES += \
     libcodec2_hidl@1.2.vendor \
     libcodec2_vndk.vendor \
     libOmxCore \
+    libmm-omxcore \
     libstagefrighthw
 
 # Perf
