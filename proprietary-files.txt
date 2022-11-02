@@ -439,16 +439,14 @@ system_ext/etc/permissions/com.qti.dpmframework.xml
 system_ext/etc/permissions/dpmapi.xml
 system_ext/framework/com.qti.dpmframework.jar
 system_ext/framework/dpmapi.jar
-system_ext/lib/com.qualcomm.qti.dpm.api@1.0.so
-system_ext/lib/libdpmctmgr.so
-system_ext/lib/libdpmfdmgr.so
-system_ext/lib/libdpmframework.so
-system_ext/lib/libdpmtcm.so
 system_ext/lib64/com.qualcomm.qti.dpm.api@1.0.so
 system_ext/lib64/libdpmctmgr.so
 system_ext/lib64/libdpmfdmgr.so
 system_ext/lib64/libdpmframework.so
 system_ext/lib64/libdpmtcm.so
+system_ext/lib64/vendor.qti.hardware.dpmservice@1.0.so
+system_ext/lib64/vendor.qti.hardware.dpmservice@1.1.so
+-system_ext/priv-app/dpmserviceapp/dpmserviceapp.apk
 vendor/bin/dpmQmiMgr
 vendor/bin/vendor.dpmd
 vendor/etc/dpm_vndr/vendor.dpm.conf
@@ -904,6 +902,8 @@ vendor/lib64/vendor.qti.qesdsys-V1-ndk_platform.so
 # QMI
 system/etc/permissions/privapp-permissions-qti.xml
 system/etc/sysconfig/qti_whitelist.xml
+system_ext/etc/sysconfig/qti_telephony_system_packages_config.xml
+system_ext/etc/sysconfig/qti_whitelist_system_ext.xml
 vendor/bin/irsc_util
 vendor/bin/qcom-system-daemon
 vendor/bin/qmipriod
@@ -1037,6 +1037,7 @@ product/etc/permissions/UimService.xml
 product/framework/uimgbalibrary.jar
 product/framework/uimgbamanagerlibrary.jar
 product/framework/uimservicelibrary.jar
+-system_ext/app/QtiTelephony/QtiTelephony.apk
 -system_ext/app/QtiTelephonyService/QtiTelephonyService.apk
 system_ext/etc/permissions/qcrilhook.xml
 system_ext/etc/permissions/qti_libpermissions.xml
@@ -1060,6 +1061,7 @@ vendor/bin/qti
 vendor/bin/qtigetprop
 vendor/bin/qtisetprop
 vendor/bin/rmt_storage
+vendor/bin/shsusrd
 vendor/bin/tftp_server
 vendor/etc/data/dsi_config.xml
 vendor/etc/data/netmgr_config.xml
@@ -1069,6 +1071,7 @@ vendor/etc/init/ipa_fws.rc
 vendor/etc/init/netmgrd.rc
 vendor/etc/init/port-bridge.rc
 vendor/etc/init/qcrilNrd.rc
+vendor/etc/init/shsusrd.rc
 vendor/etc/init/vendor.qti.rmt_storage.rc
 vendor/etc/init/vendor.qti.tftp.rc
 vendor/etc/qcril_database/upgrade/config/10.0_config.sql
@@ -1176,6 +1179,7 @@ vendor/lib64/libril-legacy.so
 vendor/lib64/libril-qc-ltedirectdisc.so
 vendor/lib64/libril-qc-radioconfig.so
 vendor/lib64/librilqmimiscservices.so
+vendor/lib64/libshsusr_verinfo.so
 vendor/lib64/libsystem_health_mon.so
 vendor/lib64/qcrilInterfaces.so
 vendor/lib64/qcrilMarshal.so
