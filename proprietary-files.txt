@@ -1,4 +1,4 @@
-# All unpinned blobs below are extracted from 12-S3SQ32.16-53-13 220b5b release-keys.
+# All unpinned blobs below are extracted from 12-S3SQ32.16-72-14 896aec-56d40 release-keys.
 
 # ADSP
 vendor/bin/adsprpcd
@@ -1221,7 +1221,7 @@ system/etc/permissions/moto-telephony.xml:system_ext/etc/permissions/moto-teleph
 system/framework/moto-telephony.jar:system_ext/framework/moto-telephony.jar
 
 # Radio - IMS (APK) - from patched source
--system_ext/priv-app/ims/ims.apk|d466d3430c956021c4deb9decf95a7f3b37e19c2
+-system_ext/priv-app/ims/ims.apk|cbbf5773af59cd8489b33da08e5963307db77c79
 
 # RIL - IMS
 -system_ext/app/ImsRcsService/ImsRcsService.apk
