@@ -60,7 +60,8 @@ TARGET_KERNEL_CONFIG := \
     gki_defconfig \
     vendor/waipio_GKI.config \
     vendor/ext_config/moto-waipio.config \
-    vendor/ext_config/moto-waipio-gki.config
+    vendor/ext_config/moto-waipio-gki.config \
+    vendor/ext_config/lineage-moto-waipio.config
 
 # Kernel modules - WLAN
 TARGET_MODULE_ALIASES += \
