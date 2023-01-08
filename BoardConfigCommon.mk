@@ -56,7 +56,11 @@ BOARD_RAMDISK_USE_LZ4 := true
 BOARD_USES_GENERIC_KERNEL_IMAGE := true
 TARGET_KERNEL_ADDITIONAL_FLAGS := DTC_EXT=$(shell pwd)/prebuilts/misc/linux-x86/dtc/dtc LLVM=1
 TARGET_KERNEL_SOURCE := kernel/motorola/sm8475
-TARGET_KERNEL_CONFIG := gki_defconfig vendor/waipio_GKI.config vendor/lineage_moto-waipio.config
+TARGET_KERNEL_CONFIG := \
+    gki_defconfig \
+    vendor/waipio_GKI.config \
+    vendor/ext_config/moto-waipio.config \
+    vendor/ext_config/moto-waipio-gki.config
 
 # Kernel modules - WLAN
 TARGET_MODULE_ALIASES += \
