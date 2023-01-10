@@ -62,10 +62,6 @@ TARGET_KERNEL_CONFIG := \
     vendor/ext_config/moto-waipio-gki.config \
     vendor/ext_config/lineage-moto-waipio.config
 
-# Kernel modules - WLAN
-TARGET_MODULE_ALIASES += \
-    qca6750.ko:qca_cld3_qca6750.ko
-
 # Platform
 BOARD_USES_QCOM_HARDWARE := true
 TARGET_BOARD_PLATFORM := taro
