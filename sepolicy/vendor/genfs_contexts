@@ -1,6 +1,9 @@
 # Display
 genfscon sysfs /devices/platform/soc/ae00000.qcom,mdss_mdp/drm/card0/card0-DSI-1/panelBLExponent        u:object_r:vendor_sysfs_data:s0
 
+# Fingerprint
+genfscon sysfs /devices/platform/soc/soc:qcom,dsi-display-primary/fod_hbm                      u:object_r:vendor_sysfs_fingerprint:s0
+
 # Gestures
 genfscon sysfs /devices/platform/soc/990000.i2c/i2c-0/0-005d/touchscreen/primary/gesture       u:object_r:vendor_sysfs_dt2w:s0
 
