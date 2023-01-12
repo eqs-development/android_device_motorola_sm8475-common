@@ -68,9 +68,6 @@
 # Motobox
 /(vendor|system/vendor)/bin/motobox                     u:object_r:vendor_motobox_exec:s0
 
-# Moto display panel
-/(vendor|system/vendor)/bin/hw/com\.motorola\.hardware\.display\.panel@1\.1-service       u:object_r:hal_panel_default_exec:s0
-
 # NFC
 /(vendor|system/vendor)/bin/STFlashTool                                       u:object_r:stflashtool_exec:s0
 /(vendor|system/vendor)/bin/hw/android\.hardware\.nfc@1\.2-service\.st        u:object_r:hal_nfc_default_exec:s0
