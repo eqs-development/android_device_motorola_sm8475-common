@@ -1221,10 +1221,6 @@ vendor/lib64/vendor.qti.hardware.radio.uim_remote_client@1.1.so
 vendor/lib64/vendor.qti.hardware.radio.uim_remote_client@1.2.so
 vendor/lib64/vendor.qti.hardware.radio.uim_remote_server@1.0.so
 
-# Ril - IMS (APK)
-system/etc/permissions/moto-telephony.xml:system_ext/etc/permissions/moto-telephony.xml
-system/framework/moto-telephony.jar:system_ext/framework/moto-telephony.jar
-
 # Radio - IMS (APK) - from patched source
 -system_ext/priv-app/ims/ims.apk|cbbf5773af59cd8489b33da08e5963307db77c79
 
