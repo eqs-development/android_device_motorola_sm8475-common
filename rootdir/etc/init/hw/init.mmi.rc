@@ -376,12 +376,6 @@ service vendor.oem-super-image-detector-sh /vendor/bin/init.oem.hw.sh -M
     oneshot
     disabled
 
-service vendor.hal-fps-sh /vendor/bin/init.oem.fingerprint2.sh
-    class late_start
-    user root
-    group system
-    oneshot
-
 service fpc_ident /vendor/bin/fpc_ident
     class late_start
     user system
@@ -434,17 +428,6 @@ service vendor.touchRec /vendor/bin/touchRec
     group input
     oneshot
     disabled
-
-# Override the AOSP sensor HAL service definition
-# from hardware/interfaces/sensors/2.0/multihal
-# to add input and uhid group access
-service vendor.sensors-hal-2-0-multihal /vendor/bin/hw/android.hardware.sensors@2.0-service.multihal
-    class hal
-    user system
-    group system wakelock context_hub input uhid
-    writepid /dev/cpuset/system-background/tasks
-    capabilities BLOCK_SUSPEND
-    rlimit rtprio 10 10
 
 # from hardware/interfaces/sensors/2.1/multihal
 # to add input and uhid group access
