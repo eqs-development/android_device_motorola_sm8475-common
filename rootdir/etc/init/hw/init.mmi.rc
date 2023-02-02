@@ -326,18 +326,6 @@ on boot
    chown system system /sys/class/capsense/capsense0/fac_raw
    chown system system /sys/class/capsense/capsense0/reset
 
-   wait /sys/class/capsense/capsense1/fac_enable 1
-   wait /sys/class/capsense/capsense1/fac_cal 1
-   chmod 0660 /sys/class/capsense/capsense1/fac_cal
-   chmod 0660 /sys/class/capsense/capsense1/fac_enable
-   chown system system /sys/class/capsense/capsense1/fac_detect
-   chown system system /sys/class/capsense/capsense1/fac_enable
-   chown system system /sys/class/capsense/capsense1/fac_cal
-   chown system system /sys/class/capsense/capsense1/fac_irq_state
-   chown system system /sys/class/capsense/capsense1/fac_compensation
-   chown system system /sys/class/capsense/capsense1/fac_raw
-   chown system system /sys/class/capsense/capsense1/reset
-
 on late-fs-charger
     class_start early_hal
     wait_for_prop hwservicemanager.ready true
