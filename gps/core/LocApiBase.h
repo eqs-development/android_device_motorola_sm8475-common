@@ -209,6 +209,7 @@ public:
     void sendNfwNotification(GnssNfwNotification& notification);
     void reportGnssConfig(uint32_t sessionId, const GnssConfig& gnssConfig);
     void reportLatencyInfo(GnssLatencyInfo& gnssLatencyInfo);
+    void reportEngDebugDataInfo(GnssEngineDebugDataInfo& gnssEngineDebugDataInfo);
     void reportQwesCapabilities
     (
         const std::unordered_map<LocationQwesFeatureType, bool> &featureMap
@@ -228,8 +229,6 @@ public:
     // downward calls
     virtual void* getSibling();
     virtual LocApiProxyBase* getLocApiProxy();
-    virtual void startFix(const LocPosMode& fixCriteria, LocApiResponse* adapterResponse);
-    virtual void stopFix(LocApiResponse* adapterResponse);
     virtual void deleteAidingData(const GnssAidingData& data, LocApiResponse* adapterResponse);
     virtual void injectPosition(double latitude, double longitude, float accuracy,
             bool onDemandCpi);
