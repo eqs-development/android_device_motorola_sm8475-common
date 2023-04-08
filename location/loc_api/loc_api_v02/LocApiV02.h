@@ -359,6 +359,7 @@ private:
   void geofenceStatusEvent(const qmiLocEventGeofenceGenAlertIndMsgT_v02* alertInfo);
   void geofenceDwellEvent(const qmiLocEventGeofenceBatchedDwellIndMsgT_v02 *dwellEvent);
   void reportLatencyInfo(const qmiLocLatencyInformationIndMsgT_v02* pLocLatencyInfo);
+  void reportEngDebugDataInfo(const qmiLocEngineDebugDataIndMsgT_v02* pLocEngDbgDataInfoIndMsg);
 
 protected:
   virtual enum loc_api_adapter_err
@@ -384,9 +385,6 @@ public:
                locClientErrorEnumType errorId);
 
   // Tracking
-  virtual void startFix(const LocPosMode& posMode, LocApiResponse *adapterResponse);
-  virtual void stopFix(LocApiResponse *adapterResponse);
-
   void startTimeBasedTracking(const TrackingOptions& options, LocApiResponse* adapterResponse);
   void stopTimeBasedTracking(LocApiResponse* adapterResponse);
   void startDistanceBasedTracking(uint32_t sessionId, const LocationOptions& options,

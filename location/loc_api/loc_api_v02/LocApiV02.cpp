@@ -226,6 +226,7 @@ static void globalEventCb(locClientHandleType clientHandle,
     case QMI_LOC_EVENT_GALILEO_EPHEMERIS_REPORT_IND_V02:
     case QMI_LOC_EVENT_QZSS_EPHEMERIS_REPORT_IND_V02:
     case QMI_LOC_LATENCY_INFORMATION_IND_V02:
+    case QMI_LOC_ENGINE_DEBUG_DATA_IND_V02:
         MODEM_LOG_CALLFLOW_DEBUG(%s, loc_get_v02_event_name(eventId));
         break;
     default:
@@ -691,7 +692,8 @@ locClientEventMaskType LocApiV02 :: adjustMaskIfNoSessionOrEngineOff(locClientEv
                                            QMI_LOC_EVENT_MASK_GNSS_SV_POLYNOMIAL_REPORT_V02 |
                                            QMI_LOC_EVENT_MASK_EPHEMERIS_REPORT_V02 |
                                            QMI_LOC_EVENT_MASK_NEXT_LS_INFO_REPORT_V02 |
-                                           QMI_LOC_EVENT_MASK_LATENCY_INFORMATION_REPORT_V02;
+                                           QMI_LOC_EVENT_MASK_LATENCY_INFORMATION_REPORT_V02 |
+                                           QMI_LOC_EVENT_MASK_ENGINE_DEBUG_DATA_REPORT_V02;
         // clear GNSS_EVENT_REPORT mask because QMI_LOC_EVENT_MASK_FEATURE_STATUS_V02 is set
         // when LOC_SUPPORTED_FEATURE_DYNAMIC_FEATURE_STATUS is supported
         if (ContextBase::isFeatureSupported(LOC_SUPPORTED_FEATURE_DYNAMIC_FEATURE_STATUS)) {
@@ -722,242 +724,6 @@ enum loc_api_adapter_err LocApiV02 :: close()
   clientHandle = LOC_CLIENT_INVALID_HANDLE_VALUE;
 
   return rtv;
-}
-
-
-/* start positioning session */
-void LocApiV02 :: startFix(const LocPosMode& fixCriteria, LocApiResponse *adapterResponse)
-{
-  sendMsg(new LocApiMsg([this, fixCriteria, adapterResponse] () {
-
-  locClientStatusEnumType status;
-  locClientReqUnionType req_union;
-
-  qmiLocStartReqMsgT_v02 start_msg;
-
-  qmiLocSetOperationModeReqMsgT_v02 set_mode_msg;
-  qmiLocSetOperationModeIndMsgT_v02 set_mode_ind;
-
-    // clear all fields, validity masks
-  memset (&start_msg, 0, sizeof(start_msg));
-  memset (&set_mode_msg, 0, sizeof(set_mode_msg));
-  memset (&set_mode_ind, 0, sizeof(set_mode_ind));
-
-  LOC_LOGV("%s:%d]: start \n", __func__, __LINE__);
-  // BOOT KPI marker, print only once for a session
-  if (false == mInSession) {
-      loc_boot_kpi_marker("L - LocApiV02 startFix, tbf %d", fixCriteria.min_interval);
-  }
-  fixCriteria.logv();
-
-  mInSession = true;
-  mMeasurementsStarted = true;
-  registerEventMask(mMask);
-
-  // fill in the start request
-  switch(fixCriteria.mode)
-  {
-    case LOC_POSITION_MODE_MS_BASED:
-      set_mode_msg.operationMode = eQMI_LOC_OPER_MODE_MSB_V02;
-      break;
-
-    case LOC_POSITION_MODE_MS_ASSISTED:
-      set_mode_msg.operationMode = eQMI_LOC_OPER_MODE_MSA_V02;
-      break;
-
-    case LOC_POSITION_MODE_RESERVED_4:
-      set_mode_msg.operationMode = eQMI_LOC_OPER_MODE_CELL_ID_V02;
-        break;
-
-    case LOC_POSITION_MODE_RESERVED_5:
-      set_mode_msg.operationMode = eQMI_LOC_OPER_MODE_WWAN_V02;
-        break;
-
-    default:
-      set_mode_msg.operationMode = eQMI_LOC_OPER_MODE_STANDALONE_V02;
-      break;
-  }
-
-  req_union.pSetOperationModeReq = &set_mode_msg;
-
-  // send the mode first, before the start message.
-  status = locSyncSendReq(QMI_LOC_SET_OPERATION_MODE_REQ_V02,
-                          req_union, LOC_ENGINE_SYNC_REQUEST_TIMEOUT,
-                          QMI_LOC_SET_OPERATION_MODE_IND_V02,
-                          &set_mode_ind); // NULL?
-   //When locSyncSendReq status is time out, more likely the response was lost.
-   //startFix will continue as though it is succeeded.
-  if ((status != eLOC_CLIENT_SUCCESS && status != eLOC_CLIENT_FAILURE_TIMEOUT) ||
-       eQMI_LOC_SUCCESS_V02 != set_mode_ind.status)
-  {
-    LOC_LOGE ("%s:%d]: set opertion mode failed status = %s, "
-                   "ind..status = %s\n", __func__, __LINE__,
-              loc_get_v02_client_status_name(status),
-              loc_get_v02_qmi_status_name(set_mode_ind.status));
-  } else {
-      if (status == eLOC_CLIENT_FAILURE_TIMEOUT)
-      {
-          LOC_LOGE ("%s:%d]: set operation mode timed out\n", __func__, __LINE__);
-      }
-      start_msg.minInterval_valid = 1;
-      start_msg.minInterval = fixCriteria.min_interval;
-      mMinInterval = start_msg.minInterval;
-
-      start_msg.horizontalAccuracyLevel_valid = 1;
-
-      if (fixCriteria.preferred_accuracy <= 100)
-      {
-          // fix needs high accuracy
-          start_msg.horizontalAccuracyLevel =  eQMI_LOC_ACCURACY_HIGH_V02;
-      }
-      else if (fixCriteria.preferred_accuracy <= 1000)
-      {
-          //fix needs med accuracy
-          start_msg.horizontalAccuracyLevel =  eQMI_LOC_ACCURACY_MED_V02;
-      }
-      else
-      {
-          //fix needs low accuracy
-          start_msg.horizontalAccuracyLevel =  eQMI_LOC_ACCURACY_LOW_V02;
-          // limit the scanning max time to 1 min and TBF to 10 min
-          // this is to control the power cost for gps for LOW accuracy
-          start_msg.positionReportTimeout_valid = 1;
-          start_msg.positionReportTimeout = 60000;
-          if (start_msg.minInterval < 600000) {
-              start_msg.minInterval = 600000;
-          }
-      }
-
-      start_msg.fixRecurrence_valid = 1;
-      if(LOC_GPS_POSITION_RECURRENCE_SINGLE == fixCriteria.recurrence)
-      {
-          start_msg.fixRecurrence = eQMI_LOC_RECURRENCE_SINGLE_V02;
-      }
-      else
-      {
-          start_msg.fixRecurrence = eQMI_LOC_RECURRENCE_PERIODIC_V02;
-      }
-
-      //dummy session id
-      // TBD: store session ID, check for session id in pos reports.
-      start_msg.sessionId = LOC_API_V02_DEF_SESSION_ID;
-
-      //Set whether position report can be shared with other LOC clients
-      start_msg.sharePosition_valid = 1;
-      start_msg.sharePosition = fixCriteria.share_position;
-
-      if (fixCriteria.credentials[0] != 0) {
-          int size1 = sizeof(start_msg.applicationId.applicationName);
-          int size2 = sizeof(fixCriteria.credentials);
-          int len = ((size1 < size2) ? size1 : size2) - 1;
-          memcpy(start_msg.applicationId.applicationName,
-                 fixCriteria.credentials,
-                 len);
-
-          size1 = sizeof(start_msg.applicationId.applicationProvider);
-          size2 = sizeof(fixCriteria.provider);
-          len = ((size1 < size2) ? size1 : size2) - 1;
-          memcpy(start_msg.applicationId.applicationProvider,
-                 fixCriteria.provider,
-                 len);
-
-          start_msg.applicationId_valid = 1;
-      }
-
-      // config Altitude Assumed
-      start_msg.configAltitudeAssumed_valid = 1;
-      start_msg.configAltitudeAssumed = eQMI_LOC_ALTITUDE_ASSUMED_IN_GNSS_SV_INFO_DISABLED_V02;
-
-      // set power mode details
-      mPowerMode = fixCriteria.powerMode;
-      if (GNSS_POWER_MODE_INVALID != fixCriteria.powerMode) {
-          start_msg.powerMode_valid = 1;
-          start_msg.powerMode.powerMode = convertPowerMode(fixCriteria.powerMode);
-          start_msg.powerMode.timeBetweenMeasurement =
-                  fixCriteria.timeBetweenMeasurements;
-          // Force low accuracy for background power modes
-          if (GNSS_POWER_MODE_M3 == fixCriteria.powerMode ||
-                  GNSS_POWER_MODE_M4 == fixCriteria.powerMode ||
-                  GNSS_POWER_MODE_M5 == fixCriteria.powerMode) {
-              start_msg.horizontalAccuracyLevel =  eQMI_LOC_ACCURACY_LOW_V02;
-          }
-          // Force TBM = TBF for power mode M4
-          if (GNSS_POWER_MODE_M4 == fixCriteria.powerMode) {
-              start_msg.powerMode.timeBetweenMeasurement = start_msg.minInterval;
-          }
-      }
-
-      req_union.pStartReq = &start_msg;
-
-      status = locClientSendReq(QMI_LOC_START_REQ_V02, req_union);
-  }
-
-  LocationError err = LOCATION_ERROR_GENERAL_FAILURE;
-  if (eLOC_CLIENT_SUCCESS == status) {
-      err = LOCATION_ERROR_SUCCESS;
-  }
-
-  if (adapterResponse != NULL) {
-      adapterResponse->returnToSender(err);
-  }
-  }));
-
-}
-
-/* stop a positioning session */
-void LocApiV02 :: stopFix(LocApiResponse *adapterResponse)
-{
-  sendMsg(new LocApiMsg([this, adapterResponse] () {
-
-  locClientStatusEnumType status;
-  locClientReqUnionType req_union;
-
-  qmiLocStopReqMsgT_v02 stop_msg;
-
-  LOC_LOGD(" %s:%d]: stop called \n", __func__, __LINE__);
-  loc_boot_kpi_marker("L - LocApiV02 stop Fix session");
-
-  memset(&stop_msg, 0, sizeof(stop_msg));
-
-  // dummy session id
-  stop_msg.sessionId = LOC_API_V02_DEF_SESSION_ID;
-
-  req_union.pStopReq = &stop_msg;
-
-  status = locClientSendReq(QMI_LOC_STOP_REQ_V02, req_union);
-
-  mIsFirstFinalFixReported = false;
-  mInSession = false;
-  mPowerMode = GNSS_POWER_MODE_INVALID;
-
-  // if engine on never happend, deregister events
-  // without waiting for Engine Off
-  if (!mEngineOn) {
-      registerEventMask(mMask);
-  }
-
-  // free the memory used to assemble SV measurement from
-  // different constellations and bands
-  if (!mGnssMeasurements) {
-      free(mGnssMeasurements);
-      mGnssMeasurements = nullptr;
-  }
-
-  if( eLOC_CLIENT_SUCCESS != status)
-  {
-      LOC_LOGE("%s:%d]: error = %s\n",__func__, __LINE__,
-               loc_get_v02_client_status_name(status));
-  }
-
-  LocationError err = LOCATION_ERROR_GENERAL_FAILURE;
-  if (eLOC_CLIENT_SUCCESS == status) {
-      err = LOCATION_ERROR_SUCCESS;
-  }
-
-  if (adapterResponse != NULL) {
-      adapterResponse->returnToSender(err);
-  }
-  }));
 }
 
 /* inject time into the position engine */
@@ -2674,6 +2440,10 @@ locClientEventMaskType LocApiV02 :: convertMask(
       eventMask |= QMI_LOC_EVENT_MASK_FEATURE_STATUS_V02;
   }
 
+  if (mask & LOC_API_ADAPTER_BIT_ENGINE_DEBUG_DATA_REPORT) {
+     eventMask |= QMI_LOC_EVENT_MASK_ENGINE_DEBUG_DATA_REPORT_V02;
+  }
+
   return eventMask;
 }
 
@@ -4066,6 +3836,12 @@ void  LocApiV02 :: reportSvPolynomial(const qmiLocEventGnssSvPolyIndMsgT_v02 *gn
             svPolynomial.is_valid |= ULP_GNSS_SV_POLY_BIT_BDS_TGD_B1C;
             svPolynomial.bdsTgdB1c = gnss_sv_poly_ptr->bdsTgdB1c;
         }
+
+        if (1 == gnss_sv_poly_ptr->bdsIscB1c_valid) {
+            svPolynomial.is_valid |= ULP_GNSS_SV_POLY_BIT_BDS_ISC_B1C;
+            svPolynomial.bdsIscB1c = gnss_sv_poly_ptr->bdsIscB1c;
+        }
+
         //Report SV Poly
         LocApiBase::reportSvPolynomial(svPolynomial);
 
@@ -7223,6 +6999,9 @@ void LocApiV02 :: eventCb(locClientHandleType /*clientHandle*/,
     case QMI_LOC_LATENCY_INFORMATION_IND_V02:
       reportLatencyInfo(eventPayload.pLocLatencyInfoIndMsg);
       break;
+    case QMI_LOC_ENGINE_DEBUG_DATA_IND_V02:
+      reportEngDebugDataInfo(eventPayload.pLocEngDbgDataInfoIndMsg);
+      break;
 
   }
 }
@@ -7675,6 +7454,356 @@ void LocApiV02::reportLatencyInfo(const qmiLocLatencyInformationIndMsgT_v02* pLo
              gnssLatencyInfo.hlosQtimer1, gnssLatencyInfo.hlosQtimer2);
 
     LocApiBase::reportLatencyInfo(gnssLatencyInfo);
+}
+
+void LocApiV02::reportEngDebugDataInfo(const qmiLocEngineDebugDataIndMsgT_v02*
+        pLocEngDbgDataInfoIndMsg) {
+    GnssEngineDebugDataInfo gnssEngineDebugDataInfo = {};
+
+    if (pLocEngDbgDataInfoIndMsg->week_valid) {
+        gnssEngineDebugDataInfo.timeValid = 1;
+        gnssEngineDebugDataInfo.gpsWeek = pLocEngDbgDataInfoIndMsg->week;
+    }
+
+    if (pLocEngDbgDataInfoIndMsg->timeOfWeek_valid) {
+        gnssEngineDebugDataInfo.gpsTowMs = pLocEngDbgDataInfoIndMsg->timeOfWeek;
+    }
+
+    if (pLocEngDbgDataInfoIndMsg->sourceOfTime_valid) {
+        gnssEngineDebugDataInfo.sourceOfTime = pLocEngDbgDataInfoIndMsg->sourceOfTime;
+    }
+
+    if (pLocEngDbgDataInfoIndMsg->clkTimeUnc_valid) {
+        gnssEngineDebugDataInfo.clkTimeUnc = pLocEngDbgDataInfoIndMsg->clkTimeUnc;
+    }
+
+    if (pLocEngDbgDataInfoIndMsg->clkFreqBias_valid) {
+        gnssEngineDebugDataInfo.clkFreqBias = pLocEngDbgDataInfoIndMsg->clkFreqBias;
+    }
+
+    if (pLocEngDbgDataInfoIndMsg->clkFreqUnc_valid) {
+        gnssEngineDebugDataInfo.clkFreqUnc = pLocEngDbgDataInfoIndMsg->clkFreqUnc;
+    }
+
+    if (pLocEngDbgDataInfoIndMsg->xoState_valid) {
+        gnssEngineDebugDataInfo.xoState = pLocEngDbgDataInfoIndMsg->xoState;
+    }
+
+    if (pLocEngDbgDataInfoIndMsg->rcvrErrRecovery_valid) {
+        gnssEngineDebugDataInfo.rcvrErrRecovery = pLocEngDbgDataInfoIndMsg->rcvrErrRecovery;
+    }
+
+    if (pLocEngDbgDataInfoIndMsg->leapSecondInfo_valid) {
+        gnssEngineDebugDataInfo.leapSecondInfo.size = sizeof(Gnss_LeapSecondInfoStructType);
+        gnssEngineDebugDataInfo.leapSecondInfo.leapSec =
+            pLocEngDbgDataInfoIndMsg->leapSecondInfo.leapSec;
+        gnssEngineDebugDataInfo.leapSecondInfo.leapSecUnc =
+            pLocEngDbgDataInfoIndMsg->leapSecondInfo.leapSecUnc;
+    }
+
+    if (pLocEngDbgDataInfoIndMsg->jammedSignalsMask_valid) {
+        gnssEngineDebugDataInfo.jammedSignalsMask = pLocEngDbgDataInfoIndMsg->jammedSignalsMask;
+    }
+
+    if (pLocEngDbgDataInfoIndMsg->jammerIndicatorList_valid) {
+        // initalize the bpMetricDb and agcMetricDb as invalid for all signal types
+        // modem does not report jammerData for signal types if they are invalid as earlier.
+        gnssEngineDebugDataInfo.jammerData.resize(GNSS_LOC_MAX_NUMBER_OF_SIGNAL_TYPES,
+                {INT32_MAX, INT32_MAX});
+        for (int i = 0; i < pLocEngDbgDataInfoIndMsg->jammerIndicatorList_len; i++) {
+            // get the signal type index from the signalTypeMask
+            int signalTypeIndex =
+                log2(pLocEngDbgDataInfoIndMsg->jammerIndicatorList[i].gnssSignalType);
+                if (gnssEngineDebugDataInfo.jammerData.size() > signalTypeIndex) {
+                    gnssEngineDebugDataInfo.jammerData[signalTypeIndex] = {
+                        pLocEngDbgDataInfoIndMsg->jammerIndicatorList[i].bpMetricDb,
+                        pLocEngDbgDataInfoIndMsg->jammerIndicatorList[i].agcMetricDb};
+                }
+        }
+    }
+
+    if (pLocEngDbgDataInfoIndMsg->epiTime_valid) {
+        gnssEngineDebugDataInfo.epiTime.hours = pLocEngDbgDataInfoIndMsg->epiTime.hours;
+        gnssEngineDebugDataInfo.epiTime.mins = pLocEngDbgDataInfoIndMsg->epiTime.mins;
+        gnssEngineDebugDataInfo.epiTime.secs = pLocEngDbgDataInfoIndMsg->epiTime.secs;
+    }
+
+    if (pLocEngDbgDataInfoIndMsg->epiLat_valid) {
+        gnssEngineDebugDataInfo.epiValidity = 1;
+        gnssEngineDebugDataInfo.epiLat = pLocEngDbgDataInfoIndMsg->epiLat;
+    }
+
+    if (pLocEngDbgDataInfoIndMsg->epiLon_valid) {
+        gnssEngineDebugDataInfo.epiLon = pLocEngDbgDataInfoIndMsg->epiLon;
+    }
+
+    if (pLocEngDbgDataInfoIndMsg->epiAlt_valid) {
+        gnssEngineDebugDataInfo.epiAlt = pLocEngDbgDataInfoIndMsg->epiAlt;
+    }
+
+    if (pLocEngDbgDataInfoIndMsg->epiHepe_valid) {
+        gnssEngineDebugDataInfo.epiHepe = pLocEngDbgDataInfoIndMsg->epiHepe;
+    }
+
+    if (pLocEngDbgDataInfoIndMsg->epiAltUnc_valid) {
+        gnssEngineDebugDataInfo.epiAltUnc = pLocEngDbgDataInfoIndMsg->epiAltUnc;
+    }
+
+    if (pLocEngDbgDataInfoIndMsg->epiSrc_valid) {
+        gnssEngineDebugDataInfo.epiSrc = pLocEngDbgDataInfoIndMsg->epiSrc;
+    }
+
+    if (pLocEngDbgDataInfoIndMsg->bestPosTime_valid) {
+        gnssEngineDebugDataInfo.bestPosTime.hours = pLocEngDbgDataInfoIndMsg->bestPosTime.hours;
+        gnssEngineDebugDataInfo.bestPosTime.mins = pLocEngDbgDataInfoIndMsg->bestPosTime.mins;
+        gnssEngineDebugDataInfo.bestPosTime.secs = pLocEngDbgDataInfoIndMsg->bestPosTime.secs;
+    }
+
+    if (pLocEngDbgDataInfoIndMsg->bestPosLat_valid) {
+        gnssEngineDebugDataInfo.bestPosLat = pLocEngDbgDataInfoIndMsg->bestPosLat;
+    }
+
+    if (pLocEngDbgDataInfoIndMsg->bestPosLon_valid) {
+        gnssEngineDebugDataInfo.bestPosLon = pLocEngDbgDataInfoIndMsg->bestPosLon;
+    }
+
+    if (pLocEngDbgDataInfoIndMsg->bestPosAlt_valid) {
+        gnssEngineDebugDataInfo.bestPosAlt = pLocEngDbgDataInfoIndMsg->bestPosAlt;
+    }
+
+    if (pLocEngDbgDataInfoIndMsg->bestPosHepe_valid) {
+        gnssEngineDebugDataInfo.bestPosHepe = pLocEngDbgDataInfoIndMsg->bestPosHepe;
+    }
+
+    if (pLocEngDbgDataInfoIndMsg->bestPosAltUnc_valid) {
+        gnssEngineDebugDataInfo.bestPosAltUnc = pLocEngDbgDataInfoIndMsg->bestPosAltUnc;
+    }
+
+    if (pLocEngDbgDataInfoIndMsg->xtraInfoTime_valid) {
+        gnssEngineDebugDataInfo.xtraInfoTime.hours = pLocEngDbgDataInfoIndMsg->xtraInfoTime.hours;
+        gnssEngineDebugDataInfo.xtraInfoTime.mins = pLocEngDbgDataInfoIndMsg->xtraInfoTime.mins;
+        gnssEngineDebugDataInfo.xtraInfoTime.secs = pLocEngDbgDataInfoIndMsg->xtraInfoTime.secs;
+    }
+
+    if (pLocEngDbgDataInfoIndMsg->gpsXtraAge_valid) {
+        gnssEngineDebugDataInfo.gpsXtraAge = pLocEngDbgDataInfoIndMsg->gpsXtraAge;
+    }
+
+    if (pLocEngDbgDataInfoIndMsg->gloXtraAge_valid) {
+        gnssEngineDebugDataInfo.gloXtraAge = pLocEngDbgDataInfoIndMsg->gloXtraAge;
+    }
+
+    if (pLocEngDbgDataInfoIndMsg->bdsXtraAge_valid) {
+        gnssEngineDebugDataInfo.bdsXtraAge = pLocEngDbgDataInfoIndMsg->bdsXtraAge;
+    }
+
+    if (pLocEngDbgDataInfoIndMsg->galXtraAge_valid) {
+        gnssEngineDebugDataInfo.galXtraAge = pLocEngDbgDataInfoIndMsg->galXtraAge;
+    }
+
+    if (pLocEngDbgDataInfoIndMsg->qzssXtraAge_valid) {
+        gnssEngineDebugDataInfo.qzssXtraAge = pLocEngDbgDataInfoIndMsg->qzssXtraAge;
+    }
+
+    if (pLocEngDbgDataInfoIndMsg->navicXtraAge_valid) {
+        gnssEngineDebugDataInfo.navicXtraAge = pLocEngDbgDataInfoIndMsg->navicXtraAge;
+    }
+
+    if (pLocEngDbgDataInfoIndMsg->gpsXtraMask_valid) {
+        gnssEngineDebugDataInfo.xtraValidMask =
+            gnssEngineDebugDataInfo.xtraValidMask | GPS_XTRA_VALID_BIT;
+        gnssEngineDebugDataInfo.gpsXtraMask = pLocEngDbgDataInfoIndMsg->gpsXtraMask;
+    }
+
+    if (pLocEngDbgDataInfoIndMsg->gloXtraMask_valid) {
+        gnssEngineDebugDataInfo.xtraValidMask =
+            gnssEngineDebugDataInfo.xtraValidMask | GLONASS_XTRA_VALID_BIT;
+        gnssEngineDebugDataInfo.gloXtraMask = pLocEngDbgDataInfoIndMsg->gloXtraMask;
+    }
+
+    if (pLocEngDbgDataInfoIndMsg->bdsXtraMask_valid) {
+        gnssEngineDebugDataInfo.xtraValidMask =
+            gnssEngineDebugDataInfo.xtraValidMask | BDS_XTRA_VALID_BIT;
+        gnssEngineDebugDataInfo.bdsXtraMask = pLocEngDbgDataInfoIndMsg->bdsXtraMask;
+    }
+
+    if (pLocEngDbgDataInfoIndMsg->galXtraMask_valid) {
+        gnssEngineDebugDataInfo.xtraValidMask =
+            gnssEngineDebugDataInfo.xtraValidMask | GAL_XTRA_VALID_BIT;
+        gnssEngineDebugDataInfo.galXtraMask = pLocEngDbgDataInfoIndMsg->galXtraMask;
+    }
+
+    if (pLocEngDbgDataInfoIndMsg->qzssXtraMask_valid) {
+        gnssEngineDebugDataInfo.xtraValidMask =
+            gnssEngineDebugDataInfo.xtraValidMask | QZSS_XTRA_VALID_BIT;
+        gnssEngineDebugDataInfo.qzssXtraMask = pLocEngDbgDataInfoIndMsg->qzssXtraMask;
+    }
+
+    if (pLocEngDbgDataInfoIndMsg->navicXtraMask_valid) {
+        gnssEngineDebugDataInfo.xtraValidMask =
+            gnssEngineDebugDataInfo.xtraValidMask | NAVIC_XTRA_VALID_BIT;
+        gnssEngineDebugDataInfo.navicXtraMask = pLocEngDbgDataInfoIndMsg->navicXtraMask;
+    }
+
+    if (pLocEngDbgDataInfoIndMsg->ephInfoTime_valid) {
+        gnssEngineDebugDataInfo.ephInfoTime.hours = pLocEngDbgDataInfoIndMsg->ephInfoTime.hours;
+        gnssEngineDebugDataInfo.ephInfoTime.mins = pLocEngDbgDataInfoIndMsg->ephInfoTime.mins;
+        gnssEngineDebugDataInfo.ephInfoTime.secs = pLocEngDbgDataInfoIndMsg->ephInfoTime.secs;
+    }
+
+    if (pLocEngDbgDataInfoIndMsg->gpsEphMask_valid) {
+        gnssEngineDebugDataInfo.gpsEphMask = pLocEngDbgDataInfoIndMsg->gpsEphMask;
+    }
+
+    if (pLocEngDbgDataInfoIndMsg->gloEphMask_valid) {
+        gnssEngineDebugDataInfo.gloEphMask = pLocEngDbgDataInfoIndMsg->gloEphMask;
+    }
+
+    if (pLocEngDbgDataInfoIndMsg->bdsEphMask_valid) {
+        gnssEngineDebugDataInfo.bdsEphMask = pLocEngDbgDataInfoIndMsg->bdsEphMask;
+    }
+
+    if (pLocEngDbgDataInfoIndMsg->galEphMask_valid) {
+        gnssEngineDebugDataInfo.galEphMask = pLocEngDbgDataInfoIndMsg->galEphMask;
+    }
+
+    if (pLocEngDbgDataInfoIndMsg->qzssEphMask_valid) {
+        gnssEngineDebugDataInfo.qzssEphMask = pLocEngDbgDataInfoIndMsg->qzssEphMask;
+    }
+
+    if (pLocEngDbgDataInfoIndMsg->navicEphMask_valid) {
+        gnssEngineDebugDataInfo.navicEphMask = pLocEngDbgDataInfoIndMsg->navicEphMask;
+    }
+
+    if (pLocEngDbgDataInfoIndMsg->healthInfoTime_valid) {
+        gnssEngineDebugDataInfo.healthInfoTime.hours =
+            pLocEngDbgDataInfoIndMsg->healthInfoTime.hours;
+        gnssEngineDebugDataInfo.healthInfoTime.mins =
+            pLocEngDbgDataInfoIndMsg->healthInfoTime.mins;
+        gnssEngineDebugDataInfo.healthInfoTime.secs =
+            pLocEngDbgDataInfoIndMsg->healthInfoTime.secs;
+    }
+
+    if (pLocEngDbgDataInfoIndMsg->gpsHealthUnknownMask_valid) {
+        gnssEngineDebugDataInfo.gpsHealthUnknownMask =
+                pLocEngDbgDataInfoIndMsg->gpsHealthUnknownMask;
+    }
+
+    if (pLocEngDbgDataInfoIndMsg->gloHealthUnknownMask_valid) {
+        gnssEngineDebugDataInfo.gloHealthUnknownMask =
+                pLocEngDbgDataInfoIndMsg->gloHealthUnknownMask;
+    }
+
+    if (pLocEngDbgDataInfoIndMsg->bdsHealthUnknownMask_valid) {
+        gnssEngineDebugDataInfo.bdsHealthUnknownMask =
+                pLocEngDbgDataInfoIndMsg->bdsHealthUnknownMask;
+    }
+
+    if (pLocEngDbgDataInfoIndMsg->galHealthUnknownMask_valid) {
+        gnssEngineDebugDataInfo.galHealthUnknownMask =
+                pLocEngDbgDataInfoIndMsg->galHealthUnknownMask;
+    }
+
+    if (pLocEngDbgDataInfoIndMsg->qzssHealthUnknownMask_valid) {
+        gnssEngineDebugDataInfo.qzssHealthUnknownMask =
+                pLocEngDbgDataInfoIndMsg->qzssHealthUnknownMask;
+    }
+
+    if (pLocEngDbgDataInfoIndMsg->navicHealthUnknownMask_valid) {
+        gnssEngineDebugDataInfo.navicHealthUnknownMask =
+                pLocEngDbgDataInfoIndMsg->navicHealthUnknownMask;
+    }
+
+    if (pLocEngDbgDataInfoIndMsg->gpsHealthGoodMask_valid) {
+        gnssEngineDebugDataInfo.gpsHealthGoodMask = pLocEngDbgDataInfoIndMsg->gpsHealthGoodMask;
+    }
+
+    if (pLocEngDbgDataInfoIndMsg->gloHealthGoodMask_valid) {
+        gnssEngineDebugDataInfo.gloHealthGoodMask = pLocEngDbgDataInfoIndMsg->gloHealthGoodMask;
+    }
+
+    if (pLocEngDbgDataInfoIndMsg->bdsHealthGoodMask_valid) {
+        gnssEngineDebugDataInfo.bdsHealthGoodMask = pLocEngDbgDataInfoIndMsg->bdsHealthGoodMask;
+    }
+
+    if (pLocEngDbgDataInfoIndMsg->galHealthGoodMask_valid) {
+        gnssEngineDebugDataInfo.galHealthGoodMask = pLocEngDbgDataInfoIndMsg->galHealthGoodMask;
+    }
+
+    if (pLocEngDbgDataInfoIndMsg->qzssHealthGoodMask_valid) {
+        gnssEngineDebugDataInfo.qzssHealthGoodMask = pLocEngDbgDataInfoIndMsg->qzssHealthGoodMask;
+    }
+
+    if (pLocEngDbgDataInfoIndMsg->navicHealthGoodMask_valid) {
+        gnssEngineDebugDataInfo.navicHealthGoodMask = pLocEngDbgDataInfoIndMsg->navicHealthGoodMask;
+    }
+
+
+    if (pLocEngDbgDataInfoIndMsg->gpsHealthBadMask_valid) {
+        gnssEngineDebugDataInfo.gpsHealthBadMask = pLocEngDbgDataInfoIndMsg->gpsHealthBadMask;
+    }
+
+    if (pLocEngDbgDataInfoIndMsg->gloHealthBadMask_valid) {
+        gnssEngineDebugDataInfo.gloHealthBadMask = pLocEngDbgDataInfoIndMsg->gloHealthBadMask;
+    }
+
+    if (pLocEngDbgDataInfoIndMsg->bdsHealthBadMask_valid) {
+        gnssEngineDebugDataInfo.bdsHealthBadMask = pLocEngDbgDataInfoIndMsg->bdsHealthBadMask;
+    }
+
+    if (pLocEngDbgDataInfoIndMsg->galHealthBadMask_valid) {
+        gnssEngineDebugDataInfo.galHealthBadMask = pLocEngDbgDataInfoIndMsg->galHealthBadMask;
+    }
+
+    if (pLocEngDbgDataInfoIndMsg->qzssHealthBadMask_valid) {
+        gnssEngineDebugDataInfo.qzssHealthBadMask = pLocEngDbgDataInfoIndMsg->qzssHealthBadMask;
+    }
+
+    if (pLocEngDbgDataInfoIndMsg->navicHealthBadMask_valid) {
+        gnssEngineDebugDataInfo.navicHealthBadMask = pLocEngDbgDataInfoIndMsg->navicHealthBadMask;
+    }
+
+    if (pLocEngDbgDataInfoIndMsg->fixInfoTime_valid) {
+        gnssEngineDebugDataInfo.fixInfoTime.hours = pLocEngDbgDataInfoIndMsg->fixInfoTime.hours;
+        gnssEngineDebugDataInfo.fixInfoTime.mins = pLocEngDbgDataInfoIndMsg->fixInfoTime.mins;
+        gnssEngineDebugDataInfo.fixInfoTime.secs = pLocEngDbgDataInfoIndMsg->fixInfoTime.secs;
+    }
+
+    if (pLocEngDbgDataInfoIndMsg->fixInfoMask_valid) {
+        gnssEngineDebugDataInfo.fixInfoMask = pLocEngDbgDataInfoIndMsg->fixInfoMask;
+    }
+
+    if (pLocEngDbgDataInfoIndMsg->navDataTime_valid) {
+        gnssEngineDebugDataInfo.navDataTime.hours = pLocEngDbgDataInfoIndMsg->navDataTime.hours;
+        gnssEngineDebugDataInfo.navDataTime.mins = pLocEngDbgDataInfoIndMsg->navDataTime.mins;
+        gnssEngineDebugDataInfo.navDataTime.secs = pLocEngDbgDataInfoIndMsg->navDataTime.secs;
+    }
+
+    if (pLocEngDbgDataInfoIndMsg->navData_valid) {
+        for (int i = 0; i < pLocEngDbgDataInfoIndMsg->navData_len ; i++) {
+            gnssEngineDebugDataInfo.navData[i].gnssSvId =
+                pLocEngDbgDataInfoIndMsg->navData[i].gnssSvId;
+            gnssEngineDebugDataInfo.navData[i].type = pLocEngDbgDataInfoIndMsg->navData[i].type;
+            gnssEngineDebugDataInfo.navData[i].src = pLocEngDbgDataInfoIndMsg->navData[i].src;
+            gnssEngineDebugDataInfo.navData[i].age = pLocEngDbgDataInfoIndMsg->navData[i].age;
+        }
+    }
+
+    if (pLocEngDbgDataInfoIndMsg->fixStatusTime_valid) {
+        gnssEngineDebugDataInfo.fixStatusTime.hours = pLocEngDbgDataInfoIndMsg->fixStatusTime.hours;
+        gnssEngineDebugDataInfo.fixStatusTime.mins = pLocEngDbgDataInfoIndMsg->fixStatusTime.mins;
+        gnssEngineDebugDataInfo.fixStatusTime.secs = pLocEngDbgDataInfoIndMsg->fixStatusTime.secs;
+    }
+
+    if (pLocEngDbgDataInfoIndMsg->fixStatusMask_valid) {
+        gnssEngineDebugDataInfo.fixStatusMask = pLocEngDbgDataInfoIndMsg->fixStatusMask;
+    }
+
+    if (pLocEngDbgDataInfoIndMsg->fixHepeLimit_valid) {
+        gnssEngineDebugDataInfo.fixHepeLimit = pLocEngDbgDataInfoIndMsg->fixHepeLimit;
+    }
+
+    LocApiBase::reportEngDebugDataInfo(gnssEngineDebugDataInfo);
 }
 
 void LocApiV02::configRobustLocation
@@ -9952,6 +10081,12 @@ LocApiV02::startTimeBasedTracking(const TrackingOptions& options, LocApiResponse
     start_msg.configAltitudeAssumed =
         eQMI_LOC_ALTITUDE_ASSUMED_IN_GNSS_SV_INFO_DISABLED_V02;
 
+    //Enable intermediate report only when client shows interest, i.e. HW FLP or automotive client
+    if (QUALITY_HIGH_ACCU_FIX_ONLY == options.qualityLevelAccepted) {
+        start_msg.intermediateReportState_valid = 1;
+        start_msg.intermediateReportState = eQMI_LOC_INTERMEDIATE_REPORTS_OFF_V02;
+    }
+
     // power mode
     if (GNSS_POWER_MODE_INVALID != options.powerMode) {
         start_msg.powerMode_valid = 1;
@@ -10212,7 +10347,7 @@ LocApiV02::stopTimeBasedTracking(LocApiResponse* adapterResponse)
     locClientReqUnionType req_union;
     qmiLocStopReqMsgT_v02 stop_msg;
     memset(&stop_msg, 0, sizeof(stop_msg));
-    stop_msg.sessionId = 1; // dummy session id
+    stop_msg.sessionId = LOC_API_V02_DEF_SESSION_ID; // dummy session id
     req_union.pStopReq = &stop_msg;
 
     status = locClientSendReq(QMI_LOC_STOP_REQ_V02, req_union);
@@ -10221,6 +10356,7 @@ LocApiV02::stopTimeBasedTracking(LocApiResponse* adapterResponse)
                   __func__, status);
         err = LOCATION_ERROR_GENERAL_FAILURE;
     } else {
+        mIsFirstFinalFixReported = false;
         mInSession = false;
         mPowerMode = GNSS_POWER_MODE_INVALID;
 
@@ -10228,6 +10364,12 @@ LocApiV02::stopTimeBasedTracking(LocApiResponse* adapterResponse)
         // without waiting for Engine Off
         if (!mEngineOn) {
             registerEventMask(mMask);
+        }
+        // free the memory used to assemble SV measurement from
+        // different constellations and bands
+        if (!mGnssMeasurements) {
+            free(mGnssMeasurements);
+            mGnssMeasurements = nullptr;
         }
     }
 

@@ -1158,6 +1158,11 @@ typedef union
    const qmiLocLatencyInformationIndMsgT_v02 *pLocLatencyInfoIndMsg;
    /** Sent by the engine to inform of latency info
     QMI_LOC_LATENCY_INFORMATION_IND_V02 */
+
+   const qmiLocEngineDebugDataIndMsgT_v02 *pLocEngDbgDataInfoIndMsg;
+   /** Indication Message; Used by the service to
+     report engine debug information */
+
 }locClientEventIndUnionType;
 
 
