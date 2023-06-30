@@ -110,9 +110,8 @@ TARGET_USES_COLOR_METADATA := true
 TARGET_USES_DISPLAY_RENDER_INTENTS := true
 TARGET_USES_GRALLOC4 := true
 TARGET_USES_HWC2 := true
-SOONG_CONFIG_qtidisplay += \
-    gralloc_handle_has_reserved_size
-SOONG_CONFIG_qtidisplay_gralloc_handle_has_reserved_size := true
+TARGET_GRALLOC_HANDLE_HAS_RESERVED_SIZE := true
+TARGET_GRALLOC_HANDLE_HAS_CUSTOM_CONTENT_MD_RESERVED_SIZE := false
 
 # DRM
 TARGET_ENABLE_MEDIADRM_64 := true
