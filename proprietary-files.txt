@@ -1,4 +1,4 @@
-# All unpinned blobs below are extracted from 13-T1TBS33.32-8-9-7-2 a1794-1eb02 release-keys.
+# All unpinned blobs below are extracted from 13-T1SQ33.15-11-137-10 71a49-d8d2b release-keys.
 
 # ADSP
 vendor/bin/adsprpcd
@@ -384,7 +384,9 @@ vendor/etc/display/DPU720.xml
 vendor/etc/display/DPU7__.xml
 vendor/etc/display/DPU820.xml
 vendor/etc/display/DPU830.xml
+vendor/etc/display/DPU860.xml
 vendor/etc/display/DPU8__.xml
+vendor/etc/display/DPU9__.xml
 vendor/etc/display/advanced_sf_offsets.xml
 vendor/etc/display/thermallevel_to_fps.xml
 vendor/lib64/libdisplayqos.so
@@ -680,6 +682,7 @@ vendor/lib64/libcodec2_store_dolby.so
 vendor/lib64/libdeccfg.so
 vendor/lib64/libdsd2pcm.so
 vendor/lib64/libEvrcSwCodec.so
+vendor/lib64/libmmosal_vendor.so
 vendor/lib64/libQcelp13SwCodec.so
 vendor/lib64/libqc2audio_base.so
 vendor/lib64/libqc2audio_basecodec.so
@@ -702,7 +705,7 @@ vendor/lib64/libqcodec2_mockqc2filter.so
 vendor/lib64/libqcodec2_platform.so
 vendor/lib64/libqcodec2_utils.so
 vendor/lib64/libqcodec2_v4l2codec.so
-vendor/lib64/libmmosal_vendor.so
+vendor/lib64/libsfplugin_ccodec_utils.so
 vendor/lib64/libvideotxr.so
 vendor/lib64/libvideoutils.so
 vendor/lib64/qti.video.utils.videobufferlayout.so
@@ -977,6 +980,17 @@ vendor/etc/qvr/cfg/457/3/65537/mtpwaipio_qvr_3dof_tracker_config.txt
 vendor/etc/qvr/cfg/530/0/65536/mtpwaipio.txt
 vendor/etc/qvr/cfg/530/0/65536/mtpwaipio_6dof_config.xml
 vendor/etc/qvr/cfg/530/0/65536/mtpwaipio_qvr_3dof_tracker_config.txt
+vendor/etc/qvr/tuning/qvrservice_abf10238_tuning.json
+vendor/etc/qvr/tuning/qvrservice_asf10338a_tuning.json
+vendor/etc/qvr/tuning/qvrservice_asf10338b_tuning.json
+vendor/etc/qvr/tuning/qvrservice_bbf10138_tuning.json
+vendor/etc/qvr/tuning/qvrservice_br015b_tuning.json
+vendor/etc/qvr/tuning/qvrservice_imx476_tuning.json
+vendor/etc/qvr/tuning/qvrservice_obf2259_tuning.json
+vendor/etc/qvr/tuning/qvrservice_obf2260_tuning.json
+vendor/etc/qvr/tuning/qvrservice_ov7251_tuning.json
+vendor/etc/qvr/tuning/qvrservice_ov9282_tuning.json
+vendor/etc/qvr/tuning/qvrservice_v4l_ov7251_tuning.json
 vendor/etc/qvr/qvr_hid_device_list.txt
 vendor/etc/qvr/qvr_usb_device_list.txt
 vendor/etc/qvr/qvrservice_config.txt
@@ -1160,6 +1174,7 @@ vendor/lib64/libril-qc-radioconfig.so
 vendor/lib64/librilqmimiscservices.so
 vendor/lib64/libshsusr_verinfo.so
 vendor/lib64/libsystem_health_mon.so
+vendor/lib64/qcril_client.so
 vendor/lib64/qcrilInterfaces.so
 vendor/lib64/qcrilMarshal.so
 vendor/lib64/qcrilNrQmiModule.so
@@ -1431,6 +1446,7 @@ vendor/lib64/vendor.qti.hardware.vpp@2.0.so
 vendor/bin/hw/android.hardware.drm@1.4-service.widevine
 vendor/etc/init/android.hardware.drm@1.4-service.widevine.rc
 -vendor/etc/vintf/manifest/manifest_android.hardware.drm@1.4-service.widevine.xml
+vendor/etc/qcom_widevine_licenses.pfm
 vendor/lib64/libtrustedapploader.so
 vendor/lib64/libwvhidl.so
 

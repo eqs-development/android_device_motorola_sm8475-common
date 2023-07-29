@@ -12,6 +12,16 @@ on fs
     insmod /vendor/lib/modules/bm_adsp_ulog.ko
     insmod /vendor/lib/modules/mmi_charger.ko
 
+on post-fs
+    start vendor.copy_wvcert
+
+service vendor.copy_wvcert /vendor/bin/copy_wvcert.sh
+    class main
+    user system
+    group root system
+    oneshot
+    disabled
+
 on init && property:ro.boot.default_usb_mode=device
     setprop vendor.usb.controller ${ro.boot.usbcontroller}
     setprop sys.usb.controller ${vendor.usb.controller}

@@ -28,4 +28,4 @@ allow hal_camera vendor_imager_data_file:dir rw_dir_perms;
 allow hal_camera vendor_imager_data_file:file rw_file_perms;
 
 allow hal_camera_default vendor_imager_metadata_file:dir rw_dir_perms;
-allow hal_camera_default vendor_imager_metadata_file:file rw_file_perms;
+allow hal_camera_default vendor_imager_metadata_file:file create_file_perms;

@@ -320,16 +320,6 @@ persist.vendor.rcs.presence.provision=0
 ro.vendor.radio.imei.sv=4
 ro.vendor.use_data_netmgrd=true
 
-# Sensors
-persist.vendor.sensors.als_com_count=500
-persist.vendor.sensors.als_com_rt=1663356754
-persist.vendor.sensors.als_com_st2=1663356754
-persist.vendor.sensors.als_com_st=1663174076
-persist.vendor.sensors.enable.mag_filter=true
-persist.vendor.sensors.mot_tap=true
-ro.vendor.sensors.glance_approach=false
-ro.vendor.sensors.mot_drop=true
-
 # Shutdown
 sys.vendor.shutdown.waittime=500
 
