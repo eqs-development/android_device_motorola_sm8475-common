@@ -1,4 +1,4 @@
-# All unpinned blobs below are extracted from 13-T1SQ33.15-11-137-10 71a49-d8d2b release-keys.
+# All unpinned blobs below are extracted from 13-T1SQ33.15-11-137-10-2 189fe0-f5e7b6 release-keys.
 
 # ADSP
 vendor/bin/adsprpcd
