@@ -62,6 +62,7 @@ TARGET_KERNEL_CONFIG := \
     vendor/ext_config/moto-waipio.config \
     vendor/ext_config/moto-waipio-gki.config \
     vendor/ext_config/lineage-moto-waipio.config
+BOARD_USES_QCOM_MERGE_DTBS_SCRIPT := true
 
 # Platform
 BOARD_USES_QCOM_HARDWARE := true
