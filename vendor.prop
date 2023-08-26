@@ -201,7 +201,6 @@ vendor.display.enable_rc_support=1
 vendor.display.enable_rotator_ui=1
 vendor.display.enable_rounded_corner=0
 vendor.display.enable_spec_fence=1
-vendor.display.lcd_density=480
 vendor.display.target.version=2
 vendor.display.thermal.version=1
 vendor.display.use_smooth_motion=1
@@ -335,7 +334,6 @@ persist.vendor.enable_spu=true
 persist.vendor.ssr.restart_level=ALL_ENABLE
 
 # Surfaceflinger
-ro.sf.lcd_density=400
 ro.surface_flinger.enable_frame_rate_override=true
 ro.surface_flinger.force_hwc_copy_for_virtual_displays=true
 ro.surface_flinger.has_HDR_display=true
