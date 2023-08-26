@@ -24,6 +24,7 @@ ro.audio.flinger_standbytime_ms=2000
 ro.audio.monitorRotation=true
 ro.audio.monitorWindowRotation=true
 ro.audio.relative_volume=true
+ro.hardware.audio.primary=taro-moto
 ro.vendor.audio.crystal_talk.supported=true
 ro.vendor.audio.crystal_talk_record.2mic.supported=false
 ro.vendor.audio.crystal_talk_record.max_rate=16000

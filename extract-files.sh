@@ -93,6 +93,10 @@ function blob_fixup() {
         vendor/bin/init.qti.media.sh)
             sed -i "s#build_codename -le \"12\"#build_codename -le \"13\"#" "${2}"
             ;;
+        # rename moto modified primary audio to not conflict with source built
+        vendor/lib/hw/audio.primary.taro-moto.so | vendor/lib64/hw/audio.primary.taro-moto.so)
+            "${PATCHELF}" --set-soname audio.primary.taro-moto.so "${2}"
+            ;;
     esac
 }
 

@@ -95,7 +95,6 @@ PRODUCT_PACKAGES += \
     android.hardware.soundtrigger@2.3-impl \
     audioadsprpcd \
     audio.bluetooth.default \
-    audio.primary.taro \
     audio.r_submix.default \
     audio.usb.default \
     agmcap \
@@ -194,7 +193,8 @@ PRODUCT_PACKAGES += \
     libbatching \
     libgeofencing \
     libloc_core \
-    libgnss
+    libgnss \
+    libgnsspps
 
 PRODUCT_PACKAGES += \
     apdr.conf \
@@ -287,6 +287,7 @@ PRODUCT_PACKAGES += \
     libavservices_minijail_vendor \
     libavservices_minijail.vendor \
     libcodec2_hidl@1.2.vendor \
+    libpalclient \
     android.hardware.media.c2@1.2.vendor
 
 # MotoActions
