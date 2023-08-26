@@ -207,7 +207,7 @@ esac
 # Moto added, yangbq2
 product_specific=`getprop ro.vendor.product.device`
 case "$product_specific" in
-	"oneli")
+	"oneli"|"zeekr")
 		# configure settings for silver cluster
 		echo 940800 > /sys/devices/system/cpu/cpufreq/policy0/walt/hispeed_freq
 		echo 806400 > /sys/devices/system/cpu/cpufreq/policy0/walt/rtg_boost_freq

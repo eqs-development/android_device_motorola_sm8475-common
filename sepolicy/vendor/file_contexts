@@ -74,6 +74,7 @@
 
 # Powershare
 /(vendor|system/vendor)/bin/hw/vendor\.lineage\.powershare@1\.0-service\.eqs        u:object_r:hal_lineage_powershare_default_exec:s0
+/(vendor|system/vendor)/bin/hw/vendor\.lineage\.powershare@1\.0-service\.zeekr      u:object_r:hal_lineage_powershare_default_exec:s0
 
 # Radio
 /data/vendor/misc/cutback(/.*)?                         u:object_r:cutback_data_file:s0
@@ -85,6 +86,7 @@
 
 # Touch
 /(vendor|system/vendor)/bin/hw/vendor\.lineage\.touch@1\.0-service\.eqs               u:object_r:hal_lineage_touch_default_exec:s0
+/(vendor|system/vendor)/bin/hw/vendor\.lineage\.touch@1\.0-service\.zeekr             u:object_r:hal_lineage_touch_default_exec:s0
 /sys/devices/platform/soc/990000\.i2c/i2c-0/0-005d/touchscreen/primary(/.*)?          u:object_r:vendor_sysfs_touchpanel:s0
 
 # Thermal
