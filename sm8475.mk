@@ -511,14 +511,5 @@ PRODUCT_COPY_FILES += \
 
 PRODUCT_VENDOR_MOVE_ENABLED := true
 
-# WiFi Display
-PRODUCT_PACKAGES += \
-    libavservices_minijail \
-    libnl \
-    libwfdaac_vendor
-
-PRODUCT_BOOT_JARS += \
-    WfdCommon
-
 # Inherit from vendor blobs
 $(call inherit-product, vendor/motorola/sm8475-common/sm8475-common-vendor.mk)
