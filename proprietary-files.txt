@@ -113,7 +113,7 @@ vendor/lib/libadsprpc.so
 vendor/lib/libar-acdb.so
 vendor/lib/libar-gpr.so
 -vendor/lib/libar-gsl.so
--vendor/lib/libar-pal.so
+-vendor/lib/libar-pal.so;DISABLE_CHECKELF
 -vendor/lib/libats.so
 vendor/lib/libaualgo_foundation.so
 vendor/lib/libaudio_log_utils.so
@@ -129,7 +129,7 @@ vendor/lib64/libadsprpc.so
 vendor/lib64/libar-acdb.so
 vendor/lib64/libar-gpr.so
 -vendor/lib64/libar-gsl.so
--vendor/lib64/libar-pal.so
+-vendor/lib64/libar-pal.so;DISABLE_CHECKELF
 -vendor/lib64/libats.so
 vendor/lib64/libaualgo_foundation.so
 vendor/lib64/libaudio_log_utils.so
@@ -270,7 +270,7 @@ vendor/etc/cne/profileMwqem.xml
 vendor/etc/default-permissions/com.qualcomm.qti.cne.xml
 vendor/etc/init/cnd.rc
 vendor/lib/libxml.so
-vendor/lib64/libcne.so
+vendor/lib64/libcne.so;DISABLE_CHECKELF
 vendor/lib64/libcneapiclient.so
 vendor/lib64/libcneoplookup.so
 vendor/lib64/libcneqmiutils.so
@@ -321,8 +321,8 @@ vendor/lib64/libcvp2_1.so
 vendor/lib64/libcvpcpuRev_skel.so
 
 # Diag
-system_ext/lib/vendor.qti.diaghal@1.0.so
-system_ext/lib64/vendor.qti.diaghal@1.0.so
+system_ext/lib/vendor.qti.diaghal@1.0.so;MODULE=vendor.qti.diaghal@1.0-se
+system_ext/lib64/vendor.qti.diaghal@1.0.so;MODULE=vendor.qti.diaghal@1.0-se
 vendor/bin/diag-router
 vendor/etc/init/vendor.qti.diag.rc
 -vendor/etc/vintf/manifest/vendor.qti.diag.hal.service.xml
@@ -401,24 +401,24 @@ vendor/etc/vintf/manifest/vendor.dolby.hardware.dms.xml
 vendor/lib/libdlbpreg.so
 vendor/lib/vendor.dolby.hardware.dms@2.0.so
 vendor/lib64/libdlbpreg.so
-vendor/lib64/libdlbdsservice.so
+vendor/lib64/libdlbdsservice.so;DISABLE_CHECKELF
 vendor/lib64/vendor.dolby.hardware.dms@2.0-impl.so
 vendor/lib64/vendor.dolby.hardware.dms@2.0.so
 
 # DPM
 system/framework/tcmclient.jar
-system_ext/bin/dpmd
+system_ext/bin/dpmd;DISABLE_CHECKELF
 system_ext/etc/dpm/dpm.conf
 system_ext/etc/init/dpmd.rc
 system_ext/etc/permissions/com.qti.dpmframework.xml
 system_ext/etc/permissions/dpmapi.xml
 system_ext/framework/com.qti.dpmframework.jar
 system_ext/framework/dpmapi.jar
-system_ext/lib64/com.qualcomm.qti.dpm.api@1.0.so
-system_ext/lib64/libdpmctmgr.so
-system_ext/lib64/libdpmfdmgr.so
-system_ext/lib64/libdpmframework.so
-system_ext/lib64/libdpmtcm.so
+system_ext/lib64/com.qualcomm.qti.dpm.api@1.0.so;MODULE=com.qualcomm.qti.dpm.api@1.0-se
+system_ext/lib64/libdpmctmgr.so;DISABLE_CHECKELF
+system_ext/lib64/libdpmfdmgr.so;DISABLE_CHECKELF
+system_ext/lib64/libdpmframework.so;DISABLE_CHECKELF
+system_ext/lib64/libdpmtcm.so;DISABLE_CHECKELF
 -system_ext/priv-app/dpmserviceapp/dpmserviceapp.apk
 vendor/bin/dpmQmiMgr
 vendor/bin/vendor.dpmd
@@ -491,7 +491,8 @@ vendor/lib64/hw/android.hardware.gatekeeper@1.0-impl-qti.so
 vendor/bin/edgnss-daemon
 vendor/bin/engine-service
 vendor/bin/loc_launcher
-vendor/bin/lowi-server
+# lowi-server depends on libwpa_client, which is a gnu makefile target
+vendor/bin/lowi-server;DISABLE_CHECKELF
 vendor/bin/mlid
 vendor/bin/xtra-daemon
 vendor/bin/xtwifi-client
@@ -542,7 +543,7 @@ vendor/lib/egl/libq3dtools_adreno.so;SYMLINK=vendor/lib/libq3dtools_adreno.so
 vendor/lib/egl/libq3dtools_esx.so
 vendor/lib/libCB.so
 vendor/lib/libOpenCL.so
-vendor/lib/libadreno_app_profiles.so
+vendor/lib/libadreno_app_profiles.so;DISABLE_CHECKELF
 vendor/lib/libadreno_utils.so
 vendor/lib/libgpudataproducer.so
 vendor/lib/libgsl.so
@@ -560,7 +561,7 @@ vendor/lib64/egl/libq3dtools_adreno.so;SYMLINK=vendor/lib64/libq3dtools_adreno.s
 vendor/lib64/egl/libq3dtools_esx.so
 vendor/lib64/libCB.so
 vendor/lib64/libOpenCL.so
-vendor/lib64/libadreno_app_profiles.so
+vendor/lib64/libadreno_app_profiles.so;DISABLE_CHECKELF
 vendor/lib64/libadreno_utils.so
 vendor/lib64/libgpudataproducer.so
 vendor/lib64/libgsl.so
@@ -672,7 +673,7 @@ vendor/lib64/libqc2audio_base.so
 vendor/lib64/libqc2audio_basecodec.so
 vendor/lib64/libqc2audio_core.so
 vendor/lib64/libqc2audio_hooks.so
-vendor/lib64/libqc2audio_hwaudiocodec.so
+vendor/lib64/libqc2audio_hwaudiocodec.so;DISABLE_CHECKELF
 vendor/lib64/libqc2audio_platform.so
 vendor/lib64/libqc2audio_swaudiocodec.so
 vendor/lib64/libqc2audio_utils.so
@@ -831,20 +832,20 @@ system_ext/lib64/vendor.qti.hardware.qccsyshal@1.0.so
 system_ext/lib64/vendor.qti.hardware.qccsyshal@1.1.so
 system_ext/lib64/vendor.qti.hardware.qccsyshal@1.2-halimpl.so
 system_ext/lib64/vendor.qti.hardware.qccsyshal@1.2.so
-vendor/lib/vendor.qti.hardware.qccsyshal@1.0.so
-vendor/lib/vendor.qti.hardware.qccsyshal@1.1.so
-vendor/lib64/vendor.qti.hardware.qccsyshal@1.0.so
-vendor/lib64/vendor.qti.hardware.qccsyshal@1.1.so
+vendor/lib/vendor.qti.hardware.qccsyshal@1.0.so;MODULE=vendor.qti.hardware.qccsyshal@1.0-vendor
+vendor/lib/vendor.qti.hardware.qccsyshal@1.1.so;DISABLE_CHECKELF;MODULE=vendor.qti.hardware.qccsyshal@1.1-vendor
+vendor/lib64/vendor.qti.hardware.qccsyshal@1.0.so;MODULE=vendor.qti.hardware.qccsyshal@1.0-vendor
+vendor/lib64/vendor.qti.hardware.qccsyshal@1.1.so;DISABLE_CHECKELF;MODULE=vendor.qti.hardware.qccsyshal@1.1-vendor
 
 # QCC - vendor
-vendor/bin/qcc-trd
+vendor/bin/qcc-trd;DISABLE_CHECKELF
 vendor/etc/init/init.qdmastats.rc
 vendor/lib/hw/vendor.qti.hardware.qccvndhal@1.0-impl.so
-vendor/lib/libqcc_file_agent.so
+vendor/lib/libqcc_file_agent.so;DISABLE_CHECKELF
 vendor/lib/vendor.qti.hardware.qccvndhal@1.0-halimpl.so
 vendor/lib/vendor.qti.hardware.qccvndhal@1.0.so
 vendor/lib64/hw/vendor.qti.hardware.qccvndhal@1.0-impl.so
-vendor/lib64/libqcc_file_agent.so
+vendor/lib64/libqcc_file_agent.so;DISABLE_CHECKELF
 vendor/lib64/vendor.qti.hardware.qccvndhal@1.0-halimpl.so
 vendor/lib64/vendor.qti.hardware.qccvndhal@1.0.so
 
@@ -921,10 +922,10 @@ vendor/lib64/libqmiservices.so
 vendor/lib64/libsubsystem_control.so
 
 # QSPM
-system_ext/bin/qspmsvc
+system_ext/bin/qspmsvc;DISABLE_CHECKELF
 system_ext/etc/init/qspmsvc.rc
 system_ext/lib64/libqspmsvc.so
-system_ext/lib64/vendor.qti.qspmhal@1.0.so
+system_ext/lib64/vendor.qti.qspmhal@1.0.so;MODULE=vendor.qti.qspmhal@1.0-se
 system_ext/lib64/vendor.qti.qspmhal-V1-ndk.so
 vendor/bin/vendor.qti.qspmhal@1.0-service
 vendor/etc/init/vendor.qti.qspmhal@1.0-service.rc
@@ -968,7 +969,7 @@ vendor/bin/netmgrd
 vendor/bin/pd-mapper
 vendor/bin/port-bridge
 vendor/bin/qmi_motext_hook
-vendor/bin/qms
+vendor/bin/qms;DISABLE_CHECKELF
 vendor/bin/qrtr-cfg
 vendor/bin/qrtr-lookup
 vendor/bin/qrtr-ns
@@ -1066,11 +1067,11 @@ vendor/lib64/deviceInfoServiceModuleNr.so
 vendor/lib64/libconfigdb.so
 vendor/lib64/liblog_vendor.so
 vendor/lib64/liblqe.so
-vendor/lib64/libmdmcutback.so
+vendor/lib64/libmdmcutback.so;DISABLE_CHECKELF
 vendor/lib64/libmdmdetect.so
 vendor/lib64/libmdmimgload.so
 vendor/lib64/libminkdescriptor.so
-vendor/lib64/libmotext_inf.so
+vendor/lib64/libmotext_inf.so;DISABLE_CHECKELF
 vendor/lib64/libnetmgr.so
 vendor/lib64/libnetmgr_common.so
 vendor/lib64/libnetmgr_datapath_proxy.so
@@ -1174,14 +1175,14 @@ system_ext/framework/vendor.qti.ims.rcsuce-V1.1-java.jar
 system_ext/framework/vendor.qti.ims.rcsuce-V1.2-java.jar
 system_ext/framework/vendor.qti.ims.rcsuceaidlservice-V1-java.jar
 system_ext/lib64/lib-imsvideocodec.so
-system_ext/lib64/lib-imsvt.so
+system_ext/lib64/lib-imsvt.so;DISABLE_CHECKELF
 system_ext/lib64/lib-imsvtextutils.so
 system_ext/lib64/lib-imsvtutils.so
-system_ext/lib64/libdiag_system.so
+system_ext/lib64/libdiag_system.so;DISABLE_CHECKELF
 system_ext/lib64/libimscamera_jni.so;SYMLINK=system_ext/priv-app/ims/lib/arm64/libimscamera_jni.so
 system_ext/lib64/libimsmedia_jni.so;SYMLINK=system_ext/priv-app/ims/lib/arm64/libimsmedia_jni.so
-system_ext/lib64/vendor.qti.imsrtpservice@3.0.so
-system_ext/lib64/vendor.qti.imsrtpservice@3.1.so
+system_ext/lib64/vendor.qti.imsrtpservice@3.0.so;MODULE=vendor.qti.imsrtpservice@3.0-se
+system_ext/lib64/vendor.qti.imsrtpservice@3.1.so;DISABLE_CHECKELF
 system_ext/lib64/vendor.qti.ImsRtpService-V1-ndk.so
 
 # RIL - IMS
