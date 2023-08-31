@@ -84,6 +84,10 @@
 /(vendor|system/vendor)/bin/hw/android\.hardware\.secure_element@1\.2-service-gto        u:object_r:hal_secure_element_default_exec:s0
 /dev/st54spi                                                                             u:object_r:secure_element_device:s0
 
+
+# Sensors
+/vendor/bin/hw/motorola.hardware.sensorext-service                                    u:object_r:hal_sensors_default_exec:s0
+
 # Touch
 /(vendor|system/vendor)/bin/hw/vendor\.lineage\.touch@1\.0-service\.eqs               u:object_r:hal_lineage_touch_default_exec:s0
 /(vendor|system/vendor)/bin/hw/vendor\.lineage\.touch@1\.0-service\.zeekr             u:object_r:hal_lineage_touch_default_exec:s0
