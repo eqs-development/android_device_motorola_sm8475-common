@@ -62,7 +62,6 @@ TARGET_KERNEL_CONFIG := \
     vendor/ext_config/moto-waipio.config \
     vendor/ext_config/moto-waipio-gki.config \
     vendor/ext_config/lineage-moto-waipio.config
-KERNEL_LTO := none
 
 # Platform
 BOARD_USES_QCOM_HARDWARE := true
