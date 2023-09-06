@@ -91,9 +91,6 @@ PRODUCT_PACKAGES += \
     audio.r_submix.default \
     audio.primary.taro \
     audio.usb.default \
-    agmcap \
-    agmcompressplay \
-    agmplay \
     libagm_compress_plugin \
     libagm_mixer_plugin \
     libagm_pcm_plugin \
