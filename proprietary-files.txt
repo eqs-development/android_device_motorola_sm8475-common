@@ -1008,7 +1008,6 @@ system_ext/etc/permissions/qcrilhook.xml
 system_ext/etc/permissions/qti_libpermissions.xml
 system_ext/etc/permissions/qti_permissions.xml
 system_ext/framework/qcrilhook.jar
-system_ext/framework/qti-telephony-common.jar|2fb8fa3af66cc7a54fd2bfb085d5e0be3a91035a
 -system_ext/priv-app/qcrilmsgtunnel/qcrilmsgtunnel.apk
 
 # RIL
