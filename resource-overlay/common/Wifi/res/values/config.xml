@@ -9,9 +9,6 @@
     <!-- Boolean indicating whether the wifi chipset has 5GHz frequency band support -->
     <bool translatable="false" name="config_wifi5ghzSupport">true</bool>
 
-    <!-- Wifi driver supports 6GHz band for softap -->
-    <bool translatable="false" name="config_wifiSoftap6ghzSupported">true</bool>
-
     <!-- Boolean indicating whether the wifi chipset has background scan support -->
     <bool translatable="false" name="config_wifi_background_scan_support">true</bool>
 
@@ -32,13 +29,6 @@
 
     <!-- Boolean to provide support to keep wifi5 symbol for 8SS supported device and 11ax AP -->
     <bool translateble="false" name="config_wifi_report_he_ready">true</bool>
-
-    <!-- Channel list for softap 2G band. Empty means all channels -->
-    <string translateble="false" name="config_wifiSoftap2gChannelList"></string>
-    <!-- Channel list for softap 5G band. Empty means all channels -->
-    <string translateble="false" name="config_wifiSoftap5gChannelList"></string>
-    <!-- Channel list for softap 6G band. Empty means all channels -->
-    <string translateble="false" name="config_wifiSoftap6gChannelList"></string>
 
     <!-- Boolean to provide support to keep wifi5 symbol for 8SS supported device and 11ax AP -->
     <bool translatable="false" name="config_vendorWifi11axReadySupport">true</bool>
