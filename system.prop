@@ -6,9 +6,6 @@ audio.offload.min.duration.secs=60
 audio.offload.video=true
 media.aac_51_output_enabled=true
 
-# Charger
-ro.charger.enable_suspend=1
-
 # Display
 debug.sf.enable_hwc_vds=1
 
