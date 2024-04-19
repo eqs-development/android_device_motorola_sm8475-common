@@ -833,3 +833,12 @@ on property:vendor.opengles.version=*
 #Set gpu available frequencies property
 on property:vendor.gpu.available_frequencies=*
     setprop ro.vendor.gpu.available_frequencies ${vendor.gpu.available_frequencies}
+
+service sim-restart /system/bin/init.sim.restart.sh
+    class main
+    user root
+    oneshot
+    disabled
+
+on property:sys.boot_completed=1
+    start sim-restart
