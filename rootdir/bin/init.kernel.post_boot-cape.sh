@@ -235,6 +235,20 @@ case "$product_specific" in
 		echo 1536000 > /sys/devices/system/cpu/cpufreq/policy7/walt/hispeed_freq
 		##echo 0 1766400:-5 2246400:-60 > /sys/devices/system/cpu/cpufreq/policy7/walt/target_loads
 	;;
+	"bronco")
+		# configure settings for silver cluster
+		echo 940800 > /sys/devices/system/cpu/cpufreq/policy0/walt/hispeed_freq
+		echo 806400 > /sys/devices/system/cpu/cpufreq/policy0/walt/rtg_boost_freq
+
+		# configure settings for gold cluster
+		echo 1440000 > /sys/devices/system/cpu/cpufreq/policy4/walt/hispeed_freq
+		echo 633600 > /sys/devices/system/cpu/cpufreq/policy4/walt/rtg_boost_freq
+		##echo 0 2342400:-60 > /sys/devices/system/cpu/cpufreq/policy4/walt/target_loads
+
+		# configure settings for prime cluster
+		echo 1536000 > /sys/devices/system/cpu/cpufreq/policy7/walt/hispeed_freq
+		##echo 0 1766400:-5 2246400:-60 > /sys/devices/system/cpu/cpufreq/policy7/walt/target_loads
+	;;
 	*)
 		echo "not specific config for $product_specific"
 	;;

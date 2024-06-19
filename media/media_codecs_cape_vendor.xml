@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <!--
-    Copyright (c) 2018-2022 Qualcomm Technologies, Inc.
+    Copyright (c) 2018-2021 Qualcomm Technologies, Inc.
     All Rights Reserved.
     Confidential and Proprietary - Qualcomm Technologies, Inc.
 
@@ -43,7 +43,7 @@
 -->
 
 <!--
- Cape Non-Secure decoder capabilities
+ Lahaina Non-Secure decoder capabilities
  (MB is defined as 16x16)
  _____________________________________________________________________
  | Codec       | W       H       fps     Mbps    MB/s        Max MB/s|
@@ -62,7 +62,7 @@
  |             | 7680    4320    60      100     7776000             |
  |_____________|_____________________________________________________|
 
- Cape Secure decoder capabilities
+ Lahaina Secure decoder capabilities
  (MB is defined as 16x16)
  __________________________________________________________________
  | Codec    | W       H       fps     Mbps    MB/s        Max MB/s|
@@ -84,7 +84,7 @@
  |          | 4096    2304    30      40      1105920             |
  |__________|_____________________________________________________|
 
- Cape Non-Secure encoder capabilities (Secure not supported)
+ Lahaina Non-Secure encoder capabilities (Secure not supported)
  (MB is defined as 16x16)
  __________________________________________________________________
  | Codec    | W       H       fps     Mbps    MB/s        Max MB/s|
@@ -103,10 +103,14 @@
 -->
 
 <MediaCodecs>
+    <Include href="media_codecs_google_c2_telephony.xml" />
+    <Include href="media_codecs_dolby_audio.xml" />
+<!--
     <Include href="media_codecs_google_audio.xml" />
     <Include href="media_codecs_vendor_audio.xml" />
     <Include href="media_codecs_google_telephony.xml" />
     <Include href="media_codecs_c2_audio.xml" />
+-->
     <Settings>
         <Setting name="max-video-encoder-input-buffers" value="11" />
     </Settings>
@@ -165,10 +169,10 @@
         </MediaCodec>
         <MediaCodec name="c2.qti.hevc.decoder" type="video/hevc" >
             <Alias name="OMX.qcom.video.decoder.hevc"/>
-            <Limit name="size" min="96x96" max="8192x8192" />
+            <Limit name="size" min="96x96" max="7680x7680" />
             <Limit name="alignment" value="2x2" />
             <Limit name="block-size" value="16x16" />
-            <Limit name="block-count" range="36-138240" />
+            <Limit name="block-count" range="36-129600" />
             <Limit name="blocks-per-second" min="36" max="7776000" />
             <Limit name="bitrate" range="1-160000000" />
             <Limit name="frame-rate" range="1-960" />
@@ -182,10 +186,10 @@
         </MediaCodec>
         <MediaCodec name="c2.qti.hevc.decoder.low_latency" type="video/hevc" >
             <Alias name="OMX.qcom.video.decoder.hevc.low_latency"/>
-            <Limit name="size" min="96x96" max="8192x8192" />
+            <Limit name="size" min="96x96" max="7680x7680" />
             <Limit name="alignment" value="2x2" />
             <Limit name="block-size" value="16x16" />
-            <Limit name="block-count" range="36-138240" />
+            <Limit name="block-count" range="36-129600" />
             <Limit name="blocks-per-second" min="36" max="3916800" />
             <Limit name="bitrate" range="1-70000000" />
             <Limit name="frame-rate" range="1-480" />
@@ -284,11 +288,11 @@
         </MediaCodec>
         <MediaCodec name="c2.qti.hevc.encoder" type="video/hevc">
             <Alias name="OMX.qcom.video.encoder.hevc"/>
-            <Limit name="size" min="128x128" max="8192x8192" />
+            <Limit name="size" min="128x128" max="7680x7680" />
             <Limit name="alignment" value="2x2" />
             <Limit name="block-size" value="16x16" />
             <Limit name="blocks-per-second" min="64" max="3916800" />
-            <Limit name="block-count" range="64-138240" />
+            <Limit name="block-count" range="64-129600" />
             <Limit name="bitrate" range="1-160000000" />
             <Limit name="frame-rate" range="1-960" />
             <Limit name="complexity" range="0-100"  default="100" />
@@ -330,5 +334,7 @@
             <Limit name="performance-point-1920x1080" value="6" />
         </MediaCodec>
     </Encoders>
+<!--
     <Include href="media_codecs_google_c2.xml" />
+-->
 </MediaCodecs>

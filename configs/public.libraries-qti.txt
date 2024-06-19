@@ -1,4 +1,5 @@
 libupdateprof.qti.so
+libQOC.qti.so
 libdiag_system.qti.so
 libqape.qti.so
 libqesdk_ndk_platform.qti.so

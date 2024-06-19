@@ -359,39 +359,38 @@ set_ro_hw_properties_upgrade()
 		utag_value=$(cat $utag_path/ascii)
 		setprop $prop_prefix$utag_name "$utag_value"
 		notice "ro.vendor.hw.$utag_name='$utag_value'"
-
-		if [ "$utag_name" = "dualsim" ] && [ "$utag_value" = "true" ]; then
-			setprop persist.vendor.radio.multisim.config dsds
-		fi
 	done
 }
 
-set_ro_hw_properties()
+set_ro_hw_property()
 {
+	local hwtag=$1
 	local utag_path
 	local utag_name
 	local prop_prefix
 	local utag_value
 	local verify
+
+	debug "path $hwtag has '.system' in its name"
+	prop_prefix=$(cat $hwtag/ascii)
+	verify=${prop_prefix%.}
+	# esure property ends with '.'
+	if [ "$prop_prefix" == "$verify" ]; then
+		prop_prefix="$prop_prefix."
+		debug "added '.' at the end of [$prop_prefix]"
+        fi
+	utag_path=${hwtag%/*}
+	utag_name=${utag_path##*/}
+	utag_value=$(cat $utag_path/ascii)
+	setprop $prop_prefix$utag_name "$utag_value"
+	notice "$prop_prefix$utag_name='$utag_value'"
+}
+
+set_ro_hw_properties()
+{
+
 	for hwtag in $(find $hw_mp -name '.system'); do
-		debug "path $hwtag has '.system' in its name"
-		prop_prefix=$(cat $hwtag/ascii)
-		verify=${prop_prefix%.}
-		# esure property ends with '.'
-		if [ "$prop_prefix" == "$verify" ]; then
-			prop_prefix="$prop_prefix."
-			debug "added '.' at the end of [$prop_prefix]"
-
-                fi
-		utag_path=${hwtag%/*}
-		utag_name=${utag_path##*/}
-		utag_value=$(cat $utag_path/ascii)
-		setprop $prop_prefix$utag_name "$utag_value"
-		notice "$prop_prefix$utag_name='$utag_value'"
-
-		if [ "$utag_name" = "dualsim" ] && [ "$utag_value" = "true" ]; then
-			setprop persist.vendor.radio.multisim.config dsds
-		fi
+		set_ro_hw_property $hwtag &
 	done
 }
 
@@ -431,9 +430,9 @@ url_style_off()
 	local __arg=$1
 	local value=$2
 	if [[ $value == *%* ]]; then
-		value=$(echo $value | sed 's/%20/ /g')
-		value=$(echo $value | sed 's/%28/\(/g')
-		value=$(echo $value | sed 's/%29/\)/g')
+		value=$(echo ${value//%20/ })
+		value=$(echo ${value//%28/\(})
+		value=$(echo ${value//%29/\)})
 	fi
 	eval $__arg='$value'
 }

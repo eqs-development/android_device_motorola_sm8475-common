@@ -197,9 +197,9 @@ setup_permissions()
 			  samsung)	key_path="/sys/devices/virtual/sec/sec_ts/"
 						key_files=$(ls $key_path 2>/dev/null)
 						# Set optional permissions to LSI touch tests
-						[ -f $touch_path/size ] && chown root:vendor_tcmd $touch_path/size
-						[ -f $touch_path/address ] && chown root:vendor_tcmd $touch_path/address
-						[ -f $touch_path/write ] && chown root:vendor_tcmd $touch_path/write
+						[ -f $touch_path/size ] && chgrp vendor_tcmd $touch_path/size
+						[ -f $touch_path/address ] && chgrp vendor_tcmd $touch_path/address
+						[ -f $touch_path/write ] && chgrp vendor_tcmd $touch_path/write
 						;;
 			   pixart)	key_path="/sys/bus/i2c/devices/1-0033"
 						key_files="selftest selftest_bin"
@@ -222,7 +222,7 @@ setup_permissions()
 			   stmicro)	key_path="/proc/fts/"
 						key_files="driver_test"
 						# Set optional permissions to LSI touch tests
-						[ -f $touch_path/calibrate ] && chown root:vendor_tcmd $touch_path/calibrate
+						[ -f $touch_path/calibrate ] && chgrp vendor_tcmd $touch_path/calibrate
 						;;
 		esac
 		for entry in $key_files; do
@@ -231,14 +231,14 @@ setup_permissions()
 		done
 	fi
 	# Set permissions to enable factory touch tests
-	chown root:vendor_tcmd $touch_path/drv_irq
-	chown root:vendor_tcmd $touch_path/hw_irqstat
-	chown root:vendor_tcmd $touch_path/reset
+	chgrp vendor_tcmd $touch_path/drv_irq
+	chgrp vendor_tcmd $touch_path/hw_irqstat
+	chgrp vendor_tcmd $touch_path/reset
 
 	# Set permissions to allow Bug2Go access to touch statistics
-	chown root:log $touch_path/stats
+	chgrp log $touch_path/stats
 	# Erase is optional
-	[ -f $touch_path/erase_all ] && chown root:vendor_tcmd $touch_path/erase_all
+	[ -f $touch_path/erase_all ] && chgrp vendor_tcmd $touch_path/erase_all
 }
 
 read_touch_property()
@@ -606,19 +606,46 @@ process_touch_instance()
 set_ro_hw_properties_exponent_panel()
 {
 	local panelname_path=/sys/class/drm/card0-DSI-1/panelName
+	local panelname_cli_path=/sys/class/drm/card0-DSI-2/panelName
 	local bl_exponent_path=/sys/class/drm/card0-DSI-1/panelBLExponent
 	local bl_exponent_prop=ro.vendor.hw.curve
+
+	local prim_declare_path=/sys/class/drm/card0-DSI-1/panelDeclare
+	local cli_declare_path=/sys/class/drm/card0-DSI-2/panelDeclare
+	local prim_declare_prop=ro.vendor.hw.primary_declare
+	local cli_declare_prop=ro.vendor.hw.cli_declare
+
 	local panelname
 	local wait_cnt=0
+	lid_property=ro.vendor.mot.hw.lid
+	lid=1
+
+	has_lid=$(getprop $lid_property 2> /dev/null)
 	while [ "$wait_cnt" -lt 15 ]; do
 		if [ -e $panelname_path ]; then
 			panelname=$(cat $panelname_path)
 			panelBLExponent=$(cat $bl_exponent_path)
 			setprop $bl_exponent_prop "$panelBLExponent"
-			notice "setprop $bl_exponent_prop as $panelBLExponent, panelname: [$panelname]"
-			break;
+			notice "setprop $bl_exponent_prop as $panelBLExponent for panel [$panelname]"
+			if [ -e $prim_declare_path ]; then
+			    prim_declare_str=$(cat $prim_declare_path)
+			    setprop $prim_declare_prop "$prim_declare_str"
+			    notice "setprop $prim_declare_prop as $prim_declare_str for panel [$panelname]"
+			fi
+			if [ $has_lid -eq $lid ]
+			then
+			    if [ -e $panelname_cli_path -a -e $cli_declare_path ] ; then
+			        panelname=$(cat $panelname_cli_path)
+			        cli_declare_str=$(cat $cli_declare_path)
+			        setprop $cli_declare_prop "$cli_declare_str"
+			        notice "setprop $cli_declare_prop as $cli_declare_str for panel [$panelname]"
+			        break;
+			    fi
+			else
+			    break;
+			fi
 		fi
-		notice "waiting for panelname, wait_cnt is $wait_cnt"
+		notice "waiting for panelname, wait_cnt is $wait_cnt, has_lid is $has_lid"
 		sleep 1;
 		wait_cnt=$((wait_cnt+1))
 	done

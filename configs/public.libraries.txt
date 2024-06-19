@@ -1,3 +1,7 @@
+libancbase_rt_fusion.so
+libAncHumanSegFigureFusion.so
+libsnpe_loader.so
+libportrait_repair_ppl3_ocl.so
 libqti-perfd-client.so
 libadsprpc.so
 libcdsprpc.so
@@ -9,3 +13,5 @@ libqmi_common_so.so
 libqmiservices.so
 libqmimotext.so
 libiqi_bridge.so
+libSNPE.so
+libc++_shared.so
