@@ -113,7 +113,6 @@ vendor/lib/libar-gpr.so
 -vendor/lib/libar-pal.so
 -vendor/lib/libats.so
 vendor/lib/libaualgo_foundation.so
-vendor/lib/libaualgo_sst_component.so
 vendor/lib/libaudio_log_utils.so
 vendor/lib/libdapparamstorage.so
 vendor/lib/liblx-ar_util.so
@@ -130,7 +129,6 @@ vendor/lib64/libar-gpr.so
 -vendor/lib64/libar-pal.so
 -vendor/lib64/libats.so
 vendor/lib64/libaualgo_foundation.so
-vendor/lib64/libaualgo_sst_component.so
 vendor/lib64/libaudio_log_utils.so
 vendor/lib64/libdapparamstorage.so
 vendor/lib64/liblx-ar_util.so
@@ -202,10 +200,6 @@ vendor/lib64/libbluetooth_audio_session_qti.so
 vendor/lib64/libbluetooth_audio_session_qti_2_1.so
 vendor/lib64/vendor.qti.hardware.bluetooth_sar@1.0.so
 vendor/lib64/vendor.qti.hardware.bluetooth_sar@1.1.so
-
-# Bluetooth (aptX)
-system/lib64/libaptXHD_encoder.so
-system/lib64/libaptX_encoder.so
 
 # CDSP
 vendor/bin/cdsprpcd
@@ -464,9 +458,7 @@ vendor/lib64/vendor.qti.hardware.eid@1.0.so
 vendor/bin/embmsslServer
 vendor/etc/init/init.embmssl_server.rc
 vendor/lib64/libembmsservice.so
-vendor/lib64/vendor.qti.hardware.embmssl@1.0-adapter-helper.so
 vendor/lib64/vendor.qti.hardware.embmssl@1.0.so
-vendor/lib64/vendor.qti.hardware.embmssl@1.1-adapter-helper.so
 vendor/lib64/vendor.qti.hardware.embmssl@1.1.so
 
 # FM
@@ -487,14 +479,8 @@ vendor/bin/lowi-server
 vendor/bin/mlid
 vendor/bin/xtra-daemon
 vendor/bin/xtwifi-client
-vendor/bin/xtwifi-inet-agent
 vendor/etc/init/loc-launcher.rc
 -vendor/etc/vintf/manifest/vendor.qti.gnss-service.xml
-vendor/etc/cacert_location.pem
-vendor/etc/xtra_root_cert.pem
-vendor/lib64/libasn1cper.so
-vendor/lib64/libasn1crt.so
-vendor/lib64/libasn1crtx.so
 vendor/lib64/libcacertclient.so
 vendor/lib64/libcdfw.so
 vendor/lib64/libcdfw_remote_api.so
@@ -524,8 +510,6 @@ vendor/lib64/libqppe.so
 vendor/lib64/libslimclient.so
 vendor/lib64/libsys_info_cache.so
 vendor/lib64/libxtadapter.so
-vendor/lib64/libxtwifi_server_protocol.so
-vendor/lib64/libxtwifi_server_protocol_uri_v3.so
 vendor/lib64/vendor.qti.gnss-service.so
 vendor/lib64/vendor.qti.gnss-V3-ndk_platform.so
 vendor/lib64/vendor.qti.gnss-V5-ndk_platform.so
@@ -990,7 +974,6 @@ vendor/lib64/libqtr_sdk.so
 vendor/lib64/libqvr_cam_cdsp_driver_stub.so
 vendor/lib64/libqvr_cdsp_driver_stub.so
 vendor/lib64/libqvr_eyetracking_plugin.so
-vendor/lib64/libqvr_hostcontroller_plugin.so
 vendor/lib64/libqvrcamera_client.qti.so
 vendor/lib64/libqvrservice.so
 vendor/lib64/libqvrservice_client.qti.so
@@ -1315,7 +1298,6 @@ vendor/lib64/libqesdk_manager.so
 vendor/lib64/libsdsprpc.so
 vendor/lib64/libsensorcal.so
 vendor/lib64/libsensorslog.so
-vendor/lib64/libsns_api.so
 vendor/lib64/libsns_device_mode_stub.so
 vendor/lib64/libsns_direct_channel_stub.so
 vendor/lib64/libsns_registry_skel.so
