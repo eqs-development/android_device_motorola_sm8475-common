@@ -968,6 +968,7 @@ vendor/etc/qvr/qvrservice_config.txt
 vendor/etc/seccomp_policy/qvr@2.0.policy
 vendor/etc/vintf/manifest/vendor.qti.hardware.qxr-service.xml
 vendor/lib64/libDspIOProxy_stub.so
+vendor/lib64/libgrpc++_unsecure.so
 vendor/lib64/libhalide_hexagon_host.so
 vendor/lib64/libMapService.so
 vendor/lib64/libqtr_sdk.so
