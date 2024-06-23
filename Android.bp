@@ -18,3 +18,10 @@ install_symlink {
     installed_location: "firmware/wlan/qca_cld/qca6490/WCNSS_qcom_cfg.ini",
     symlink_target: "/vendor/etc/wifi/qca6490/WCNSS_qcom_cfg.ini",
 }
+
+install_symlink {
+    name: "rfs_msm_mpss_readonly_vendor_fsg_symlink",
+    vendor: true,
+    installed_location: "rfs/msm/mpss/readonly/vendor/fsg",
+    symlink_target: "/vendor/fsg",
+}
