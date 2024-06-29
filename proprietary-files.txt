@@ -688,7 +688,7 @@ vendor/lib64/libQnnHtpAltPrepV69Stub.so
 vendor/lib64/libQnnHtpV69Stub.so
 
 # OEM
-vendor/bin/motobox
+vendor/bin/motobox;SYMLINK=vendor/bin/expat
 
 # OMX
 vendor/lib/libAlacSwDec.so
