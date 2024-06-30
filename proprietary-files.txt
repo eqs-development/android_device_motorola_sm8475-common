@@ -115,6 +115,7 @@ vendor/lib/libar-gpr.so
 vendor/lib/libaualgo_foundation.so
 vendor/lib/libaudio_log_utils.so
 vendor/lib/libdapparamstorage.so
+vendor/lib/libfmpal.so
 vendor/lib/liblx-ar_util.so
 -vendor/lib/liblx-osal.so
 vendor/lib/libmcs.so
@@ -131,6 +132,7 @@ vendor/lib64/libar-gpr.so
 vendor/lib64/libaualgo_foundation.so
 vendor/lib64/libaudio_log_utils.so
 vendor/lib64/libdapparamstorage.so
+vendor/lib64/libfmpal.so
 vendor/lib64/liblx-ar_util.so
 -vendor/lib64/liblx-osal.so
 vendor/lib64/libmcs.so
@@ -907,6 +909,7 @@ system_ext/bin/qspmsvc
 system_ext/etc/init/qspmsvc.rc
 system_ext/lib64/libqspmsvc.so
 system_ext/lib64/vendor.qti.qspmhal@1.0.so
+system_ext/lib64/vendor.qti.qspmhal-V1-ndk.so
 vendor/bin/vendor.qti.qspmhal@1.0-service
 vendor/etc/init/vendor.qti.qspmhal@1.0-service.rc
 vendor/etc/seccomp_policy/qspm.policy

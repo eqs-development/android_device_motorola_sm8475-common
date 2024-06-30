@@ -89,6 +89,7 @@ PRODUCT_PACKAGES += \
     audioadsprpcd \
     audio.bluetooth.default \
     audio.r_submix.default \
+    audio.primary.taro \
     audio.usb.default \
     agmcap \
     agmcompressplay \
@@ -300,6 +301,7 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
     libcodec2_hidl@1.2.vendor \
     libcodec2_vndk.vendor \
+    libcodec2_soft_common.vendor \
     libOmxCore \
     libmm-omxcore \
     libstagefrighthw
