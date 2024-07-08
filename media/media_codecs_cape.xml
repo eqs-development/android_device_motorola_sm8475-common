@@ -103,11 +103,8 @@
 -->
 
 <MediaCodecs>
-    <Include href="media_codecs_google_c2_telephony.xml" />
-<!--
-    <Include href="media_codecs_c2_audio.xml" />
--->
     <Settings>
+        <Domain name="telephony" enabled="true" />
         <Setting name="max-video-encoder-input-buffers" value="11" />
     </Settings>
     <Decoders>
