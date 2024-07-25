@@ -115,7 +115,6 @@ vendor/lib/libar-gpr.so
 vendor/lib/libaualgo_foundation.so
 vendor/lib/libaudio_log_utils.so
 vendor/lib/libdapparamstorage.so
-vendor/lib/libfmpal.so
 vendor/lib/liblx-ar_util.so
 -vendor/lib/liblx-osal.so
 vendor/lib/libmcs.so
@@ -132,7 +131,6 @@ vendor/lib64/libar-gpr.so
 vendor/lib64/libaualgo_foundation.so
 vendor/lib64/libaudio_log_utils.so
 vendor/lib64/libdapparamstorage.so
-vendor/lib64/libfmpal.so
 vendor/lib64/liblx-ar_util.so
 -vendor/lib64/liblx-osal.so
 vendor/lib64/libmcs.so
