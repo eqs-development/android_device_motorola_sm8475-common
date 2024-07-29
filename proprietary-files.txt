@@ -1012,6 +1012,7 @@ vendor/bin/hw/qcrilNrd
 vendor/bin/ATFWD-daemon
 vendor/bin/adpl
 vendor/bin/ks
+vendor/bin/mbm_spy
 vendor/bin/netmgrd
 vendor/bin/pd-mapper
 vendor/bin/port-bridge
