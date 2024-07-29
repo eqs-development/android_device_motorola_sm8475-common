@@ -313,7 +313,8 @@ PRODUCT_PACKAGES += \
     libcodec2_soft_common.vendor \
     libOmxCore \
     libmm-omxcore \
-    libstagefrighthw
+    libstagefrighthw \
+    libstagefright_softomx_plugin.vendor
 
 # Perf
 PRODUCT_PACKAGES += \
