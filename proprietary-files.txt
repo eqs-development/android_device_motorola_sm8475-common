@@ -829,6 +829,7 @@ vendor/lib64/hw/vendor.qti.hardware.qccvndhal@1.0-impl.so
 vendor/lib64/libqcc_file_agent.so
 vendor/lib64/vendor.qti.hardware.qccvndhal@1.0-halimpl.so
 vendor/lib64/vendor.qti.hardware.qccvndhal@1.0.so
+vendor/lib64/libgrpc++_unsecure.so
 
 # QESDK
 vendor/bin/perf_qesdk_client
@@ -920,73 +921,6 @@ vendor/bin/hw/vendor.qti.hardware.servicetracker@1.2-service
 vendor/etc/init/vendor.qti.hardware.servicetracker@1.2-service.rc
 -vendor/etc/vintf/manifest/vendor.qti.hardware.servicetracker@1.2-service.xml
 vendor/lib64/hw/vendor.qti.hardware.servicetracker@1.2-impl.so
-
-# QXR
-vendor/bin/hw/qvrservice
-vendor/bin/qvrcameratest
-vendor/etc/init/qvrd_vndr.rc
-vendor/etc/qvr/cfg/339/0/65536/mtp855.txt
-vendor/etc/qvr/cfg/339/0/65536/mtp855_6dof_config.xml
-vendor/etc/qvr/cfg/356/0/65536/mtp865.txt
-vendor/etc/qvr/cfg/356/0/65536/mtp865_6dof_config.xml
-vendor/etc/qvr/cfg/356/1/131072/morpheus.txt
-vendor/etc/qvr/cfg/356/1/131072/morpheus_6dof_config.xml
-vendor/etc/qvr/cfg/356/1/65536/trinity.txt
-vendor/etc/qvr/cfg/356/1/65536/trinity_6dof_config.xml
-vendor/etc/qvr/cfg/415/0/131072/mtplahaina.txt
-vendor/etc/qvr/cfg/415/0/131072/mtplahaina_6dof_config.xml
-vendor/etc/qvr/cfg/415/0/65536/mtplahaina.txt
-vendor/etc/qvr/cfg/415/0/65536/mtplahaina_6dof_config.xml
-vendor/etc/qvr/cfg/457/0/65536/mtpwaipio.txt
-vendor/etc/qvr/cfg/457/0/65536/mtpwaipio_6dof_config.xml
-vendor/etc/qvr/cfg/457/0/65536/mtpwaipio_qvr_3dof_tracker_config.txt
-vendor/etc/qvr/cfg/457/0/65537/mtpwaipio.txt
-vendor/etc/qvr/cfg/457/0/65537/mtpwaipio_6dof_config.xml
-vendor/etc/qvr/cfg/457/0/65537/mtpwaipio_qvr_3dof_tracker_config.txt
-vendor/etc/qvr/cfg/457/3/65536/mtpwaipio.txt
-vendor/etc/qvr/cfg/457/3/65536/mtpwaipio_6dof_config.xml
-vendor/etc/qvr/cfg/457/3/65536/mtpwaipio_qvr_3dof_tracker_config.txt
-vendor/etc/qvr/cfg/457/3/65537/mtpwaipio.txt
-vendor/etc/qvr/cfg/457/3/65537/mtpwaipio_6dof_config.xml
-vendor/etc/qvr/cfg/457/3/65537/mtpwaipio_qvr_3dof_tracker_config.txt
-vendor/etc/qvr/cfg/530/0/65536/mtpwaipio.txt
-vendor/etc/qvr/cfg/530/0/65536/mtpwaipio_6dof_config.xml
-vendor/etc/qvr/cfg/530/0/65536/mtpwaipio_qvr_3dof_tracker_config.txt
-vendor/etc/qvr/tuning/qvrservice_abf10238_tuning.json
-vendor/etc/qvr/tuning/qvrservice_asf10338a_tuning.json
-vendor/etc/qvr/tuning/qvrservice_asf10338b_tuning.json
-vendor/etc/qvr/tuning/qvrservice_bbf10138_tuning.json
-vendor/etc/qvr/tuning/qvrservice_br015b_tuning.json
-vendor/etc/qvr/tuning/qvrservice_imx476_tuning.json
-vendor/etc/qvr/tuning/qvrservice_obf2259_tuning.json
-vendor/etc/qvr/tuning/qvrservice_obf2260_tuning.json
-vendor/etc/qvr/tuning/qvrservice_ov7251_tuning.json
-vendor/etc/qvr/tuning/qvrservice_ov9282_tuning.json
-vendor/etc/qvr/tuning/qvrservice_v4l_ov7251_tuning.json
-vendor/etc/qvr/qvr_hid_device_list.txt
-vendor/etc/qvr/qvr_usb_device_list.txt
-vendor/etc/qvr/qvrservice_config.txt
-vendor/etc/seccomp_policy/qvr@2.0.policy
-vendor/etc/vintf/manifest/vendor.qti.hardware.qxr-service.xml
-vendor/lib64/libDspIOProxy_stub.so
-vendor/lib64/libgrpc++_unsecure.so
-vendor/lib64/libhalide_hexagon_host.so
-vendor/lib64/libMapService.so
-vendor/lib64/libqtr_sdk.so
-vendor/lib64/libqvr_cam_cdsp_driver_stub.so
-vendor/lib64/libqvr_cdsp_driver_stub.so
-vendor/lib64/libqvr_eyetracking_plugin.so
-vendor/lib64/libqvrcamera_client.qti.so
-vendor/lib64/libqvrservice.so
-vendor/lib64/libqvrservice_client.qti.so
-vendor/lib64/libqvrservice_ov7251_hvx_tuning.so
-vendor/lib64/libqvrservice_ov9282_hvx_tuning.so
-vendor/lib64/libqvrservice_v4l_ov7251_hvx_tuning.so
-vendor/lib64/libScenescape.so
-vendor/lib64/libStereoRectifyWrapper.so
-vendor/lib64/libsensor_calibration.so
-vendor/lib64/libtracker_6dof_impl.so
-vendor/lib64/vendor.qti.hardware.qxr-V1-ndk_platform.so
 
 # RIL - UIM
 -product/app/uimgbaservice/uimgbaservice.apk
@@ -1358,13 +1292,6 @@ vendor/lib/vendor.qti.spu@2.0.so
 vendor/lib64/vendor.qti.spu@1.0.so
 vendor/lib64/vendor.qti.spu@1.1.so
 vendor/lib64/vendor.qti.spu@2.0.so
-
-# SXR
-vendor/bin/hw/sxrservice
-vendor/etc/init/sxrd.rc
-vendor/etc/seccomp_policy/sxr@2.0.policy
-vendor/lib64/libsxrcryptoimpl.so
-vendor/lib64/libsxrservice.so
 
 # Thermal engine
 vendor/bin/thermal-engine-v2
