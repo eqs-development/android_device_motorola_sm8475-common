@@ -3,10 +3,12 @@ type vendor_init_touch_exec, exec_type, vendor_file_type, file_type;
 init_daemon_domain(vendor_init_touch)
 
 allow vendor_init_touch vendor_toolbox_exec:file rx_file_perms;
+allow vendor_init_touch kmsg_device:chr_file rw_file_perms;
+allow vendor_init_touch self:capability { chown fowner sys_module };
 
-r_dir_file(vendor_init_touch , vendor_sysfs_touchpanel)
 set_prop(vendor_init_touch, vendor_mot_touch_prop)
 set_prop(vendor_init_touch, vendor_mot_hw_prop)
 
-
+allow vendor_init_touch vendor_sysfs_touchpanel:dir r_dir_perms;
+allow vendor_init_touch vendor_sysfs_touchpanel:file { rw_file_perms setattr };
 allow vendor_init_touch vendor_sysfs_data:file r_file_perms;
