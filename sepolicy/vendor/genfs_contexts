@@ -1,4 +1,5 @@
 # Display
+genfscon sysfs /devices/platform/soc/ae00000.qcom,mdss_mdp/drm/card0/card0-DSI-1/panelDeclare           u:object_r:vendor_sysfs_data:s0
 genfscon sysfs /devices/platform/soc/ae00000.qcom,mdss_mdp/drm/card0/card0-DSI-1/panelBLExponent        u:object_r:vendor_sysfs_data:s0
 
 # Fingerprint
