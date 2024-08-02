@@ -60,7 +60,8 @@ fi
 
 function blob_fixup() {
     case "${1}" in
-        system_ext/etc/permissions/moto-telephony.xml)
+        system_ext/etc/permissions/moto-telephony.xml | \
+        system_ext/etc/permissions/moto-ims-ext.xml)
             sed -i "s#/system/#/system_ext/#" "${2}"
             ;;
         vendor/etc/vintf/manifest/vendor.dolby.media.c2@1.0-service.xml)
