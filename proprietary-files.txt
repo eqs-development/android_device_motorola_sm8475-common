@@ -681,6 +681,10 @@ vendor/bin/modemManager
 vendor/etc/init/modemManager.rc
 vendor/etc/seccomp_policy/modemManager.policy
 
+# Motorola
+system/etc/permissions/moto-settings.xml
+system/framework/moto-settings.jar
+
 # Neural networks
 vendor/lib64/libQnnHtp.so
 vendor/lib64/libQnnHtpPrepare.so
