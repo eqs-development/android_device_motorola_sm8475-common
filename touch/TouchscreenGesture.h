@@ -30,10 +30,10 @@ struct GestureInfo {
 };
 
 constexpr GestureInfo kGestureNodes[] = {
-        {59,
+        {0x2c2,
          "Single Tap",
-         "/sys/class/touchscreen/primary/gesture",
-         "33", "32"},
+         "/sys/class/touchscreen/primary/single_tap_enabled",
+         "1", "0"},
 };
 }  // anonymous namespace
 
