@@ -1008,7 +1008,7 @@ system_ext/etc/permissions/qcrilhook.xml
 system_ext/etc/permissions/qti_libpermissions.xml
 system_ext/etc/permissions/qti_permissions.xml
 system_ext/framework/qcom-moto-ims-ext.jar
-system_ext/framework/qcom-moto-telephony-ext.jar
+system_ext/framework/qcom-moto-telephony-ext.jar|eea956d4c7aa9f5c20ab86772dc9fd7d8334b332
 system_ext/framework/qcrilhook.jar
 system_ext/framework/qti-telephony-common.jar
 -system_ext/priv-app/qcrilmsgtunnel/qcrilmsgtunnel.apk
