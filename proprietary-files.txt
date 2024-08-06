@@ -1205,7 +1205,7 @@ system/etc/permissions/moto-telephony.xml:system_ext/etc/permissions/moto-teleph
 system/framework/moto-telephony.jar:system_ext/framework/moto-telephony.jar
 
 # RIL - IMS - system_ext
--system_ext/priv-app/ims/ims.apk|38ce142f9b9f75d8a5373479ccdea4ec3b237b57
+-system_ext/priv-app/ims/ims.apk
 -system_ext/app/ImsRcsService/ImsRcsService.apk
 system_ext/etc/permissions/vendor.qti.ims.rcsservice.xml
 system_ext/framework/vendor.qti.ims.connection-V1.0-java.jar

@@ -1,0 +1,39 @@
+From 3bcdbb759b5b07f1e7bc50eb3c3bda5bc0aedb6a Mon Sep 17 00:00:00 2001
+From: Erfan Abdi <erfangplus@gmail.com>
+Date: Sun, 26 Jan 2020 20:23:44 +0330
+Subject: [PATCH 1/5] ImsConfigImpl: Return 0 in getWfcMDN in any case
+
+---
+ smali/org/codeaurora/ims/ImsConfigImpl.smali | 13 -------------
+ 1 file changed, 13 deletions(-)
+
+diff --git a/smali/org/codeaurora/ims/ImsConfigImpl.smali b/smali/org/codeaurora/ims/ImsConfigImpl.smali
+index 4012516..99b2bba 100644
+--- a/smali/org/codeaurora/ims/ImsConfigImpl.smali
++++ b/smali/org/codeaurora/ims/ImsConfigImpl.smali
+@@ -1382,22 +1382,9 @@
+     .param p1, "subid"    # I
+ 
+     .line 820
+-    const-string v0, "wfc_ims_mdn"
+-
+-    iget-object v1, p0, Lorg/codeaurora/ims/ImsConfigImpl;->mContext:Landroid/content/Context;
+-
+-    invoke-virtual {p0, p1, v0, v1}, Lorg/codeaurora/ims/ImsConfigImpl;->getSubscriptionProperty(ILjava/lang/String;Landroid/content/Context;)Ljava/lang/String;
+-
+-    move-result-object v0
+-
+-    .line 822
+-    .local v0, "mdn":Ljava/lang/String;
+-    if-nez v0, :cond_0
+ 
+     const-string v0, "0"
+ 
+-    .line 823
+-    :cond_0
+     return-object v0
+ .end method
+ 
+-- 
+2.45.2
+

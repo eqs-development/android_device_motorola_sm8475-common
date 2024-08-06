@@ -101,6 +101,9 @@ function blob_fixup() {
         vendor/lib/hw/audio.primary.taro-moto.so | vendor/lib64/hw/audio.primary.taro-moto.so)
             "${PATCHELF}" --set-soname audio.primary.taro-moto.so "${2}"
             ;;
+        system_ext/priv-app/ims/ims.apk)
+            apktool_patch "${2}" "$MY_DIR/ims-patches"
+            ;;
     esac
 }
 
