@@ -94,22 +94,28 @@ TARGET_KERNEL_EXT_MODULES += \
     motorola/drivers/power/mmi_charger \
     motorola/drivers/power/qti_glink_charger \
     motorola/drivers/power/qpnp_adaptive_charge \
+    motorola/drivers/power/cw2217b_fg_mmi \
+    motorola/drivers/power/sgm4154x_charger_lite \
     motorola/drivers/misc/utag \
     motorola/drivers/mmi_relay \
     motorola/drivers/moto_f_mass_storage \
     motorola/drivers/moto_f_usbnet \
     motorola/drivers/misc/mmi_sys_temp \
     motorola/drivers/watchdogtest \
+    motorola/drivers/regulator/wl2864c \
     motorola/drivers/regulator/wl2868c \
     motorola/drivers/sensors \
     motorola/drivers/misc/sx937x_multi \
     motorola/drivers/input/touchscreen/touchscreen_mmi \
     motorola/drivers/input/touchscreen/goodix_berlin_mmi \
     motorola/drivers/input/touchscreen/stmicro_mmi \
+    motorola/drivers/input/touchscreen/focaltech_touch_v3 \
+    motorola/drivers/input/misc/fpc_fps_mmi \
     motorola/drivers/input/misc/rbs_fod_mmi \
     motorola/drivers/moto_mm \
     motorola/drivers/moto_swap \
     motorola/drivers/nfc/st21nfc \
+    motorola/drivers/nfc/sn2xx \
     motorola/drivers/ese/st54x
 
 # Platform
