@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-#define LOG_TAG "lineage.touch@1.0-service.lge_msmnile"
+#define LOG_TAG "vendor.lineage.touch@1.0-service.moto_sm8475"
 
 #include <android-base/logging.h>
 #include <hidl/HidlTransportSupport.h>
