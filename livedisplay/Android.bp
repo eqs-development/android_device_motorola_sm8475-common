@@ -41,6 +41,7 @@ cc_defaults {
 cc_binary {
     name: "vendor.lineage.livedisplay@2.1-service.motorola_taro",
     init_rc: ["vendor.lineage.livedisplay@2.1-service.motorola_taro.rc"],
+    vintf_fragments: ["vendor.lineage.livedisplay@2.1-service.motorola_taro.xml"],
     defaults: ["livedisplay_motorola_taro"],
     vendor: true,
 }
