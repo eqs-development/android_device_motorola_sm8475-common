@@ -287,11 +287,17 @@ sensors_class.ko
 sx937x_multi.ko
 touchscreen_mmi.ko
 stmicro_mmi.ko
+fpc1020_mmi.ko
 goodix_brl_mmi.ko
+focaltech_v3.ko
 qti_glink_charger.ko
 wl2868c.ko
+slg5bm43670.ko
 mmi_sys_temp.ko
 qpnp_adaptive_charge.ko
+cw2217b_fg_mmi.ko
+sgm4154x_charger_lite.ko
+wl2864c.ko
 moto_mm.ko
 moto_swap.ko
 gpio_keys.ko
