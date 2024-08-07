@@ -1,0 +1,11 @@
+on init
+    chown system system /sys/devices/platform/soc/soc:qcom,dsi-display-primary/fod_hbm
+
+service fps_hal.eqs /vendor/bin/hw/android.hardware.biometrics.fingerprint@2.3-service.eqs
+    # "class hal" causes a race condition on some devices due to files created
+    # in /data. As a workaround, postpone startup until later in boot once
+    # /data is mounted.
+    class late_start
+    user system
+    group system input uhid
+    writepid /dev/cpuset/system-background/tasks
