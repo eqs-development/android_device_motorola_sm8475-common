@@ -1319,6 +1319,11 @@ vendor/lib64/libssc.so
 vendor/lib64/libssc_default_listener.so
 vendor/lib64/vendor.qti.hardware.sensorscalibrate@1.0.so
 
+# Sensors (Motorola)
+vendor/lib64/motorola.hardware.sensors-V1-ndk_platform.so
+vendor/lib64/sensors.moto.so
+vendor/lib64/sensors.ssc.so
+
 # Snapdragon Computer Vision Engine
 vendor/lib/libeva.so
 vendor/lib/libfastcvdsp_stub.so
