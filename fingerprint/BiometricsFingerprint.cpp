@@ -13,7 +13,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-#define LOG_TAG "fingerprint@2.3-service.eqs"
+
+#define LOG_TAG "android.hardware.biometrics.fingerprint@2.3-service.moto_sm8475_fod"
 
 #include "BiometricsFingerprint.h"
 
