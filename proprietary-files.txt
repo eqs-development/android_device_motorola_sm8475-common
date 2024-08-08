@@ -206,6 +206,14 @@ vendor/firmware/CAMERA_ICP.elf
 vendor/firmware/CAMERA_ICP_170.elf
 vendor/firmware/CAMERA_ICP_480.elf
 
+# Camera - Motorola
+vendor/bin/hw/motorola.hardware.camera.desktop@2.0-service
+vendor/etc/init/motorola.hardware.camera.desktop@2.0-service.rc
+vendor/lib/motorola.hardware.camera.desktop@1.0.so
+vendor/lib/motorola.hardware.camera.desktop@2.0.so
+vendor/lib64/motorola.hardware.camera.desktop@1.0.so
+vendor/lib64/motorola.hardware.camera.desktop@2.0.so
+
 # CDSP
 vendor/bin/cdsprpcd
 vendor/etc/init/vendor.qti.cdsprpc-service.rc
