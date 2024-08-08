@@ -112,6 +112,7 @@ TARGET_KERNEL_EXT_MODULES += \
     motorola/drivers/watchdogtest \
     motorola/drivers/regulator/wl2864c \
     motorola/drivers/regulator/wl2868c \
+    motorola/drivers/regulator/slg5bm43670 \
     motorola/drivers/sensors \
     motorola/drivers/misc/sx937x_multi \
     motorola/drivers/input/touchscreen/touchscreen_mmi \
