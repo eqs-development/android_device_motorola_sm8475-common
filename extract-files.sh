@@ -64,7 +64,7 @@ function blob_fixup() {
             sed -i "s#/system/#/system_ext/#" "${2}"
             ;;
         vendor/etc/vintf/manifest/vendor.dolby.media.c2@1.0-service.xml)
-            sed -ni '/default1/!p' "${2}"
+            sed -ni '/default9/!p' "${2}"
             ;;
         vendor/lib/libcamximageformatutils.so | vendor/lib64/libcamximageformatutils.so)
             ${PATCHELF} --replace-needed "vendor.qti.hardware.display.config-V2-ndk_platform.so" "vendor.qti.hardware.display.config-V2-ndk.so" "${2}"
