@@ -1,3 +1,6 @@
+on post-fs
+    chown system system /sys/class/touchscreen/primary/single_tap_enabled
+
 service vendor.touch-hal-1-0 /vendor/bin/hw/vendor.lineage.touch@1.0-service.moto_sm8475
     interface vendor.lineage.touch@1.0::IHighTouchPollingRate default
     interface vendor.lineage.touch@1.0::ITouchscreenGesture default
