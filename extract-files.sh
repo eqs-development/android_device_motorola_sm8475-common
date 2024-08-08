@@ -94,9 +94,6 @@ function blob_fixup() {
         vendor/lib64/vendor.qti.hardware.qxr-V1-ndk_platform.so)
             ${PATCHELF} --replace-needed "android.hardware.common-V2-ndk_platform.so" "android.hardware.common-V2-ndk.so" "${2}"
             ;;
-        vendor/bin/init.qti.media.sh)
-            sed -i "s#build_codename -le \"12\"#build_codename -le \"13\"#" "${2}"
-            ;;
         # rename moto modified primary audio to not conflict with source built
         vendor/lib/hw/audio.primary.taro-moto.so | vendor/lib64/hw/audio.primary.taro-moto.so)
             "${PATCHELF}" --set-soname audio.primary.taro-moto.so "${2}"
