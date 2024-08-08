@@ -81,7 +81,7 @@ function blob_fixup() {
             ${PATCHELF} --replace-needed "android.hardware.security.sharedsecret-V1-ndk_platform.so" "android.hardware.security.sharedsecret-V1-ndk.so" "${2}"
             ;;
         vendor/lib64/libdlbdsservice.so | vendor/lib64/soundfx/libswdap.so)
-            "${PATCHELF}" --replace-needed "libstagefright_foundation.so" "libstagefright_foundation-v33.so" "${2}"
+            ${PATCHELF} --replace-needed "libstagefright_foundation.so" "libstagefright_foundation-v33.so" "${2}"
             ;;
         vendor/lib64/vendor.qti.hardware.qxr-V1-ndk_platform.so)
             ${PATCHELF} --replace-needed "android.hardware.common-V2-ndk_platform.so" "android.hardware.common-V2-ndk.so" "${2}"
@@ -94,7 +94,7 @@ function blob_fixup() {
             ;;
         # rename moto modified primary audio to not conflict with source built
         vendor/lib/hw/audio.primary.taro-moto.so | vendor/lib64/hw/audio.primary.taro-moto.so)
-            "${PATCHELF}" --set-soname audio.primary.taro-moto.so "${2}"
+            ${PATCHELF} --set-soname audio.primary.taro-moto.so "${2}"
             ;;
         system_ext/priv-app/ims/ims.apk)
             apktool_patch "${2}" "$MY_DIR/ims-patches"
