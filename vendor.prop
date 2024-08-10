@@ -322,7 +322,6 @@ persist.vendor.radio.flexmap_type=none
 persist.vendor.radio.enable_temp_dds=true
 persist.vendor.rcs.presence.provision=0
 persist.radio.multisim.config=dsds
-ro.vendor.radio.imei.sv=4
 ro.vendor.use_data_netmgrd=true
 
 # Shutdown
