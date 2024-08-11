@@ -5,9 +5,6 @@ genfscon sysfs /devices/platform/soc/ae00000.qcom,mdss_mdp/drm/card0/card0-DSI-1
 # Fingerprint
 genfscon sysfs /devices/platform/soc/soc:qcom,dsi-display-primary/fod_hbm                      u:object_r:vendor_sysfs_fingerprint:s0
 
-# Gestures
-genfscon sysfs /devices/platform/soc/990000.i2c/i2c-0/0-005d/touchscreen/primary/gesture       u:object_r:vendor_sysfs_dt2w:s0
-
 # Graphics
 genfscon sysfs /devices/platform/soc/88e0000.qcom,msm-eud/extcon/extcon0/cable.0/name          u:object_r:vendor_sysfs_graphics:s0
 genfscon sysfs /devices/platform/soc/88e0000.qcom,msm-eud/extcon/extcon0/cable.1/name          u:object_r:vendor_sysfs_graphics:s0
@@ -37,7 +34,6 @@ genfscon proc /hw                                                               
 # PowerHal
 genfscon proc /sys/kernel/sched_lib_name                                        u:object_r:proc_sched_lib_mask_cpuinfo:s0
 genfscon proc /sys/kernel/sched_lib_mask_force                                  u:object_r:proc_sched_lib_mask_cpuinfo:s0
-genfscon sysfs /devices/platform/soc/a94000.i2c/i2c-2/2-0049/double_click       u:object_r:vendor_sysfs_dt2w:s0
 
 # Powershare
 genfscon sysfs /devices/platform/soc/soc:qcom,pmic_glink/soc:qcom,pmic_glink:qcom,battery_charger/tx_mode    u:object_r:vendor_sysfs_wlc:s0
