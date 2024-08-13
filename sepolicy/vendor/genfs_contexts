@@ -22,6 +22,9 @@ genfscon sysfs /devices/virtual/input                                           
 # Lights
 genfscon sysfs /devices/platform/soc/c440000.qcom,spmi/spmi-0/spmi0-02/c440000.qcom,spmi:qcom,pm8350c@2:qcom,leds@ef00/leds/charging u:object_r:sysfs_leds:s0
 
+# Lineage Health
+genfscon sysfs /devices/platform/soc/soc:qcom,pmic_glink/soc:qcom,pmic_glink:qcom,battery_charger/force_charging_disable    u:object_r:sysfs_battery_supply:s0
+
 # LiveDisplay
 genfscon sysfs /devices/platform/soc/soc:qcom,dsi-display-primary/dsi_display_hbm             u:object_r:sysfs_livedisplay_tuneable:s0
 genfscon sysfs /devices/platform/soc/soc:qcom,dsi-display-primary/dsi_display_dc              u:object_r:sysfs_livedisplay_tuneable:s0
