@@ -173,8 +173,8 @@ dalvik.vm.heaptargetutilization=0.5
 
 # Display
 vendor.display.comp_mask=0
-vendor.display.disable_3d_adaptive_tm=1
-vendor.display.disable_cwb_idle_fallback=1
+vendor.display.disable_3d_adaptive_tm=0
+vendor.display.disable_dynamic_sf_idle=1
 vendor.display.disable_excl_rect=0
 vendor.display.disable_excl_rect_partial_fb=1
 vendor.display.disable_hw_recovery_dump=1
