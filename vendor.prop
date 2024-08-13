@@ -292,7 +292,6 @@ persist.vendor.radio.start_ota_daemon=0
 persist.vendor.radio.sw_mbn_update=0
 persist.vendor.radio.sar_sensor=1
 persist.vendor.radio.fi_supported=0
-persist.vendor.radio.rat_on=combine
 persist.vendor.radio.data_ltd_sys_ind=1
 persist.vendor.radio.hidl_dev_service=1
 persist.vendor.radio.enableadvancedscan=true
