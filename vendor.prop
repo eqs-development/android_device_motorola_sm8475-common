@@ -39,7 +39,6 @@ vendor.audio.enable.mirrorlink=false
 vendor.audio.flac.sw.decoder.24bit=true
 vendor.audio.hal.boot.timeout.ms=20000
 vendor.audio.hal.output.suspend.supported=true
-vendor.audio.hdr.record.enable=false
 vendor.audio.hw.aac.encoder=false
 vendor.audio.max.dr0=7.5
 vendor.audio.max.dr1=8.0
