@@ -239,7 +239,6 @@ vendor.hw.sf.IdleLazyResetThresholdT=1000
 net.lte.ims.data.enabled=true,true
 persist.vendor.lte.pco_supported=true
 persist.vendor.rcs.singlereg.feature=0
-vendor.ims.modem.multisub.cap=2
 
 # Incremental FS
 ro.incremental.enable=yes
