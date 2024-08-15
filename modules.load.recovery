@@ -331,3 +331,6 @@ snd_event_dlkm.ko
 q6_notifier_dlkm.ko
 q6_pdr_dlkm.ko
 adsp_loader_dlkm.ko
+mmi_charger.ko
+qti_glink_charger.ko
+cw2217b_fg_mmi.ko
