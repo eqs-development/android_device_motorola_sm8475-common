@@ -87,6 +87,12 @@ function blob_fixup() {
         vendor/lib64/libancbase_rt_fusion.so)
             ${PATCHELF} --set-soname libancbase_rt_fusion.so "${2}"
             ;;
+        vendor/lib64/libremosaiclib_s5khp1.so)
+            ${PATCHELF} --set-soname libremosaiclib_s5khp1.so "${2}"
+            ;;
+        vendor/lib64/libremosaiclib_s5kjn1.so)
+            ${PATCHELF} --set-soname libremosaiclib_s5kjn1.so "${2}"
+            ;;
         # rename moto modified primary audio to not conflict with source built
         vendor/lib/hw/audio.primary.taro-moto.so | vendor/lib64/hw/audio.primary.taro-moto.so)
             ${PATCHELF} --set-soname audio.primary.taro-moto.so "${2}"
