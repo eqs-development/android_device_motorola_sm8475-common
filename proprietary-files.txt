@@ -401,7 +401,7 @@ vendor/etc/vintf/manifest/vendor.dolby.hardware.dms.xml
 vendor/lib/libdlbpreg.so
 vendor/lib/vendor.dolby.hardware.dms@2.0.so
 vendor/lib64/libdlbpreg.so
-vendor/lib64/libdlbdsservice.so;DISABLE_CHECKELF
+vendor/lib64/libdlbdsservice.so
 vendor/lib64/vendor.dolby.hardware.dms@2.0-impl.so
 vendor/lib64/vendor.dolby.hardware.dms@2.0.so
 
