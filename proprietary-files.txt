@@ -832,20 +832,20 @@ system_ext/lib64/vendor.qti.hardware.qccsyshal@1.0.so
 system_ext/lib64/vendor.qti.hardware.qccsyshal@1.1.so
 system_ext/lib64/vendor.qti.hardware.qccsyshal@1.2-halimpl.so
 system_ext/lib64/vendor.qti.hardware.qccsyshal@1.2.so
-vendor/lib/vendor.qti.hardware.qccsyshal@1.0.so;MODULE=vendor.qti.hardware.qccsyshal@1.0-vendor
-vendor/lib/vendor.qti.hardware.qccsyshal@1.1.so;DISABLE_CHECKELF;MODULE=vendor.qti.hardware.qccsyshal@1.1-vendor
-vendor/lib64/vendor.qti.hardware.qccsyshal@1.0.so;MODULE=vendor.qti.hardware.qccsyshal@1.0-vendor
-vendor/lib64/vendor.qti.hardware.qccsyshal@1.1.so;DISABLE_CHECKELF;MODULE=vendor.qti.hardware.qccsyshal@1.1-vendor
 
 # QCC - vendor
 vendor/bin/qcc-trd;DISABLE_CHECKELF
 vendor/etc/init/init.qdmastats.rc
 vendor/lib/hw/vendor.qti.hardware.qccvndhal@1.0-impl.so
 vendor/lib/libqcc_file_agent.so;DISABLE_CHECKELF
+vendor/lib/vendor.qti.hardware.qccsyshal@1.0.so;MODULE=vendor.qti.hardware.qccsyshal@1.0-vendor
+vendor/lib/vendor.qti.hardware.qccsyshal@1.1.so;DISABLE_CHECKELF;MODULE=vendor.qti.hardware.qccsyshal@1.1-vendor
 vendor/lib/vendor.qti.hardware.qccvndhal@1.0-halimpl.so
 vendor/lib/vendor.qti.hardware.qccvndhal@1.0.so
 vendor/lib64/hw/vendor.qti.hardware.qccvndhal@1.0-impl.so
 vendor/lib64/libqcc_file_agent.so;DISABLE_CHECKELF
+vendor/lib64/vendor.qti.hardware.qccsyshal@1.0.so;MODULE=vendor.qti.hardware.qccsyshal@1.0-vendor
+vendor/lib64/vendor.qti.hardware.qccsyshal@1.1.so;DISABLE_CHECKELF;MODULE=vendor.qti.hardware.qccsyshal@1.1-vendor
 vendor/lib64/vendor.qti.hardware.qccvndhal@1.0-halimpl.so
 vendor/lib64/vendor.qti.hardware.qccvndhal@1.0.so
 
