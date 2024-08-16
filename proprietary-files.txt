@@ -543,7 +543,7 @@ vendor/lib/egl/libq3dtools_adreno.so;SYMLINK=vendor/lib/libq3dtools_adreno.so
 vendor/lib/egl/libq3dtools_esx.so
 vendor/lib/libCB.so
 vendor/lib/libOpenCL.so
-vendor/lib/libadreno_app_profiles.so;DISABLE_CHECKELF
+vendor/lib/libadreno_app_profiles.so
 vendor/lib/libadreno_utils.so
 vendor/lib/libgpudataproducer.so
 vendor/lib/libgsl.so
@@ -561,7 +561,7 @@ vendor/lib64/egl/libq3dtools_adreno.so;SYMLINK=vendor/lib64/libq3dtools_adreno.s
 vendor/lib64/egl/libq3dtools_esx.so
 vendor/lib64/libCB.so
 vendor/lib64/libOpenCL.so
-vendor/lib64/libadreno_app_profiles.so;DISABLE_CHECKELF
+vendor/lib64/libadreno_app_profiles.so
 vendor/lib64/libadreno_utils.so
 vendor/lib64/libgpudataproducer.so
 vendor/lib64/libgsl.so
@@ -922,17 +922,17 @@ vendor/lib64/libqmiservices.so
 vendor/lib64/libsubsystem_control.so
 
 # QSPM
-system_ext/bin/qspmsvc;DISABLE_CHECKELF
+system_ext/bin/qspmsvc
 system_ext/etc/init/qspmsvc.rc
 system_ext/lib64/libqspmsvc.so
-system_ext/lib64/vendor.qti.qspmhal@1.0.so;MODULE=vendor.qti.qspmhal@1.0-se
+system_ext/lib64/vendor.qti.qspmhal@1.0.so
 system_ext/lib64/vendor.qti.qspmhal-V1-ndk.so
 vendor/bin/vendor.qti.qspmhal@1.0-service
 vendor/etc/init/vendor.qti.qspmhal@1.0-service.rc
 vendor/etc/seccomp_policy/qspm.policy
-vendor/lib/vendor.qti.qspmhal@1.0.so
+vendor/lib/vendor.qti.qspmhal@1.0.so;MODULE=vendor.qti.qspmhal@1.0-vendor
 vendor/lib64/vendor.qti.qspmhal@1.0-impl.so
-vendor/lib64/vendor.qti.qspmhal@1.0.so
+vendor/lib64/vendor.qti.qspmhal@1.0.so;MODULE=vendor.qti.qspmhal@1.0-vendor
 
 # QTI service tracker
 vendor/bin/hw/vendor.qti.hardware.servicetracker@1.2-service
