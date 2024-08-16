@@ -418,10 +418,6 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
     vendor.qti.hardware.servicetracker@1.2.vendor
 
-# QXR
-PRODUCT_PACKAGES += \
-    android.hardware.common-V2-ndk.vendor
-
 # RenderScript
 PRODUCT_PACKAGES += \
     android.hardware.renderscript@1.0-impl
