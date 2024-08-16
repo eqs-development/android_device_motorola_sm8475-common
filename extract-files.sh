@@ -85,6 +85,9 @@ function blob_fixup() {
         vendor/lib64/nfc_nci.nqx.default.hw.so)
             ${PATCHELF} --replace-needed "libbase.so" "libbase-v33.so" "${2}"
             ;;
+        vendor/bin/qcc-trd)
+            ${PATCHELF} --replace-needed "libgrpc++_unsecure.so" "libgrpc++_unsecure_prebuilt.so" "${2}"
+            ;;
         vendor/lib64/libancbase_rt_fusion.so)
             ${PATCHELF} --set-soname libancbase_rt_fusion.so "${2}"
             ;;
@@ -93,6 +96,9 @@ function blob_fixup() {
             ;;
         vendor/lib64/libremosaiclib_s5kjn1.so)
             ${PATCHELF} --set-soname libremosaiclib_s5kjn1.so "${2}"
+            ;;
+        vendor/lib/libgrpc++_unsecure_prebuilt.so | vendor/lib64/libgrpc++_unsecure_prebuilt.so)
+            ${PATCHELF} --set-soname libgrpc++_unsecure_prebuilt.so "${2}"
             ;;
         # rename moto modified primary audio to not conflict with source built
         vendor/lib/hw/audio.primary.taro-moto.so | vendor/lib64/hw/audio.primary.taro-moto.so)
