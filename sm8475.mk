@@ -319,7 +319,7 @@ PRODUCT_PACKAGES += \
 
 # QMI
 PRODUCT_PACKAGES += \
-    libvndfwk_detect_jni.qti.vendor # Needed by CNE app
+    libvndfwk_detect_jni.qti_vendor # Needed by CNE app
 
 # RenderScript
 PRODUCT_PACKAGES += \
