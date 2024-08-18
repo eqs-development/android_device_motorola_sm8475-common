@@ -1,7 +1,3 @@
-attribute hal_dms;
-attribute hal_dms_client;
-attribute hal_dms_server;
-
 attribute hal_panel;
 attribute hal_panel_client;
 attribute hal_panel_server;

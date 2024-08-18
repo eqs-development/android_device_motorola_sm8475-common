@@ -131,12 +131,9 @@ vendor/etc/models/acd/speech.eai
 
 # Audio - soundfx
 vendor/lib64/soundfx/libasphere.so
-vendor/lib64/soundfx/libdlbvol.so
 vendor/lib64/soundfx/libmsstwrapper.so
 vendor/lib64/soundfx/libshoebox.so
 vendor/lib64/soundfx/libspeakerbundle.so
-vendor/lib64/soundfx/libswdap.so
-vendor/lib64/soundfx/libswgamedap.so
 
 # Bluetooth
 vendor/bin/hw/android.hardware.bluetooth@1.0-service-qti
@@ -336,16 +333,6 @@ vendor/lib64/vendor.display.color@1.5.so
 vendor/lib64/vendor.display.color@1.6.so
 vendor/lib64/vendor.display.color@1.7.so
 vendor/lib64/vendor.display.postproc@1.0.so
-
-# Dolby
-vendor/bin/hw/vendor.dolby.hardware.dms@2.0-service
-vendor/etc/dolby/dax-default.xml
-vendor/etc/init/vendor.dolby.hardware.dms@2.0-service.rc
-vendor/etc/vintf/manifest/vendor.dolby.hardware.dms.xml
-vendor/lib64/libdlbpreg.so
-vendor/lib64/libdlbdsservice.so
-vendor/lib64/vendor.dolby.hardware.dms@2.0-impl.so
-vendor/lib64/vendor.dolby.hardware.dms@2.0.so
 
 # DPM
 system/framework/tcmclient.jar
@@ -568,12 +555,10 @@ vendor/lib64/vendor.qti.hardware.ListenSoundModel@1.0.so
 # Media
 system_ext/lib64/libmmosal.so
 system_ext/lib64/libmmparser_lite.so
-vendor/bin/hw/vendor.dolby.media.c2@1.0-service
 vendor/bin/hw/vendor.qti.media.c2@1.0-service
 vendor/bin/hw/vendor.qti.media.c2audio@1.0-service
 vendor/bin/init.qti.media.sh
 vendor/etc/init/init.qti.media.rc
-vendor/etc/init/vendor.dolby.media.c2@1.0-service.rc
 vendor/etc/init/vendor.qti.media.c2@1.0-service.rc
 vendor/etc/init/vendor.qti.media.c2audio@1.0-service.rc
 vendor/etc/media_cape/video_system_specs.json
@@ -584,12 +569,6 @@ vendor/etc/seccomp_policy/c2audio.vendor.ext-arm64.policy
 vendor/etc/seccomp_policy/codec2.vendor.base-arm64.policy
 vendor/etc/seccomp_policy/codec2.vendor.ext-arm64.policy
 -vendor/etc/vintf/manifest/c2_manifest_vendor_audio.xml
--vendor/etc/vintf/manifest/vendor.dolby.media.c2@1.0-service.xml
-vendor/lib64/libcodec2_soft_ac4dec.so
-vendor/lib64/libcodec2_soft_common.so:vendor/lib64/libcodec2_soft_common_prebuilt.so
-vendor/lib64/libcodec2_soft_ddpdec.so
-vendor/lib64/libcodec2_store_dolby.so
-vendor/lib64/libdeccfg.so
 vendor/lib64/libdsd2pcm.so
 vendor/lib64/libEvrcSwCodec.so
 vendor/lib64/libmmosal_vendor.so

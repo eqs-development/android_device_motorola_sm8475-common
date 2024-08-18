@@ -45,9 +45,6 @@
 # Devicetree
 /sys/firmware/devicetree/base/chosen(/.*)?              u:object_r:sysfs_dt_chosen:s0
 
-# Dolby DMS
-/(vendor|system/vendor)/bin/hw/vendor\.dolby\.hardware\.dms@2\.0-service       u:object_r:hal_dms_default_exec:s0
-
 # Fingerprint
 /(mnt/vendor/persist|persist)/egis(/.*)?                u:object_r:vendor_persist_egis_file:s0
 /(mnt/vendor/persist|persist)/mdm(/.*)?                 u:object_r:persist_modem_file:s0
@@ -63,9 +60,6 @@
 
 # LiveDisplay
 /(vendor|system/vendor)/bin/hw/vendor\.lineage\.livedisplay@2\.1-service\.motorola_taro    u:object_r:hal_lineage_livedisplay_qti_exec:s0
-
-# Media
-/(vendor|system/vendor)/bin/hw/vendor\.dolby\.media\.c2@1\.0-service            u:object_r:mediacodec_exec:s0
 
 # Motobox
 /(vendor|system/vendor)/bin/motobox                     u:object_r:vendor_motobox_exec:s0
