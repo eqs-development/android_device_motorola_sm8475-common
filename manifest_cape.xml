@@ -111,15 +111,6 @@
             <instance>default</instance>
         </interface>
     </hal>
-    <hal format="hidl">
-        <name>com.dsi.ant</name>
-        <transport>hwbinder</transport>
-        <version>1.0</version>
-        <interface>
-            <name>IAnt</name>
-            <instance>default</instance>
-        </interface>
-    </hal>
     <hal format="hidl" override="true">
         <name>com.motorola.hardware.biometric.fingerprint</name>
         <transport>hwbinder</transport>
