@@ -25,3 +25,4 @@ vendor.hw.fingerprint.status                   u:object_r:vendor_mot_fingerprint
 
 # Secure Element
 persist.vendor.se.reset                        u:object_r:vendor_secure_element_prop:s0
+vendor.ese.                                    u:object_r:vendor_secure_element_prop:s0
