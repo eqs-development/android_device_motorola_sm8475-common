@@ -101,6 +101,9 @@ blob_fixups: blob_fixups_user_type = {
     'system_ext/priv-app/ims/ims.apk': blob_fixup().apktool_patch(
         'ims-patches'
     ),
+    'vendor/lib64/vendor.libdpmframework.so': blob_fixup().add_needed(
+        'libhidlbase_shim.so'
+    ),
 }
 
 extract_fns: extract_fns_user_type = {
