@@ -257,7 +257,7 @@ system_ext/lib64/vendor.qti.diaghal@1.0.so
 vendor/bin/diag-router
 vendor/etc/init/vendor.qti.diag.rc
 -vendor/etc/vintf/manifest/vendor.qti.diag.hal.service.xml
-vendor/lib64/vendor.qti.diaghal@1.0.so;MODULE=vendor.qti.diaghal@1.0-vendor
+vendor/lib64/vendor.qti.diaghal@1.0.so;MODULE_SUFFIX=-vendor
 
 # Display - HDR
 vendor/etc/hdr_tm_config.xml
@@ -343,7 +343,7 @@ vendor/bin/vendor.dpmd
 vendor/etc/dpm_vndr/vendor.dpm.conf
 vendor/etc/init/dpmQmiMgr.rc
 vendor/etc/init/vendor.dpmd.rc
-vendor/lib64/com.qualcomm.qti.dpm.api@1.0.so;MODULE=com.qualcomm.qti.dpm.api@1.0-vendor
+vendor/lib64/com.qualcomm.qti.dpm.api@1.0.so;MODULE_SUFFIX=-vendor
 vendor/lib64/libdpmqmihal.so
 vendor/lib64/vendor.libdpmctmgr.so
 vendor/lib64/vendor.libdpmfdmgr.so
@@ -708,8 +708,8 @@ vendor/etc/init/init.qdmastats.rc
 vendor/lib64/hw/vendor.qti.hardware.qccvndhal@1.0-impl.so
 vendor/lib64/libgrpc++_unsecure.so:vendor/lib64/libgrpc++_unsecure_prebuilt.so;FIX_SONAME
 vendor/lib64/libqcc_file_agent.so
-vendor/lib64/vendor.qti.hardware.qccsyshal@1.0.so;MODULE=vendor.qti.hardware.qccsyshal@1.0-vendor
-vendor/lib64/vendor.qti.hardware.qccsyshal@1.1.so;MODULE=vendor.qti.hardware.qccsyshal@1.1-vendor
+vendor/lib64/vendor.qti.hardware.qccsyshal@1.0.so;MODULE_SUFFIX=-vendor
+vendor/lib64/vendor.qti.hardware.qccsyshal@1.1.so;MODULE_SUFFIX=-vendor
 vendor/lib64/vendor.qti.hardware.qccvndhal@1.0-halimpl.so
 vendor/lib64/vendor.qti.hardware.qccvndhal@1.0.so
 
@@ -767,9 +767,9 @@ vendor/bin/vendor.qti.qspmhal@1.0-service
 vendor/etc/init/vendor.qti.qspmhal@1.0-service.rc
 vendor/etc/seccomp_policy/qspm.policy
 vendor/lib/vendor.qti.qspmhal@1.0-impl.so
-vendor/lib/vendor.qti.qspmhal@1.0.so;MODULE=vendor.qti.qspmhal@1.0-vendor
+vendor/lib/vendor.qti.qspmhal@1.0.so;MODULE_SUFFIX=-vendor
 vendor/lib64/vendor.qti.qspmhal@1.0-impl.so
-vendor/lib64/vendor.qti.qspmhal@1.0.so;MODULE=vendor.qti.qspmhal@1.0-vendor
+vendor/lib64/vendor.qti.qspmhal@1.0.so;MODULE_SUFFIX=-vendor
 
 # QTI service tracker
 vendor/bin/hw/vendor.qti.hardware.servicetracker@1.2-service
@@ -1068,7 +1068,7 @@ vendor/lib64/vendor.qti.ims.rcsconfig@1.1.so
 vendor/lib64/vendor.qti.ims.rcsconfig@2.0.so
 vendor/lib64/vendor.qti.ims.rcsconfig@2.1.so
 vendor/lib64/vendor.qti.imsrtpservice@3.0-service-Impl.so
-vendor/lib64/vendor.qti.imsrtpservice@3.0.so;MODULE=vendor.qti.imsrtpservice@3.0-vendor
+vendor/lib64/vendor.qti.imsrtpservice@3.0.so;MODULE_SUFFIX=-vendor
 vendor/lib64/vendor.qti.ims.rcssip@1.0.so
 vendor/lib64/vendor.qti.ims.rcssip@1.1.so
 vendor/lib64/vendor.qti.ims.rcssip@1.2.so
