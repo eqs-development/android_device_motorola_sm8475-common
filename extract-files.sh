@@ -94,27 +94,6 @@ function blob_fixup() {
             [ "$2" = "" ] && return 0
             ${PATCHELF} --remove-needed "libril.so" "${2}"
             ;;
-        vendor/lib64/libancbase_rt_fusion.so)
-            [ "$2" = "" ] && return 0
-            ${PATCHELF} --set-soname libancbase_rt_fusion.so "${2}"
-            ;;
-        vendor/lib64/libremosaiclib_s5khp1.so)
-            [ "$2" = "" ] && return 0
-            ${PATCHELF} --set-soname libremosaiclib_s5khp1.so "${2}"
-            ;;
-        vendor/lib64/libremosaiclib_s5kjn1.so)
-            [ "$2" = "" ] && return 0
-            ${PATCHELF} --set-soname libremosaiclib_s5kjn1.so "${2}"
-            ;;
-        vendor/lib64/libgrpc++_unsecure_prebuilt.so)
-            [ "$2" = "" ] && return 0
-            ${PATCHELF} --set-soname libgrpc++_unsecure_prebuilt.so "${2}"
-            ;;
-        # rename moto modified primary audio to not conflict with source built
-        vendor/lib64/hw/audio.primary.taro-moto.so)
-            [ "$2" = "" ] && return 0
-            ${PATCHELF} --set-soname audio.primary.taro-moto.so "${2}"
-            ;;
         system_ext/priv-app/ims/ims.apk)
             [ "$2" = "" ] && return 0
             apktool_patch "${2}" "$MY_DIR/ims-patches"
