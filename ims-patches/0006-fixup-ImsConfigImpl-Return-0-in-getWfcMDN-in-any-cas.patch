@@ -1,0 +1,26 @@
+From 85ac2a6922e8fa7792f672e65a102b742d2a70bd Mon Sep 17 00:00:00 2001
+From: Cosmin Tanislav <demonsingur@gmail.com>
+Date: Thu, 26 Sep 2024 18:27:20 +0300
+Subject: [PATCH 6/6] fixup! ImsConfigImpl: Return 0 in getWfcMDN in any case
+
+The empty line gets removed when compiling and decompiling,
+causing patches to not be able to be applied in reverse.
+---
+ smali/org/codeaurora/ims/ImsConfigImpl.smali | 1 -
+ 1 file changed, 1 deletion(-)
+
+diff --git a/smali/org/codeaurora/ims/ImsConfigImpl.smali b/smali/org/codeaurora/ims/ImsConfigImpl.smali
+index a4ae057..9d91f33 100644
+--- a/smali/org/codeaurora/ims/ImsConfigImpl.smali
++++ b/smali/org/codeaurora/ims/ImsConfigImpl.smali
+@@ -1384,7 +1384,6 @@
+     .param p1, "subid"    # I
+ 
+     .line 820
+-
+     const-string v0, "0"
+ 
+     return-object v0
+-- 
+2.46.1
+
