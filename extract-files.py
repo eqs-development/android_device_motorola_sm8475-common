@@ -107,6 +107,8 @@ blob_fixups: blob_fixups_user_type = {
     'vendor/lib64/libqcodec2_core.so': blob_fixup().add_needed(
         'libcodec2_shim.so'
     ),
+    'vendor/etc/seccomp_policy/atfwd@2.0.policy': blob_fixup()
+        .add_line_if_missing('gettid: 1'),
 }
 
 extract_fns: extract_fns_user_type = {
